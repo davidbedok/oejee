@@ -1,1 +1,23 @@
 apply plugin: 'java'
+apply plugin: 'eclipse'
+
+sourceCompatibility = 1.7
+version = '1.0'
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Demo Application',
+                   'Implementation-Version': version,
+				   'Main-Class': 'hu.qwaevisz.gradle.Application'
+    }
+}
+
+task run( type:Exec ) {
+	workingDir 'build/libs'
+	commandLine 'java', '-jar', "${project.name}-${version}.jar"
+}
+
+task info() {
+	println "Task name: " + name
+	println "Project name: " + project.name
+}
