@@ -4,6 +4,18 @@ apply plugin: 'eclipse'
 sourceCompatibility = 1.7
 version = '1.0'
 
+def testngVersion = '6.9.6'
+
+repositories { mavenCentral() }
+
+dependencies {
+	testCompile group: 'org.testng', name: 'testng' , version: testngVersion
+}
+
+test {
+	useTestNG()
+}
+
 jar {
     manifest {
         attributes 'Implementation-Title': 'Gradle Demo Application',
