@@ -1,2 +1,3 @@
-include 'ejbservice'
-include 'weblayer'
+include 'bs-ejbservice'
+include 'bs-weblayer'
+include 'bs-persistence'
