@@ -1,0 +1,24 @@
+CREATE TABLE bookcategory (
+	bookcategory_id INTEGER NOT NULL,
+	bookcategory_name CHARACTER VARYING(100) NOT NULL,
+	CONSTRAINT PK_BOOKCATEGORY_ID PRIMARY KEY (bookcategory_id)
+);
+
+ALTER TABLE bookcategory OWNER TO postgres;
+
+CREATE TABLE book (
+	book_id SERIAL NOT NULL,
+	book_isbn CHARACTER VARYING(100) NOT NULL,
+	book_author CHARACTER VARYING(100) NOT NULL,
+	book_title CHARACTER VARYING(100) NOT NULL,
+	book_bookcategory_id INTEGER NOT NULL,
+	book_price REAL NOT NULL,
+	book_number_of_pages INTEGER NOT NULL,
+	CONSTRAINT PK_BOOK_ID PRIMARY KEY (book_id),
+	CONSTRAINT FK_BOOK_BOOKCATEGORY FOREIGN KEY (book_bookcategory_id)
+	  REFERENCES bookcategory (bookcategory_id) MATCH SIMPLE ON UPDATE RESTRICT ON DELETE RESTRICT
+);
+
+ALTER TABLE book OWNER TO postgres;
+
+CREATE UNIQUE INDEX UI_BOOK_ISBN ON book USING btree (book_isbn);
