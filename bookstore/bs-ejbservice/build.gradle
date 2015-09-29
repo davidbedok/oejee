@@ -1,0 +1,5 @@
+jar { archiveName 'bs-ejbservice.jar' }
+
+dependencies {
+	compile project(':bs-persistence')
+}
