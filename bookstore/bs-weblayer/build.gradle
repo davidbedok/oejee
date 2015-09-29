@@ -1,0 +1,8 @@
+apply plugin: 'war'
+
+war { archiveName 'bs-weblayer.war' }
+
+dependencies {
+	providedCompile project(':bs-ejbservice')
+	providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: servletapiVersion
+}

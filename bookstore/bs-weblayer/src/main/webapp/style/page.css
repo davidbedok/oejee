@@ -1,0 +1,32 @@
+body {
+	font-size: 100%;
+	font-family: Arial, Verdana, sans-serif;
+	background-color: #ffffff;
+}
+
+.bookstable {
+	color: black;
+	font-weight: normal;
+	padding: 0px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 20px;
+	margin-right: 20px;
+	border: 0px;
+	border-spacing: 0px;
+	width: 600px;
+}
+
+.bookstable thead {
+	text-align: center;
+	font-weight: bold;
+}
+
+.bookstable td, .bookstable th {
+	border: 1px solid;
+	padding: 2px;
+}
+
+label {
+	font-weight: bold;
+}
