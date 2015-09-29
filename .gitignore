@@ -17,5 +17,6 @@ hs_err_pid*
 .settings
 .gradle
 
+**/bin/*
 **/build/*
 */test-output/*
