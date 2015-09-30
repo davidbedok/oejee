@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@page import="java.util.Set" %>  
-<%@page import="hu.qwaevisz.bookstore.ejbservice.domain.BookStub" %> 
+<%@ page import="java.util.Set" %>  
+<%@ page import="hu.qwaevisz.bookstore.ejbservice.domain.BookStub" %> 
 <% BookStub book = (BookStub) request.getAttribute("book"); %>
 <!DOCTYPE html>
 <html>

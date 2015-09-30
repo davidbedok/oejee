@@ -28,11 +28,12 @@ public class BookFacadeImpl implements BookFacade {
 
 	@Override
 	public BookStub getBook(String isbn) throws FacadeException {
-		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("Get Book (isbn: " + isbn + ")");
-		}
 		try {
-			return this.converter.to(this.service.read(isbn));
+			final BookStub stub = this.converter.to(this.service.read(isbn));
+			if (LOGGER.isDebugEnabled()) {
+				LOGGER.debug("Get Book by isbn (" + isbn + ") --> " + stub);
+			}
+			return stub;
 		} catch (final PersistenceServiceException e) {
 			LOGGER.error(e, e);
 			throw new FacadeException(e.getLocalizedMessage());
@@ -44,6 +45,9 @@ public class BookFacadeImpl implements BookFacade {
 		List<BookStub> stubs = new ArrayList<>();
 		try {
 			stubs = this.converter.to(this.service.readAll());
+			if (LOGGER.isDebugEnabled()) {
+				LOGGER.debug("Get Books by criteria (" + criteria + ") --> " + stubs.size() + " book(s)");
+			}
 		} catch (final PersistenceServiceException e) {
 			LOGGER.error(e, e);
 			throw new FacadeException(e.getLocalizedMessage());
