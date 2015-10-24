@@ -1,0 +1,9 @@
+apply plugin: 'war'
+
+war { archiveName webapplicationName }
+
+dependencies {
+	providedCompile project(':ds-ejbservice')
+	providedCompile group: 'javax', name: 'javaee-api', version: jeeVersion
+	providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: servletapiVersion
+}

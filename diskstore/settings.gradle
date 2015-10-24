@@ -1,0 +1,4 @@
+include 'ds-ejbservice'
+include 'ds-ejbserviceclient'
+include 'ds-weblayer'
+include 'ds-client'

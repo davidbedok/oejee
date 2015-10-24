@@ -1,0 +1,40 @@
+apply plugin: 'eclipse'
+apply plugin: 'ear'
+
+ext {
+	log4jVersion = '1.2.17'
+	testngVersion = '6.9.+'
+	jeeVersion = '6.0' 
+	jbossjee6Version = '3.0.3.Final'  
+	servletapiVersion = '3.0.1'
+	
+	webapplicationName = 'ds-weblayer.war'
+	webapplicationContextPath = 'diskstore'
+}
+
+subprojects {
+	apply plugin: 'eclipse'
+	apply plugin: 'java'
+
+	sourceCompatibility = 1.7
+	targetCompatibility = 1.7
+
+	repositories { mavenCentral() }
+
+	dependencies {
+		compile group: 'log4j', name: 'log4j', version: log4jVersion
+		testCompile group: 'org.testng', name: 'testng', version: testngVersion
+	}
+}
+
+ear {
+    deploymentDescriptor { 
+    	webModule( webapplicationName, webapplicationContextPath ) 
+    }
+}
+
+dependencies {
+	deploy project('ds-ejbservice')
+	deploy project('ds-ejbserviceclient')
+	deploy project(path: 'ds-weblayer', configuration: 'archives')
+}
