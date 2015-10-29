@@ -1,0 +1,236 @@
+REQ: GET http://localhost:8080/school/api/student/WI53085
+RESP: 200 OK
+{
+	"name": "Juanita A. Jenkins",
+	"neptun": "WI53085",
+	"institute": "BANKI",
+	"marks": [{
+		"subject": {
+			"name": "C/C++ Programming",
+			"teacher": {
+				"name": "Lorine B. Pine",
+				"neptun": "MD21921"
+			},
+			"description": "Maecenas a nisl nisl. Nam consectetur auctor arcu, sed elementum justo suscipit nec."
+		},
+		"grade": 2,
+		"note": "Vivamus",
+		"date": 1401956934000
+	},
+	{
+		"subject": {
+			"name": "Scala Functional Programming",
+			"teacher": {
+				"name": "Richard B. Cambra",
+				"neptun": "UT84113"
+			},
+			"description": "Cras posuere cursus nulla vel feugiat. Integer sagittis efficitur enim vitae posuere."
+		},
+		"grade": 1,
+		"note": "Facilisis",
+		"date": 1391956934000
+	},
+	{
+		"subject": {
+			"name": "Python Programming",
+			"teacher": {
+				"name": "Christine W. Culp",
+				"neptun": "OK73109"
+			},
+			"description": "Fusce sem turpis, iaculis non lobortis ac, accumsan et purus."
+		},
+		"grade": 3,
+		"note": "Phasellus",
+		"date": 1411956934000
+	}]
+}
+
+
+=========================================================================================================
+REQ: GET http://localhost:8080/school/api/student/list
+RESP: 200 OK
+[{
+	"name": "Dan N. Pearman",
+	"neptun": "ND58801",
+	"institute": "KANDO",
+	"marks": [{
+		"subject": {
+			"name": "C/C++ Programming",
+			"teacher": {
+				"name": "Lorine B. Pine",
+				"neptun": "MD21921"
+			},
+			"description": "Maecenas a nisl nisl. Nam consectetur auctor arcu, sed elementum justo suscipit nec."
+		},
+		"grade": 1,
+		"note": "Consequat",
+		"date": 1371956934000
+	},
+	{
+		"subject": {
+			"name": "Python Programming",
+			"teacher": {
+				"name": "Christine W. Culp",
+				"neptun": "OK73109"
+			},
+			"description": "Fusce sem turpis, iaculis non lobortis ac, accumsan et purus."
+		},
+		"grade": 3,
+		"note": "Aliquet",
+		"date": 1355956934000
+	},
+	{
+		"subject": {
+			"name": "Python Programming",
+			"teacher": {
+				"name": "Christine W. Culp",
+				"neptun": "OK73109"
+			},
+			"description": "Fusce sem turpis, iaculis non lobortis ac, accumsan et purus."
+		},
+		"grade": 2,
+		"note": "Felis",
+		"date": 1369956934000
+	}]
+},
+{
+	"name": "Evelyn R. Ragland",
+	"neptun": "VA22304",
+	"institute": "KANDO",
+	"marks": [{
+		"subject": {
+			"name": "Scala Functional Programming",
+			"teacher": {
+				"name": "Richard B. Cambra",
+				"neptun": "UT84113"
+			},
+			"description": "Cras posuere cursus nulla vel feugiat. Integer sagittis efficitur enim vitae posuere."
+		},
+		"grade": 1,
+		"note": "Vehicula",
+		"date": 1342956934000
+	},
+	{
+		"subject": {
+			"name": "Java Enterprise Edition",
+			"teacher": {
+				"name": "Lorine B. Pine",
+				"neptun": "MD21921"
+			},
+			"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+		},
+		"grade": 5,
+		"note": "Vestibulum",
+		"date": 1348956934000
+	},
+	{
+		"subject": {
+			"name": "C/C++ Programming",
+			"teacher": {
+				"name": "Lorine B. Pine",
+				"neptun": "MD21921"
+			},
+			"description": "Maecenas a nisl nisl. Nam consectetur auctor arcu, sed elementum justo suscipit nec."
+		},
+		"grade": 2,
+		"note": "Sociis",
+		"date": 1352956934000
+	}]
+}]
+
+=========================================================================================================
+REQ: POST http://localhost:8080/school/api/mark/stat
+Payload:
+Sybase PowerBuilder
+RESP: 200 OK
+[{
+	"institute": "BANKI",
+	"year": 2015,
+	"averageGrade": 4.0
+},
+{
+	"institute": "KANDO",
+	"year": 2012,
+	"averageGrade": 4.0
+},
+{
+	"institute": "KANDO",
+	"year": 2013,
+	"averageGrade": 4.0
+},
+{
+	"institute": "NEUMANN",
+	"year": 2014,
+	"averageGrade": 3.5
+}]
+
+=========================================================================================================
+REQ: PUT http://localhost:8080/school/api/mark/add
+Payload:
+{
+	"subject": "Sybase PowerBuilder",
+	"neptun": "WI53085",
+	"grade": "WEAK",
+	"note": "Lorem ipsum"
+}
+
+RESP: 200 OK
+{
+	"subject": {
+		"name": "Sybase PowerBuilder",
+		"teacher": {
+			"name": "Richard B. Cambra",
+			"neptun": "UT84113"
+		},
+		"description": "Donec rhoncus lacus quis est cursus aliquet."
+	},
+	"grade": 2,
+	"note": "Lorem ipsum",
+	"date": 1443797867042
+}
+=========================================================================================================
+REQ: DELETE http://localhost:8080/school/api/student/ABC123
+RESP: 400 Bad Request
+{
+	"code": 40,
+	"message": "Resource not found",
+	"fields": "ABC123"
+}
+
+REQ: DELETE http://localhost:8080/school/api/student/WI53085
+RESP: 412 Precondition Failed
+{
+	"code": 50,
+	"message": "Has dependency",
+	"fields": "WI53085"
+}
+
+REQ: DELETE http://localhost:8080/school/api/student/TX78476
+RESP: 204 No Content
+=========================================================================================================
+REQ: POST http://localhost:8080/school/api/mark/get/WI53085
+Payload:
+<markcriteria>
+	<subject>Python</subject>
+	<minimumgrade>2</minimumgrade>
+	<maximumgrade>4</maximumgrade>
+</markcriteria>
+RESP: 200 OK
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mark>
+	<date>2014-09-29T04:15:34+02:00</date>
+	<grade>3</grade>
+	<note>Phasellus</note>
+	<subject>
+		<description>Fusce sem turpis, iaculis non lobortis ac, accumsan et purus.</description>
+		<name>Python Programming</name>
+		<teacher>
+			<name>Christine W. Culp</name>
+			<neptun>OK73109</neptun>
+		</teacher>
+	</subject>
+</mark>
+
+
+
+

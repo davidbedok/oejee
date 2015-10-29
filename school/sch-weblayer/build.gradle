@@ -1,0 +1,8 @@
+apply plugin: 'war'
+
+war { archiveName 'sch-weblayer.war' }
+
+dependencies {
+	providedCompile project(':sch-ejbservice')
+	providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: servletapiVersion
+}

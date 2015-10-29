@@ -1,0 +1,8 @@
+jar { archiveName 'sch-restclient.jar' }
+
+dependencies {
+	compile group: 'org.jboss.spec', name: 'jboss-javaee-6.0', version: jbossjee6Version
+	compile group: 'org.jboss.resteasy', name:'resteasy-jaxrs', version: resteasyVersion
+	compile group: 'org.jboss.resteasy', name:'resteasy-jaxb-provider', version: resteasyVersion
+	compile group: 'commons-logging', name: 'commons-logging', version: commonsloggingVersion
+}

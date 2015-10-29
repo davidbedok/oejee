@@ -1,0 +1,5 @@
+include 'sch-ejbservice'
+include 'sch-weblayer'
+include 'sch-webservice'
+include 'sch-persistence'
+include 'sch-restclient'

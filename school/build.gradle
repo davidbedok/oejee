@@ -1,0 +1,50 @@
+apply plugin: 'eclipse'
+apply plugin: 'ear'
+
+version = '1.0'
+
+ext {
+	log4jVersion = '1.2.17'
+	testngVersion = '6.9.+'
+	mockitoVersion = '1.10.8'
+	jeeVersion = '6.0'  
+	servletapiVersion = '3.0.1'
+	hibernateVersion = '4.3.10.Final'
+	jaxrsVersion = '2.0.1'
+	resteasyVersion = '2.3.7.Final'
+	jbossjee6Version = '3.0.3.Final'  
+	commonsloggingVersion = '1.2'
+	
+	webserviceArchiveName = 'sch-webservice.war'
+	webserviceContextPath = 'school'
+}
+
+subprojects {
+	apply plugin: 'eclipse'
+	apply plugin: 'java'
+
+	sourceCompatibility = 1.7
+	targetCompatibility = 1.7
+
+	repositories { 
+		mavenCentral() 
+	}
+
+	dependencies {
+		testCompile group: 'org.testng', name: 'testng', version: testngVersion
+		testCompile group: 'org.mockito', name: 'mockito-core', version: mockitoVersion
+	}
+}
+
+ear {
+    deploymentDescriptor { 
+    	webModule( webserviceArchiveName, webserviceContextPath ) 
+    }
+}
+
+dependencies {
+	deploy project('sch-ejbservice')
+	deploy project('sch-persistence')
+	deploy project(path: 'sch-weblayer', configuration: 'archives')
+	deploy project(path: 'sch-webservice', configuration: 'archives')
+}

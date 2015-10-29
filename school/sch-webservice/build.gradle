@@ -1,0 +1,9 @@
+apply plugin: 'war'
+
+war { archiveName webserviceArchiveName }
+
+dependencies {
+	providedCompile project(':sch-ejbservice')
+	providedCompile group: 'javax.ws.rs', name: 'javax.ws.rs-api', version: jaxrsVersion	
+	providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: servletapiVersion
+}
