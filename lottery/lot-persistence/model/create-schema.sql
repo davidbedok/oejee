@@ -1,0 +1,20 @@
+CREATE TABLE event (
+	event_id SERIAL NOT NULL,
+	event_puller CHARACTER VARYING(100) NOT NULL,
+	event_prizepool INTEGER NOT NULL,
+	event_date TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+	CONSTRAINT PK_EVENT_ID PRIMARY KEY (event_id)
+);
+
+ALTER TABLE event OWNER TO postgres;
+
+CREATE TABLE drawnnumber (
+	drawnnumber_id SERIAL NOT NULL,
+	drawnnumber_event_id INTEGER NOT NULL,
+	drawnnumber_value INTEGER NOT NULL,
+	CONSTRAINT PK_DRAWNNUMBER_ID PRIMARY KEY (drawnnumber_id),
+	CONSTRAINT FK_DRAWNNUMBER_EVENT FOREIGN KEY (drawnnumber_event_id)
+	  REFERENCES event (event_id) MATCH SIMPLE ON UPDATE RESTRICT ON DELETE RESTRICT
+);
+
+ALTER TABLE drawnnumber OWNER TO postgres;

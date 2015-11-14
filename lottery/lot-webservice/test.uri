@@ -1,0 +1,46 @@
+REQ: GET http://localhost:8080/lottery/api/service/event/list
+RESP: 200 OK
+[{
+	"puller": "Preston J. Fleming",
+	"prizePool": 21446,
+	"date": 1444742584359,
+	"numbers": [26, 52, 36, 81, 6]
+},
+{
+	"puller": "Tom S. Chew",
+	"prizePool": 53464,
+	"date": 1444742584343,
+	"numbers": [23, 44, 12, 87, 54]
+},
+{
+	"puller": "Juanita A. Jenkins",
+	"prizePool": 853321,
+	"date": 1444742584359,
+	"numbers": [78, 12, 76, 12, 34]
+},
+{
+	"puller": "Linda R. Ray",
+	"prizePool": 942321,
+	"date": 1444742584359,
+	"numbers": [49, 2, 21, 35, 18]
+}]
+=========================================================================================================
+REQ: GET http://localhost:8080/lottery/api/service/event/latest
+RESP: 200 OK
+{
+	"puller": "Juanita A. Jenkins",
+	"prizePool": 12345,
+	"date": 1444806575759,
+	"numbers": [5, 1, 2, 3, 4]
+}
+=========================================================================================================
+REQ: POST http://localhost:8080/lottery/api/service/check
+Payload:
+[1, 2, 7, 8, 9]
+RESP: 200 OK
+123
+
+
+
+
+
