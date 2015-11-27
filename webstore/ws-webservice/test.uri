@@ -1,0 +1,116 @@
+GET http://localhost:8080/webstore/WebStoreService?wsdl
+-------------------------
+
+-- Set identifier --
+
+DOCUMENT, LITERAL, BARE
+
+SOAP Request:
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.qwaevisz.hu/WebStore">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <web:identifier>TESTID</web:identifier>
+   </soapenv:Body>
+</soapenv:Envelope>
+
+SOAP Response:
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+   <soap:Body/>
+</soap:Envelope>
+
+DOCUMENT, LITERAL, WRAPPED
+
+SOAP Request:
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.qwaevisz.hu/WebStore">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <web:SetIdentifierRequest>
+         <identifier>TESTID</identifier>
+      </web:SetIdentifierRequest>
+   </soapenv:Body>
+</soapenv:Envelope>
+
+SOAP Response:
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+   <soap:Body>
+      <ns2:SetIdentifierRequestResponse xmlns:ns2="http://www.qwaevisz.hu/WebStore"/>
+   </soap:Body>
+</soap:Envelope>
+
+-- Get identifier
+
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.qwaevisz.hu/WebStore">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <web:GetIdentifierRequest/>
+   </soapenv:Body>
+</soapenv:Envelope>
+
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+   <soap:Body>
+      <ns2:GetIdentifierRequestResponse xmlns:ns2="http://www.qwaevisz.hu/WebStore">
+         <GetIdentifierResponse>TESTID</GetIdentifierResponse>
+      </ns2:GetIdentifierRequestResponse>
+   </soap:Body>
+</soap:Envelope>
+
+-- Get basket size
+
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.qwaevisz.hu/WebStore">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <web:GetBasketSizeRequest/>
+   </soapenv:Body>
+</soapenv:Envelope>
+
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+   <soap:Body>
+      <ns2:GetBasketSizeRequestResponse xmlns:ns2="http://www.qwaevisz.hu/WebStore">
+         <GetBasketSizeResponse>0</GetBasketSizeResponse>
+      </ns2:GetBasketSizeRequestResponse>
+   </soap:Body>
+</soap:Envelope>
+
+-- Add item
+
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.qwaevisz.hu/WebStore">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <web:AddItemRequest>
+         <item brand="PHILIPS" name="22pfh4000" price="45900"/>
+      </web:AddItemRequest>
+   </soapenv:Body>
+</soapenv:Envelope>
+
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+   <soap:Body>
+      <ns2:AddItemRequestResponse xmlns:ns2="http://www.qwaevisz.hu/WebStore"/>
+   </soap:Body>
+</soap:Envelope>
+
+-- Get content
+
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.qwaevisz.hu/WebStore">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <web:GetContentRequest/>
+   </soapenv:Body>
+</soapenv:Envelope>
+
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+   <soap:Body>
+      <ns2:GetContentRequestResponse xmlns:ns2="http://www.qwaevisz.hu/WebStore">
+         <GetContentResponse identifier="TESTID" total="345700">
+            <items quantity="1" total="45900">
+               <product brand="PHILIPS" name="22pfh4000" price="45900"/>
+            </items>
+            <items quantity="2" total="299800">
+               <product brand="PANASONIC" name="TX-42AS650E" price="149900"/>
+            </items>
+         </GetContentResponse>
+      </ns2:GetContentRequestResponse>
+   </soap:Body>
+</soap:Envelope>
+
+-------------
+

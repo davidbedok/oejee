@@ -1,0 +1,6 @@
+apply plugin: 'war'
+
+dependencies {
+	providedCompile project(':ws-ejbservice')
+	providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: servletapiVersion
+}

@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project activeEnvironment="Default" name="WebStoreService" soapui-version="5.0.0" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="WebStoreServiceSoapBinding" type="wsdl" bindingName="{http://www.qwaevisz.hu/WebStore}WebStoreServiceSoapBinding" soapVersion="1_1" anonymous="optional" definition="http://localhost:8080/webstore/WebStoreService?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:8080/webstore/WebStoreService?wsdl"><con:part><con:url>http://localhost:8080/webstore/WebStoreService?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="WebStoreService" targetNamespace="http://www.qwaevisz.hu/WebStore" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.qwaevisz.hu/WebStore" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns2="http://schemas.xmlsoap.org/soap/http" xmlns:ns1="http://www.qwaevisz.hu/Fault">
+  <wsdl:types>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://www.qwaevisz.hu/WebStore" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="basket" type="tns:basket"/>
+      <xs:element name="basketItem" type="tns:basketItem"/>
+      <xs:element name="errorStub" type="tns:serviceError"/>
+      <xs:element name="product" type="tns:product"/>
+      <xs:complexType name="serviceError">
+        <xs:sequence>
+          <xs:element name="code" type="xs:int"/>
+          <xs:element minOccurs="0" name="message" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="basket">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="items" type="tns:basketItem"/>
+        </xs:sequence>
+        <xs:attribute name="identifier" type="xs:string"/>
+        <xs:attribute name="total" type="xs:int" use="required"/>
+      </xs:complexType>
+      <xs:complexType name="basketItem">
+        <xs:sequence>
+          <xs:element minOccurs="0" ref="tns:product"/>
+        </xs:sequence>
+        <xs:attribute name="quantity" type="xs:int" use="required"/>
+        <xs:attribute name="total" type="xs:int" use="required"/>
+      </xs:complexType>
+      <xs:complexType name="product">
+        <xs:sequence/>
+        <xs:attribute name="brand" type="tns:brand"/>
+        <xs:attribute name="name" type="xs:string"/>
+        <xs:attribute name="price" type="xs:int" use="required"/>
+      </xs:complexType>
+      <xs:simpleType name="brand">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="PHILIPS"/>
+          <xs:enumeration value="SONY"/>
+          <xs:enumeration value="PANASONIC"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="GetIdentifierResponse" nillable="true" type="xs:string"/>
+      <xs:element name="GetBasketSizeResponse" nillable="true" type="xs:int"/>
+      <xs:element name="GetContentResponse" nillable="true" type="tns:basket"/>
+      <xs:element name="identifier" nillable="true" type="xs:string"/>
+      <xs:element name="item" nillable="true" type="tns:product"/>
+    </xs:schema>
+    <xsd:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://www.qwaevisz.hu/Fault" xmlns:tns="http://www.qwaevisz.hu/Fault" xmlns:ns0="http://www.qwaevisz.hu/WebStore">
+      <xsd:element name="WebStoreServiceFault" nillable="true" type="ns0:serviceError"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="AddItemRequest">
+    <wsdl:part element="tns:item" name="item"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetIdentifierRequestResponse">
+    <wsdl:part element="tns:GetIdentifierResponse" name="getIdentifierPart"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetIdentifierRequest"></wsdl:message>
+  <wsdl:message name="SetIdentifierRequestResponse"></wsdl:message>
+  <wsdl:message name="GetContentRequest"></wsdl:message>
+  <wsdl:message name="AddItemRequestResponse"></wsdl:message>
+  <wsdl:message name="GetContentRequestResponse">
+    <wsdl:part element="tns:GetContentResponse" name="getContentPart"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="WebStoreServiceException">
+    <wsdl:part element="ns1:WebStoreServiceFault" name="WebStoreServiceException"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SetIdentifierRequest">
+    <wsdl:part element="tns:identifier" name="identifier"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetBasketSizeRequestResponse">
+    <wsdl:part element="tns:GetBasketSizeResponse" name="getBasketSizePart"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetBasketSizeRequest"></wsdl:message>
+  <wsdl:portType name="WebStore">
+    <wsdl:operation name="GetIdentifierRequest">
+      <wsdl:input message="tns:GetIdentifierRequest" name="GetIdentifierRequest"></wsdl:input>
+      <wsdl:output message="tns:GetIdentifierRequestResponse" name="GetIdentifierRequestResponse"></wsdl:output>
+      <wsdl:fault message="tns:WebStoreServiceException" name="WebStoreServiceException"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetBasketSizeRequest">
+      <wsdl:input message="tns:GetBasketSizeRequest" name="GetBasketSizeRequest"></wsdl:input>
+      <wsdl:output message="tns:GetBasketSizeRequestResponse" name="GetBasketSizeRequestResponse"></wsdl:output>
+      <wsdl:fault message="tns:WebStoreServiceException" name="WebStoreServiceException"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetContentRequest">
+      <wsdl:input message="tns:GetContentRequest" name="GetContentRequest"></wsdl:input>
+      <wsdl:output message="tns:GetContentRequestResponse" name="GetContentRequestResponse"></wsdl:output>
+      <wsdl:fault message="tns:WebStoreServiceException" name="WebStoreServiceException"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="SetIdentifierRequest">
+      <wsdl:input message="tns:SetIdentifierRequest" name="SetIdentifierRequest"></wsdl:input>
+      <wsdl:output message="tns:SetIdentifierRequestResponse" name="SetIdentifierRequestResponse"></wsdl:output>
+      <wsdl:fault message="tns:WebStoreServiceException" name="WebStoreServiceException"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AddItemRequest">
+      <wsdl:input message="tns:AddItemRequest" name="AddItemRequest"></wsdl:input>
+      <wsdl:output message="tns:AddItemRequestResponse" name="AddItemRequestResponse"></wsdl:output>
+      <wsdl:fault message="tns:WebStoreServiceException" name="WebStoreServiceException"></wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WebStoreServiceSoapBinding" type="tns:WebStore">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="GetIdentifierRequest">
+      <soap:operation soapAction="http://www.qwaevisz.hu/WebStore/getIdentifier" style="document"/>
+      <wsdl:input name="GetIdentifierRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="GetIdentifierRequestResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WebStoreServiceException">
+        <soap:fault name="WebStoreServiceException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetBasketSizeRequest">
+      <soap:operation soapAction="http://www.qwaevisz.hu/WebStore/getBasketSize" style="document"/>
+      <wsdl:input name="GetBasketSizeRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="GetBasketSizeRequestResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WebStoreServiceException">
+        <soap:fault name="WebStoreServiceException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetContentRequest">
+      <soap:operation soapAction="http://www.qwaevisz.hu/WebStore/getContent" style="document"/>
+      <wsdl:input name="GetContentRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="GetContentRequestResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WebStoreServiceException">
+        <soap:fault name="WebStoreServiceException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="SetIdentifierRequest">
+      <soap:operation soapAction="http://www.qwaevisz.hu/WebStore/setIdentifier" style="document"/>
+      <wsdl:input name="SetIdentifierRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="SetIdentifierRequestResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WebStoreServiceException">
+        <soap:fault name="WebStoreServiceException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AddItemRequest">
+      <soap:operation soapAction="http://www.qwaevisz.hu/WebStore/addItem" style="document"/>
+      <wsdl:input name="AddItemRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="AddItemRequestResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WebStoreServiceException">
+        <soap:fault name="WebStoreServiceException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WebStoreService">
+    <wsdl:port binding="tns:WebStoreServiceSoapBinding" name="WebStorePort">
+      <soap:address location="http://localhost:8080/webstore/WebStoreService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/webstore/WebStoreService</con:endpoint></con:endpoints><con:operation isOneWay="false" action="http://www.qwaevisz.hu/WebStore/addItem" name="AddItemRequest" bindingOperationName="AddItemRequest" type="Request-Response" outputName="AddItemRequestResponse" inputName="AddItemRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/webstore/WebStoreService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.qwaevisz.hu/WebStore">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <web:item brand="PHILIPS" name="Qwer" price="100"/>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.qwaevisz.hu/WebStore/addItem"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation isOneWay="false" action="http://www.qwaevisz.hu/WebStore/getBasketSize" name="GetBasketSizeRequest" bindingOperationName="GetBasketSizeRequest" type="Request-Response" outputName="GetBasketSizeRequestResponse" inputName="GetBasketSizeRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/webstore/WebStoreService</con:endpoint><con:request>&lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+   &lt;soapenv:Header/>
+   &lt;soapenv:Body/>
+&lt;/soapenv:Envelope></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.qwaevisz.hu/WebStore/getBasketSize"/></con:call></con:operation><con:operation isOneWay="false" action="http://www.qwaevisz.hu/WebStore/getContent" name="GetContentRequest" bindingOperationName="GetContentRequest" type="Request-Response" outputName="GetContentRequestResponse" inputName="GetContentRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/webstore/WebStoreService</con:endpoint><con:request>&lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+   &lt;soapenv:Header/>
+   &lt;soapenv:Body/>
+&lt;/soapenv:Envelope></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.qwaevisz.hu/WebStore/getContent"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation isOneWay="false" action="http://www.qwaevisz.hu/WebStore/getIdentifier" name="GetIdentifierRequest" bindingOperationName="GetIdentifierRequest" type="Request-Response" outputName="GetIdentifierRequestResponse" inputName="GetIdentifierRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/webstore/WebStoreService</con:endpoint><con:request>&lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+   &lt;soapenv:Header/>
+   &lt;soapenv:Body/>
+&lt;/soapenv:Envelope></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.qwaevisz.hu/WebStore/getIdentifier"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation isOneWay="false" action="http://www.qwaevisz.hu/WebStore/setIdentifier" name="SetIdentifierRequest" bindingOperationName="SetIdentifierRequest" type="Request-Response" outputName="SetIdentifierRequestResponse" inputName="SetIdentifierRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/webstore/WebStoreService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.qwaevisz.hu/WebStore">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <web:identifier>asd</web:identifier>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.qwaevisz.hu/WebStore/setIdentifier"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:testSuite name="WebStoreServiceSoapBinding TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="AddItemRequest TestCase" searchProperties="true"><con:settings/><con:testStep type="request" name="AddItemRequest"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>WebStoreServiceSoapBinding</con:interface><con:operation>AddItemRequest</con:operation><con:request name="AddItemRequest"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/webstore/WebStoreService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.qwaevisz.hu/WebStore">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <web:item brand="?" name="?" price="?"/>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://www.qwaevisz.hu/WebStore/addItem"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="GetBasketSizeRequest TestCase" searchProperties="true"><con:settings/><con:testStep type="request" name="GetBasketSizeRequest"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>WebStoreServiceSoapBinding</con:interface><con:operation>GetBasketSizeRequest</con:operation><con:request name="GetBasketSizeRequest"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/webstore/WebStoreService</con:endpoint><con:request>&lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+   &lt;soapenv:Header/>
+   &lt;soapenv:Body/>
+&lt;/soapenv:Envelope></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://www.qwaevisz.hu/WebStore/getBasketSize"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="GetContentRequest TestCase" searchProperties="true"><con:settings/><con:testStep type="request" name="GetContentRequest"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>WebStoreServiceSoapBinding</con:interface><con:operation>GetContentRequest</con:operation><con:request name="GetContentRequest"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/webstore/WebStoreService</con:endpoint><con:request>&lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+   &lt;soapenv:Header/>
+   &lt;soapenv:Body/>
+&lt;/soapenv:Envelope></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://www.qwaevisz.hu/WebStore/getContent"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="GetIdentifierRequest TestCase" searchProperties="true"><con:settings/><con:testStep type="request" name="GetIdentifierRequest"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>WebStoreServiceSoapBinding</con:interface><con:operation>GetIdentifierRequest</con:operation><con:request name="GetIdentifierRequest"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/webstore/WebStoreService</con:endpoint><con:request>&lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+   &lt;soapenv:Header/>
+   &lt;soapenv:Body/>
+&lt;/soapenv:Envelope></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://www.qwaevisz.hu/WebStore/getIdentifier"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="SetIdentifierRequest TestCase" searchProperties="true"><con:settings/><con:testStep type="request" name="SetIdentifierRequest"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>WebStoreServiceSoapBinding</con:interface><con:operation>SetIdentifierRequest</con:operation><con:request name="SetIdentifierRequest"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/webstore/WebStoreService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.qwaevisz.hu/WebStore">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <web:identifier>?</web:identifier>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://www.qwaevisz.hu/WebStore/setIdentifier"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/></con:soapui-project>

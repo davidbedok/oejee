@@ -1,0 +1,3 @@
+include 'ws-ejbservice'
+include 'ws-weblayer'
+include 'ws-webservice'

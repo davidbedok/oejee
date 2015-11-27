@@ -1,0 +1,47 @@
+apply plugin: 'eclipse'
+apply plugin: 'ear'
+
+version = '1.0'
+
+ext {
+	log4jVersion = '1.2.17'
+	testngVersion = '6.9.+'
+	jeeVersion = '6.0'  
+	servletapiVersion = '3.0.1'
+	hibernateVersion = '4.3.10.Final'
+	jaxrsVersion = '2.0.1'
+	resteasyVersion = '2.3.7.Final'
+	jbossjee6Version = '3.0.3.Final'  
+	commonsloggingVersion = '1.2'
+	
+	webserviceArchiveName = 'ws-webservice.war'
+	webserviceContextPath = 'webstore'
+}
+
+subprojects {
+	apply plugin: 'eclipse'
+	apply plugin: 'java'
+
+	sourceCompatibility = 1.7
+	targetCompatibility = 1.7
+
+	repositories { 
+		mavenCentral() 
+	}
+
+	dependencies {
+		testCompile group: 'org.testng', name: 'testng', version: testngVersion
+	}
+}
+
+ear {
+    deploymentDescriptor { 
+    	webModule( webserviceArchiveName, webserviceContextPath ) 
+    }
+}
+
+dependencies {
+	deploy project('ws-ejbservice')
+	deploy project(path: 'ws-weblayer', configuration: 'archives')
+	deploy project(path: 'ws-webservice', configuration: 'archives')
+}
