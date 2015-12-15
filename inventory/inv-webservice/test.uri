@@ -1,0 +1,27 @@
+REQ: GET http://localhost:8080/inventory/api/search/IPS65
+RESP: 200 OK
+{
+	"reference": "IPS65",
+	"name": "Ipsum",
+	"type": "DISK",
+	"value": 23
+}
+
+-------------------------------------------------------------------------------------
+REQ: GET http://localhost:8080/inventory/api/search/list/BOOK
+RESP: 200 OK
+[{
+	"reference": "LOR42",
+	"name": "Lorem",
+	"type": "BOOK",
+	"value": 42
+},
+{
+	"reference": "SIT78",
+	"name": "Sit",
+	"type": "BOOK",
+	"value": 78
+}]
+
+
+

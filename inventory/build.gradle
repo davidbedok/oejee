@@ -1,0 +1,43 @@
+apply plugin: 'eclipse'
+apply plugin: 'ear'
+
+ext {
+	log4jVersion = '1.2.17'
+	testngVersion = '6.9.+'
+	jeeVersion = '6.0'
+	servletapiVersion = '3.0.1'
+	jaxrsVersion = '2.0.1'
+
+	webapplicationName = 'inv-webservice.war'
+	webapplicationContextPath = 'inventory'
+}
+
+subprojects {
+	apply plugin: 'eclipse'
+	apply plugin: 'java'
+
+	sourceCompatibility = 1.7
+	targetCompatibility = 1.7
+
+	repositories { mavenCentral() }
+
+	dependencies {
+		compile group: 'log4j', name: 'log4j', version: log4jVersion
+		testCompile group: 'org.testng', name: 'testng', version: testngVersion
+	}
+}
+
+repositories { mavenCentral() }
+
+ear {
+    deploymentDescriptor { 
+    	webModule( webapplicationName, webapplicationContextPath ) 
+    }
+}
+
+dependencies {
+	deploy project('inv-persistence')
+	deploy project('inv-ejbservice')
+	deploy project(path: 'inv-webservice', configuration: 'archives')
+	earlib group: 'log4j', name: 'log4j', version: log4jVersion
+}

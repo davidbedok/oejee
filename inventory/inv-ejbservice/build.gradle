@@ -1,0 +1,4 @@
+dependencies {
+	compile group: 'javax', name: 'javaee-api', version: jeeVersion
+	compile project(':inv-persistence')
+}

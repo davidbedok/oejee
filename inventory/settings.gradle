@@ -1,0 +1,3 @@
+include 'inv-persistence'
+include 'inv-ejbservice'
+include 'inv-webservice'

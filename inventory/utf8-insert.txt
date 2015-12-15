@@ -1,0 +1,5 @@
+SET CLIENT_ENCODING='utf-8';
+
+update supplier set sup_name = U&'LOGITECH Keyboard K120 USB HUN fekete billenty\0171zet' where sup_id = 1;
+
+update supplier set sup_name = U&'LOGITECH Keyboard K120 USB HUN fekete billentyűzet' where sup_id = 1;
