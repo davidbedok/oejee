@@ -1,0 +1,10 @@
+apply plugin: 'war'
+
+war { archiveName 'bs-weblayer.war' }
+
+dependencies {
+	providedCompile project(':bs-ejbservice')
+	providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: servletapiVersion
+	// providedCompile group: 'tag', name: 'tag', version: '1.2'
+	// providedCompile group: 'taglibs', name: 'standard', version: '1.1.2'
+}

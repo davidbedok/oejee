@@ -2,17 +2,7 @@ package hu.qwaevisz.bookstore.persistence.entity;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import hu.qwaevisz.bookstore.persistence.entity.trunk.BookCategory;
 import hu.qwaevisz.bookstore.persistence.parameter.BookParameter;
@@ -21,9 +11,12 @@ import hu.qwaevisz.bookstore.persistence.query.BookQuery;
 @Entity
 @Table(name = "book")
 @NamedQueries(value = { //
+		@NamedQuery(name = BookQuery.COUNT_BY_ISBN, query = "SELECT COUNT(b) FROM Book b WHERE b.isbn=:" + BookParameter.ISBN),
 		@NamedQuery(name = BookQuery.GET_BY_ISBN, query = "SELECT b FROM Book b WHERE b.isbn=:" + BookParameter.ISBN),
 		@NamedQuery(name = BookQuery.GET_BY_ID, query = "SELECT b FROM Book b WHERE b.id=:" + BookParameter.ID),
-		@NamedQuery(name = BookQuery.GET_ALL, query = "SELECT b FROM Book b ORDER BY b.title")
+		@NamedQuery(name = BookQuery.GET_ALL, query = "SELECT b FROM Book b ORDER BY b.title"),
+		@NamedQuery(name = BookQuery.GET_ALL_BY_CATEGORY, query = "SELECT b FROM Book b WHERE b.category=:" + BookParameter.CATEGORY + " ORDER BY b.title"),
+		@NamedQuery(name = BookQuery.REMOVE_BY_ISBN, query = "DELETE FROM Book b WHERE b.isbn=:" + BookParameter.ISBN)
 		//
 })
 public class Book implements Serializable {
@@ -56,7 +49,16 @@ public class Book implements Serializable {
 	private Integer numberOfPages;
 
 	public Book() {
+		this(null, null, null, 0, 0, BookCategory.SCIFI);
+	}
 
+	public Book(String isbn, String author, String title, int numberOfPages, double price, BookCategory category) {
+		this.isbn = isbn;
+		this.author = author;
+		this.title = title;
+		this.numberOfPages = numberOfPages;
+		this.price = price;
+		this.category = category;
 	}
 
 	public Long getId() {

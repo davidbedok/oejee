@@ -1,0 +1,5 @@
+jar { archiveName 'bs-persistence.jar' }
+
+dependencies {
+	compile group: 'org.eclipse.persistence', name: 'eclipselink', version: eclipselinkVersion
+}

@@ -17,6 +17,10 @@ hs_err_pid*
 .settings
 .gradle
 
+# IntelliJ IDEA
+.idea
+*.iml
+
 **/bin/*
 **/build/*
 */test-output/*
