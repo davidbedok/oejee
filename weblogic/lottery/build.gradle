@@ -1,0 +1,47 @@
+apply plugin: 'eclipse'
+apply plugin: 'ear'
+
+version = '1.0'
+
+ext {
+	testngVersion = '6.9.+'
+	jeeVersion = '6.0'  
+	servletapiVersion = '3.0.1'
+	jaxrsVersion = '2.0.1'
+	mockitoVersion = '1.10.8'
+	eclipselinkVersion = '2.5.2'
+
+	webserviceArchiveName = 'lot-webservice.war'
+	webserviceContextPath = 'lottery'
+}
+
+subprojects {
+	apply plugin: 'eclipse'
+	apply plugin: 'idea'
+	apply plugin: 'java'
+
+	sourceCompatibility = 1.7
+	targetCompatibility = 1.7
+
+	repositories { 
+		mavenCentral()
+		flatDir { dirs 'lib' }
+	}
+
+	dependencies {
+		testCompile group: 'org.testng', name: 'testng', version: testngVersion
+		testCompile group: 'org.mockito', name: 'mockito-core', version: mockitoVersion
+	}
+}
+
+ear {
+	deploymentDescriptor { 
+    	webModule( webserviceArchiveName, webserviceContextPath ) 
+    }
+}
+
+dependencies {
+	deploy project('lot-ejbservice')
+	deploy project('lot-persistence')
+	deploy project(path: 'lot-webservice', configuration: 'archives')
+}

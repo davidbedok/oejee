@@ -1,0 +1,7 @@
+repositories {
+    flatDir { dirs 'lib' }
+}
+
+dependencies {
+    compile name: 'wlthint3client', ext: 'jar'
+}

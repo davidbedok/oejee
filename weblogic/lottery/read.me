@@ -1,0 +1,86 @@
+# Prerequisite requirements
+- Java 1.7+
+- Weblogic AS 12.1.3 (wls1213_dev_update3.zip)
+- Gradle 2.6+
+- IntelliJ IDEA
+- PostgreSQL 9.4+ 
+- PostgreSQL JDBC Driver (postgresql-9.4-1201.jdbc41.jar)
+
+# Add PostgreSQL JDBC Driver to the classpath of the Weblogic Server instance 
+- Copy postgresql-9.4-1201.jdbc41.jar to [WL-HOME]/user_projects/domains/mydomain/lib/
+- Restart server
+
+# Configure Database
+- WebLogic Server Administration Console
+	- Services | Data Sources | Configuration tab
+		- New: Generic Data Source
+			- Name: lotteryds
+			- JNDI name: jdbc/datasource/lotteryds
+			- Target: "myserver"
+
+# Configure JMS Provider
+- WebLogic Administration Console
+	- Services | Messaging | JMS Servers
+		- New
+			- name: demoJMSserver
+			- persistence store: none
+			- target: myserver
+	- Services | Messaging | JMS Modules
+		- New
+			- name: demoJMSmodule
+			- location in domain: blank
+			- target: myserver
+			- Would you like to add resources to this JMS system module? yes
+	- Services | Messaging | JMS Modules
+		- demoJMSmodule | Subdeployments | New
+			- name: demoJMSsubmodule
+			- target/server: demoJMSserver
+			- target: myserver
+			- Would you like to add resources to this JMS system module? yes
+	- Services | Messaging | JMS Modules
+		- demoJMSmodule | Configuration | New
+			- type: Queue
+			- name: lotteryqueue
+			- JNDI name: jms/queue/lotteryqueue
+			- subdeployments: demoJMSsubmodule
+			- target/server: demoJMSserver
+	- Services | Messaging | JMS Modules
+		- demoJMSmodule | Configuration | New
+			- type: Connection Factory
+			- name: demoConnectionFactory
+			- JNDI name: jms/demoConnectionFactory
+			- target: myserver
+			
+# Setup database
+- ./database/create.[sh|bat]
+
+# Build source
+- gradle clean build 
+
+# Start WebLogic server instance
+- [WL-HOME]/user_projects/domains/mydomain/startWebLogic.[sh|cmd]
+
+# Deployment
+- Copy ./build/libs/lottery-1.0.ear to [WL-HOME]/user_projects/domains/mydomain/autodeploy
+- or: use WebLogic Server Administration Console: Deployments | Install.. and Browse EAR
+
+# Test Internal Queue Sender
+- http://localhost:7001/lottery/QueueServlet?message=1,2,3,4,5
+- Check server log or monitor queue via WebLogic Server Administration Console
+
+# Test Standalone (remote) Queue Sender
+- Change the weblogic username/password
+	- lot-jmsclient project
+		- hu.qwaevisz.lottery.jmsclient.Application class
+			- private static final String USERNAME = "weblogic";
+			- private static final String PASSWORD = "AlmafA1#";
+- Run: hu.qwaevisz.lottery.jmsclient.Application class
+
+# Test REST API
+- Check file: ./lot-webservice/test.uri
+
+# Monitor application via JMX
+- [WL-HOME]/user_projects/domains/mydomain/bin/setDomainEnv.[sh|cmd]
+- jconsole ([JDK-HOME]/bin)
+	- Connect: weblogic.server (local process)
+	- MBean tab | hu.qwaevisz.lottery.ejbservice.management | LotteryMonitor | LotteryMonitor

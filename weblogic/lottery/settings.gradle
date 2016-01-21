@@ -1,0 +1,4 @@
+include 'lot-ejbservice'
+include 'lot-jmsclient'
+include 'lot-persistence'
+include 'lot-webservice'
