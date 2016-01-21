@@ -1,4 +1,38 @@
-http://localhost:8080/bs-weblayer/BookPing
-http://localhost:8080/bs-weblayer/BookList
-http://localhost:8080/bs-weblayer/Book?isbn=978-0441172719
-http://localhost:8080/bs-weblayer/Book?isbn=978-5955000831
+# Prerequisite requirements
+- Java 1.7+
+- Weblogic AS 12.1.3 (wls1213_dev_update3.zip)
+- Gradle 2.6+
+- IntelliJ IDEA
+- PostgreSQL 9.4+ 
+- PostgreSQL JDBC Driver (postgresql-9.4-1201.jdbc41.jar)
+
+# Add PostgreSQL JDBC Driver to the classpath of the Weblogic Server instance 
+- Copy postgresql-9.4-1201.jdbc41.jar to [WL-HOME]/user_projects/domains/mydomain/lib/
+- Restart server
+
+# Configure Database
+- WebLogic Server Administration Console
+	- Services | Data Sources | Configuration tab
+		- New: Generic Data Source
+			- Name: bookstoreds
+			- JNDI name: jdbc/datasource/bookstoreds
+			- Target: "myserver"
+
+# Setup database
+- ./database/create.[sh|bat]
+
+# Build source
+- gradle clean build 
+
+# Start WebLogic server instance
+- [WL-HOME]/user_projects/domains/mydomain/startWebLogic.[sh|cmd]
+
+# Deployment
+- Copy ./build/libs/bookstore.ear to [WL-HOME]/user_projects/domains/mydomain/autodeploy
+- or: use WebLogic Server Administration Console: Deployments | Install.. and Browse EAR
+
+# Test Servlet
+- http://localhost:7001/bs-weblayer/BookPing
+
+# Test Application
+- http://localhost:7001/bs-weblayer/BookList

@@ -4,7 +4,8 @@ public enum BookCategoryStub {
 
 	SCIFI("Sci-Fi"),
 	LITERATURE("Literature"),
-	HISTORICAL("Historical");
+	HISTORICAL("Historical"),
+	PHILOSOPHY("Philosophy");
 
 	private final String label;
 

@@ -1,10 +1,25 @@
 package hu.qwaevisz.bookstore.weblayer.common;
 
-public class Page {
+public enum Page {
 
-    public static final String LIST = "list.jsp";
-    public static final String BOOK_VIEW = "book.jsp";
-    public static final String BOOK_EDIT = "book-edit.jsp";
+	LIST("list.jsp", "BookList"),
+	BOOK_VIEW("book.jsp", "Book"),
+	BOOK_EDIT("book-edit.jsp", "Book");
 
+	private final String jspName;
+	private final String url;
+
+	public String getJspName() {
+		return this.jspName;
+	}
+
+	public String getUrl() {
+		return this.url;
+	}
+
+	private Page(String jspName, String url) {
+		this.jspName = jspName;
+		this.url = url;
+	}
 
 }

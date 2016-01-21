@@ -64,7 +64,7 @@ public class BookListController extends HttpServlet implements ListAttribute, Li
 			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 		request.setAttribute(ATTR_CATEGORY, categoryValue);
-		final RequestDispatcher view = request.getRequestDispatcher(Page.LIST);
+		final RequestDispatcher view = request.getRequestDispatcher(Page.LIST.getJspName());
 		view.forward(request, response);
 	}
 

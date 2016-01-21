@@ -36,28 +36,32 @@ public class BookController extends HttpServlet implements BookParameter, BookAt
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		final String isbn = request.getParameter(ISBN);
-		LOGGER.info("Get Book by ISBN ("+isbn+")");
-		final boolean editFlag = TRUE_VALUE.equals(request.getParameter(EDIT_FLAG));
-		BookStub book = null;
-		boolean isNew = false;
-		if ( NEW_BOOK_ISBN_FLAG.equals(isbn) ) {
-			book = new BookStub("", "", "", BookCategoryStub.SCIFI, 1000, 10);
-			isNew = true;
+		LOGGER.info("Get Book by ISBN (" + isbn + ")");
+		if (isbn == null || "".equals(isbn)) {
+			response.sendRedirect(Page.LIST.getUrl());
 		} else {
-			try {
-				book = this.facade.getBook(isbn);
-			} catch (final FacadeException e) {
-				LOGGER.log(Level.SEVERE, e.getMessage(), e);
+			final boolean editFlag = TRUE_VALUE.equals(request.getParameter(EDIT_FLAG));
+			BookStub book = null;
+			boolean isNew = false;
+			if (NEW_BOOK_ISBN_FLAG.equals(isbn)) {
+				book = new BookStub("", "", "", BookCategoryStub.SCIFI, 1000, 10);
+				isNew = true;
+			} else {
+				try {
+					book = this.facade.getBook(isbn);
+				} catch (final FacadeException e) {
+					LOGGER.log(Level.SEVERE, e.getMessage(), e);
+				}
 			}
+			this.forward(request, response, editFlag, book, isNew);
 		}
-		this.forward(request, response, editFlag, book, isNew);
 	}
 
 	private void forward(final HttpServletRequest request, final HttpServletResponse response, final boolean editFlag, final BookStub book, boolean isNew)
 			throws ServletException, IOException {
 		request.setAttribute(ATTR_BOOK, book);
 		request.setAttribute(ATTR_ISNEW, isNew);
-		final RequestDispatcher view = request.getRequestDispatcher(editFlag ? Page.BOOK_EDIT : Page.BOOK_VIEW);
+		final RequestDispatcher view = request.getRequestDispatcher(editFlag ? Page.BOOK_EDIT.getJspName() : Page.BOOK_VIEW.getJspName());
 		view.forward(request, response);
 	}
 
@@ -69,14 +73,18 @@ public class BookController extends HttpServlet implements BookParameter, BookAt
 		final int numberOfPages = Integer.parseInt(request.getParameter(NUMBER_OF_PAGES));
 		final double price = Double.parseDouble(request.getParameter(PRICE));
 		final BookCategoryStub category = BookCategoryStub.valueOf(request.getParameter(CATEGORY));
-
-		BookStub book = null;
+		if (isbn == null || "".equals(isbn)) {
+			final BookStub book = new BookStub(isbn, author, title, category, price, numberOfPages);
+			this.forward(request, response, true, book, true);
+		} else {
+			BookStub book = null;
 			try {
 				book = this.facade.saveBook(isbn, author, title, numberOfPages, price, category);
 			} catch (final FacadeException e) {
 				LOGGER.log(Level.SEVERE, e.getMessage(), e);
 			}
-		this.forward(request, response, false, book, false);
+			this.forward(request, response, false, book, false);
+		}
 	}
 
 }

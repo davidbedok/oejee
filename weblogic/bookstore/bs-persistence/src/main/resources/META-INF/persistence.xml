@@ -6,7 +6,6 @@
 	<persistence-unit name="bs-persistence-unit" transaction-type="JTA">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<jta-data-source>jdbc/datasource/bookstoreds</jta-data-source>
-		<!-- <exclude-unlisted-classes>false</exclude-unlisted-classes>  -->
 		<class>hu.qwaevisz.bookstore.persistence.entity.Book</class> 
 		<properties>
 			<property name="eclipselink.logging.level" value="FINE"/>

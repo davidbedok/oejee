@@ -4,6 +4,7 @@ public enum BookCategory {
 
 	SCIFI,
 	LITERATURE,
-	HISTORICAL;
+	HISTORICAL,
+	PHILOSOPHY;
 
 }

@@ -4,11 +4,9 @@ apply plugin: 'ear'
 repositories { mavenCentral() }
 
 ext {
-	log4jVersion = '1.2.17'
 	testngVersion = '6.9.+'
 	jeeVersion = '6.0'  
 	servletapiVersion = '3.0.1'
-	hibernateVersion = '4.3.10.Final'
 	eclipselinkVersion = '2.5.2'
 }
 
@@ -22,7 +20,6 @@ subprojects {
 	repositories { mavenCentral() }
 
 	dependencies {
-		// compile group: 'commons-logging', name: 'commons-logging', version: '1.2'
 		compile group: 'javax', name: 'javaee-api', version: jeeVersion
 		testCompile group: 'org.testng', name: 'testng', version: testngVersion
 	}
@@ -32,6 +29,4 @@ dependencies {
 	deploy project('bs-ejbservice')
 	deploy project('bs-persistence')
 	deploy project(path: 'bs-weblayer', configuration: 'archives')
-	// earlib group: 'log4j', name: 'log4j', version: log4jVersion
-	// earlib group: 'commons-logging', name: 'commons-logging', version: '1.2'
 }
