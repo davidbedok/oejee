@@ -12,8 +12,8 @@ public class Application {
 	private static final String DESTINATION_LOTTERY = "jms/queue/lotteryqueue";
 
 	public static void main(final String[] args) {
-		// sendSingleMessage();
-		startSimulation(new Random(), 4000);
+		sendSingleMessage();
+		// startSimulation(new Random(), 4000);
 	}
 
 	public static void sendSingleMessage() {
