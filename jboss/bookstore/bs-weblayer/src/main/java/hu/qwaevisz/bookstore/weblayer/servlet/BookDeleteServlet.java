@@ -1,7 +1,6 @@
 package hu.qwaevisz.bookstore.weblayer.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -12,33 +11,31 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import hu.qwaevisz.bookstore.ejbservice.domain.BookStub;
 import hu.qwaevisz.bookstore.ejbservice.exception.FacadeException;
 import hu.qwaevisz.bookstore.ejbservice.facade.BookFacade;
+import hu.qwaevisz.bookstore.weblayer.common.BookParameter;
+import hu.qwaevisz.bookstore.weblayer.common.Page;
 
-@WebServlet("/BookPing")
-public class BookPingServlet extends HttpServlet {
+@WebServlet("/BookDelete")
+public class BookDeleteServlet extends HttpServlet implements BookParameter {
 
-	private static final long serialVersionUID = -7058255202709402208L;
+	private static final long serialVersionUID = -7688739575153938635L;
 
-	private static final Logger LOGGER = Logger.getLogger(BookPingServlet.class);
+	private static final Logger LOGGER = Logger.getLogger(BookDeleteServlet.class);
 
 	@EJB
 	private BookFacade facade;
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		LOGGER.info("Get Book by user");
-		response.setCharacterEncoding("UTF-8");
-		final PrintWriter out = response.getWriter();
+		final String isbn = request.getParameter(ISBN);
+		LOGGER.info("Delete Book by ISBN (" + isbn + ")");
 		try {
-			final BookStub book = this.facade.getBook("978-0441172719");
-			out.println(book.toString());
+			this.facade.removeBook(isbn);
 		} catch (final FacadeException e) {
 			LOGGER.error(e, e);
-			out.println(e.getLocalizedMessage());
 		}
-		out.close();
+		response.sendRedirect(Page.LIST.getUrl());
 	}
 
 }

@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<server xmlns="urn:jboss:domain:1.7">
+    <profile>
+		...
+        <subsystem xmlns="urn:jboss:domain:logging:1.5">
+            ...
+            <logger category="hu.qwaevisz">
+                <level name="DEBUG"/>
+            </logger>
+            ...
+        </subsystem>
+		...
+        <subsystem xmlns="urn:jboss:domain:datasources:1.2">
+            <datasources>
+                ...
+                <datasource jndi-name="java:jboss/datasources/bookstoreds" pool-name="BookStoreDSPool" enabled="true" use-java-context="true">
+                    <connection-url>jdbc:postgresql://localhost:5432/bookstoredb</connection-url>
+                    <driver>postgresql</driver>
+                    <security>
+                        <user-name>bookstore_user</user-name>
+                        <password>123topSECret321</password>
+                    </security>
+                    <validation>
+                        <check-valid-connection-sql>SELECT 1</check-valid-connection-sql>
+                        <validate-on-match>true</validate-on-match>
+                        <background-validation>false</background-validation>
+                    </validation>
+                    <statement>
+                        <share-prepared-statements>false</share-prepared-statements>
+                    </statement>
+                </datasource>
+                ...
+                <drivers>
+                    ...
+					<driver name="postgresql" module="org.postgresql">
+                        <xa-datasource-class>org.postgresql.xa.PGXADataSource</xa-datasource-class>
+                    </driver>
+					...
+                </drivers>
+            </datasources>
+        </subsystem>
+		...
+        <subsystem xmlns="urn:jboss:domain:ee:1.2">
+            <global-modules>
+                ...
+				<module name="org.postgresql" slot="main"/>
+				...
+            </global-modules>
+            ...
+        </subsystem>
+		...
+    </profile>
+	...
+    <socket-binding-group name="standard-sockets" default-interface="public" port-offset="${jboss.socket.binding.port-offset:0}">
+        ...
+        <socket-binding name="http" port="8080"/>
+        ...
+    </socket-binding-group>
+</server>

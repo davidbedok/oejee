@@ -1,4 +1,34 @@
-http://localhost:8080/bs-weblayer/BookPing
-http://localhost:8080/bs-weblayer/BookList
-http://localhost:8080/bs-weblayer/Book?isbn=978-0441172719
-http://localhost:8080/bs-weblayer/Book?isbn=978-5955000831
+# Prerequisite requirements
+- Java 1.7+
+- JBoss EAP 6.4
+- Gradle 2.6+
+- Eclipse IDE
+- PostgreSQL 9.4+ 
+- PostgreSQL JDBC Driver (postgresql-9.4-1201.jdbc41.jar)
+
+# Setup PostgreSQL JDBC Driver as JBoss module 
+- Create directory: [JBOSS-HOME]/modules/org/postgresql/main/
+- Copy postgresql-9.4-1201.jdbc41.jar to [JBOSS-HOME]/modules/org/postgresql/main/
+- Copy ./configuration/module.xml to [JBOSS-HOME]/modules/org/postgresql/main/
+
+# Configure JBoss Standalone instance
+- See configuration template: ./configuration/standalone-sample.xml
+- Change [JBOSS-HOME]/standalone/configuration/standalone.xml based on the ./configuration/standalone-sample.xml
+
+# Setup database
+- ./database/create.[sh|bat]
+
+# Build source
+- gradle clean build 
+
+# Start JBoss Standalone instance
+- [JBOSS-HOME]/bin/standalone.[sh|bat]
+
+# Deployment
+- Copy ./build/libs/bookstore.ear to [JBOSS-HOME]/standalone/deployments
+
+# Test Servlet
+- http://localhost:8080/bs-weblayer/BookPing
+
+# Test Application
+- http://localhost:8080/bs-weblayer/BookList

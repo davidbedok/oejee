@@ -13,6 +13,7 @@ import javax.persistence.PersistenceContext;
 import org.apache.log4j.Logger;
 
 import hu.qwaevisz.bookstore.persistence.entity.Book;
+import hu.qwaevisz.bookstore.persistence.entity.trunk.BookCategory;
 import hu.qwaevisz.bookstore.persistence.exception.PersistenceServiceException;
 import hu.qwaevisz.bookstore.persistence.parameter.BookParameter;
 import hu.qwaevisz.bookstore.persistence.query.BookQuery;
@@ -26,6 +27,33 @@ public class BookServiceImpl implements BookService {
 
 	@PersistenceContext(unitName = "bs-persistence-unit")
 	private EntityManager entityManager;
+
+	@Override
+	public boolean exists(String isbn) throws PersistenceServiceException {
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("Check Book by ISBN (" + isbn + ")");
+		}
+		try {
+			return this.entityManager.createNamedQuery(BookQuery.COUNT_BY_ISBN, Long.class).setParameter(BookParameter.ISBN, isbn).getSingleResult() == 1;
+		} catch (final Exception e) {
+			throw new PersistenceServiceException("Unknown error during counting Books by ISBN (" + isbn + ")! " + e.getLocalizedMessage(), e);
+		}
+	}
+
+	@Override
+	public Book create(String isbn, String author, String title, int numberOfPages, double price, BookCategory category) throws PersistenceServiceException {
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("Create Book (isbn: " + isbn + ", author: " + author + ", title: " + title + ", numberOfPages: " + numberOfPages + ", price: " + price
+					+ ", category: " + category + ")");
+		}
+		try {
+			final Book book = new Book(isbn, author, title, numberOfPages, price, category);
+			this.entityManager.persist(book);
+			return book;
+		} catch (final Exception e) {
+			throw new PersistenceServiceException("Unknown error during persisting Book (" + isbn + ")! " + e.getLocalizedMessage(), e);
+		}
+	}
 
 	@Override
 	public Book read(Long id) throws PersistenceServiceException {
@@ -67,6 +95,52 @@ public class BookServiceImpl implements BookService {
 			throw new PersistenceServiceException("Unknown error when fetching Books! " + e.getLocalizedMessage(), e);
 		}
 		return result;
+	}
+
+	@Override
+	public List<Book> read(BookCategory category) throws PersistenceServiceException {
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("Get Books by Category");
+		}
+		List<Book> result = null;
+		try {
+			result = this.entityManager.createNamedQuery(BookQuery.GET_ALL_BY_CATEGORY, Book.class).setParameter(BookParameter.CATEGORY, category)
+					.getResultList();
+		} catch (final Exception e) {
+			throw new PersistenceServiceException("Unknown error when fetching Books! " + e.getLocalizedMessage(), e);
+		}
+		return result;
+	}
+
+	@Override
+	public Book update(String isbn, String author, String title, int numberOfPages, double price, BookCategory category) throws PersistenceServiceException {
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("Update Book (isbn: " + isbn + ", author: " + author + ", title: " + title + ", numberOfPages: " + numberOfPages + ", price: " + price
+					+ ", category: " + category + ")");
+		}
+		try {
+			final Book book = this.read(isbn);
+			book.setAuthor(author);
+			book.setTitle(title);
+			book.setNumberOfPages(numberOfPages);
+			book.setPrice(price);
+			book.setCategory(category);
+			return this.entityManager.merge(book);
+		} catch (final Exception e) {
+			throw new PersistenceServiceException("Unknown error when mergning Book! " + e.getLocalizedMessage(), e);
+		}
+	}
+
+	@Override
+	public void delete(String isbn) throws PersistenceServiceException {
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("Remove Book by ISBN (" + isbn + ")");
+		}
+		try {
+			this.entityManager.createNamedQuery(BookQuery.REMOVE_BY_ISBN).setParameter(BookParameter.ISBN, isbn).executeUpdate();
+		} catch (final Exception e) {
+			throw new PersistenceServiceException("Unknown error when removing Book by ISBN (" + isbn + ")! " + e.getLocalizedMessage(), e);
+		}
 	}
 
 }
