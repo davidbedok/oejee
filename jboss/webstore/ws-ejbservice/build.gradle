@@ -1,3 +1,7 @@
+pmd {
+	ruleSetFiles = files('config/pmd/ruleset.xml')
+}
+
 dependencies {
 	compile group: 'log4j', name: 'log4j', version: log4jVersion
 	compile group: 'javax', name: 'javaee-api', version: jeeVersion

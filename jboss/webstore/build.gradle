@@ -21,6 +21,7 @@ ext {
 subprojects {
 	apply plugin: 'eclipse'
 	apply plugin: 'java'
+	apply plugin: 'pmd'
 
 	sourceCompatibility = 1.7
 	targetCompatibility = 1.7
@@ -32,6 +33,11 @@ subprojects {
 	dependencies {
 		testCompile group: 'org.testng', name: 'testng', version: testngVersion
 	}
+	
+	pmd {
+		ruleSets = ['java-basic', 'java-braces']
+	}
+	
 }
 
 ear {
