@@ -1,0 +1,7 @@
+// def jdkHome = System.getenv("JAVA_HOME")
+def jdkHome = System.properties['java.home'] + "/.."
+
+dependencies {
+    compile files("$jdkHome/lib/tools.jar")
+    compile project(':ws-common')
+}

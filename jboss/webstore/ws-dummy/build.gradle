@@ -1,0 +1,14 @@
+configurations {
+	mydoclet
+}
+
+dependencies {
+	compile project(':ws-common')
+	mydoclet project(':ws-doclet')
+}
+
+javadoc {
+	options.docletpath = configurations.mydoclet.files.asType(List)
+    options.doclet = 'hu.qwaevisz.webstore.doclet.WebStoreDoclet'
+    options.addStringOption("ws-filename", "$buildDir/ws-dummy-doc.xml")
+}

@@ -1,0 +1,29 @@
+body {
+	padding				: 20px;
+	font-family			: Georgia, serif;
+}
+
+h1 {
+	color				: #3366A5;
+}
+
+h2 {
+	font-size			: 18px;
+	font-weight			: bold;
+	background-color	: #01835b;
+	padding				: 5px;
+	color				: #dfda0f;
+	border-radius		: 5px;
+}
+
+table {
+	width				: 100%;
+	border 				: 1px solid black;
+	border-radius		: 4px;
+	margin-top			: 10px;
+}
+
+table td {
+	width				: 50%;
+	padding 			: 3px;
+}

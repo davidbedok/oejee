@@ -1,3 +1,6 @@
 include 'ws-ejbservice'
 include 'ws-weblayer'
 include 'ws-webservice'
+include 'ws-doclet'
+include 'ws-dummy'
+include 'ws-common'
