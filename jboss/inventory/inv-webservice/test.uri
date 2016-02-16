@@ -23,5 +23,23 @@ RESP: 200 OK
 	"value": 78
 }]
 
-
+REQ: GET http://localhost:8080/inventory/api/search/list/BOOK/Lorem
+[{
+	"reference": "LOR42",
+	"name": "Lorem10",
+	"type": "BOOK",
+	"value": 42
+},
+{
+	"reference": "LOR78",
+	"name": "Lorem20",
+	"type": "BOOK",
+	"value": 78
+},
+{
+	"reference": "LOR34",
+	"name": "Lorem30",
+	"type": "BOOK",
+	"value": 34
+}]
 

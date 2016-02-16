@@ -21,7 +21,9 @@ public class InventoryHolderImpl implements InventoryHolder {
 	@PostConstruct
 	private void init() {
 		this.items = new ArrayList<>();
-		this.items.add(new Inventory("LOR42", "Lorem", InventoryType.BOOK, 42));
+		this.items.add(new Inventory("LOR42", "Lorem10", InventoryType.BOOK, 42));
+		this.items.add(new Inventory("LOR78", "Lorem20", InventoryType.BOOK, 78));
+		this.items.add(new Inventory("LOR34", "Lorem30", InventoryType.BOOK, 34));
 		this.items.add(new Inventory("IPS65", "Ipsum", InventoryType.DISK, 65));
 		this.items.add(new Inventory("DOL30", "Dolor", InventoryType.CASSETTE, 30));
 		this.items.add(new Inventory("SIT78", "Sit", InventoryType.BOOK, 78));
@@ -53,6 +55,11 @@ public class InventoryHolderImpl implements InventoryHolder {
 			}
 		}
 		return result;
+	}
+
+	@Override
+	public List<Inventory> getAll() {
+		return this.items;
 	}
 
 }

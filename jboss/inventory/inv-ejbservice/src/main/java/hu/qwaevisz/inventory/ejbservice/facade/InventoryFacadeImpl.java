@@ -21,6 +21,7 @@ import hu.qwaevisz.inventory.persistence.domain.ClientType;
 import hu.qwaevisz.inventory.persistence.domain.Inventory;
 import hu.qwaevisz.inventory.persistence.domain.InventoryType;
 import hu.qwaevisz.inventory.persistence.service.InventoryHolder;
+import hu.qwaevisz.inventory.persistence.service.InventorySearch;
 
 @Stateless(mappedName = "ejb/inventoryFacade")
 public class InventoryFacadeImpl implements InventoryFacade {
@@ -43,6 +44,9 @@ public class InventoryFacadeImpl implements InventoryFacade {
 	@EJB
 	private InventoryHolder inventoryHolder;
 
+	@EJB
+	private InventorySearch inventorySearch;
+
 	@Logged
 	@Override
 	public Inventory getInventory(String reference) throws AdaptorException {
@@ -62,6 +66,11 @@ public class InventoryFacadeImpl implements InventoryFacade {
 		final Client client = this.clientHolder.getCurrent();
 		this.notifier.fire(new NotifierEvent(client, "List " + items.size() + " inventory item(s)."));
 		return items;
+	}
+
+	@Override
+	public List<Inventory> getInventories(InventoryType type, String nameTerm) throws AdaptorException {
+		return this.inventorySearch.list(type, nameTerm);
 	}
 
 }

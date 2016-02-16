@@ -34,6 +34,12 @@ public class SearchRestServiceBean implements SearchRestService {
 	}
 
 	@Override
+	public List<Inventory> getInventories(InventoryType type, String nameTerm) throws AdaptorException {
+		LOGGER.info("Get Inventories by " + type + " type and " + nameTerm + " name");
+		return this.facade.getInventories(type, nameTerm);
+	}
+
+	@Override
 	public Response optionsAll(String path) {
 		return Response.status(Response.Status.NO_CONTENT).build();
 	}

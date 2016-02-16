@@ -8,12 +8,8 @@ import hu.qwaevisz.inventory.persistence.domain.Inventory;
 import hu.qwaevisz.inventory.persistence.domain.InventoryType;
 
 @Local
-public interface InventoryHolder {
+public interface InventorySearch {
 
-	Inventory get(String reference);
-
-	List<Inventory> list(InventoryType type);
-
-	List<Inventory> getAll();
+	List<Inventory> list(InventoryType type, String nameTerm);
 
 }

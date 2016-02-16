@@ -15,4 +15,6 @@ public interface InventoryFacade {
 
 	List<Inventory> getInventories(InventoryType type) throws AdaptorException;
 
+	List<Inventory> getInventories(InventoryType type, String nameTerm) throws AdaptorException;
+
 }

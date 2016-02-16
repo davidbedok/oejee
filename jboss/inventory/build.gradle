@@ -7,6 +7,7 @@ ext {
 	jeeVersion = '6.0'
 	servletapiVersion = '3.0.1'
 	jaxrsVersion = '2.0.1'
+	groovyVersion = '2.4.5'
 
 	webapplicationName = 'inv-webservice.war'
 	webapplicationContextPath = 'inventory'

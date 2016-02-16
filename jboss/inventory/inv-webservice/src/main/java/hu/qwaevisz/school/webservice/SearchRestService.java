@@ -26,6 +26,11 @@ public interface SearchRestService {
 	@Produces("application/json")
 	List<Inventory> getInventories(@PathParam("type") InventoryType type) throws AdaptorException;
 
+	@GET
+	@Path("/list/{type}/{name}")
+	@Produces("application/json")
+	List<Inventory> getInventories(@PathParam("type") InventoryType type, @PathParam("name") String nameTerm) throws AdaptorException;
+
 	@OPTIONS
 	@Path("{path:.*}")
 	Response optionsAll(@PathParam("path") String path);
