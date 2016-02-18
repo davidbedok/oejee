@@ -6,7 +6,10 @@ public class Application {
 		final CarDealership dealerShip = CarDealership.getDatabase();
 		System.out.println(dealerShip);
 		final Car toyota = dealerShip.find(CarBrand.TOYOTA, "Verso");
-		toyota.setOwner(new Person("Anakin", "Skywalker", "FJFEMV56", Gender.MAN));
+		final Person anakin = new Person("Anakin", "Skywalker", "FJFEMV56", Gender.MAN);
+		anakin.setFirstName("Darth");
+		anakin.setFamilyName("Vader");
+		toyota.setOwner(anakin);
 		System.out.println(toyota);
 	}
 

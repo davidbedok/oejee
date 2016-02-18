@@ -1,15 +1,11 @@
 apply plugin: 'groovy'
 apply plugin: 'eclipse'
-
-sourceCompatibility = 1.7
-version = '1.0'
+apply from: 'version.gradle'
 
 sourceSets.main.java.srcDirs = []
 sourceSets.main.groovy.srcDirs = ['src/main/java', 'src/main/groovy']
 
 repositories { mavenCentral() }
-
-def groovyVersion = '2.4.5'
 
 dependencies {
 	compile group: 'org.codehaus.groovy', name: 'groovy' , version: groovyVersion

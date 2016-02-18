@@ -1,0 +1,26 @@
+import groovy.json.JsonSlurper
+
+class HelloVersion {
+	int major
+	int minor
+	def build
+	
+	@Override
+	String toString() {
+		major + '.' + minor + build
+	}
+}
+
+class HelloVersionLoader {
+	
+	def HelloVersion version
+	
+	HelloVersionLoader() {
+		def jsonSlurper = new JsonSlurper()
+		def content = jsonSlurper.parse(new File('version.json'))
+		this.version = new HelloVersion(major: content.major, minor: content.minor, build: content.build)
+	}
+	
+}
+
+version = new HelloVersionLoader().version

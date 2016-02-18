@@ -13,7 +13,7 @@ class CarDealership {
 	}
 
 	Car find( CarBrand brand, String model ) {
-		this.cars.find({ it -> it.brand == brand && it.model.startsWith(model)})
+		this.cars.find({ it.brand == brand && it.model.startsWith(model)})
 	}
 
 	@Override
