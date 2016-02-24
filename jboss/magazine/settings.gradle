@@ -1,0 +1,3 @@
+include 'mag-ejbservice'
+include 'mag-weblayer'
+include 'mag-persistence'

@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<server xmlns="urn:jboss:domain:1.7">
+
+	<management>
+        <security-realms>
+            <security-realm name="OERealm">
+                <authentication>
+                    <jaas name="oe-security-db-domain"/>
+                </authentication>
+            </security-realm>
+        </security-realms>
+	</management>
+	...
+    <profile>
+		...
+        <subsystem xmlns="urn:jboss:domain:logging:1.5">
+            ...
+            <logger category="org.jboss.security">
+                <level name="TRACE"/>
+            </logger>
+            ...
+        </subsystem>
+		...
+		<subsystem xmlns="urn:jboss:domain:datasources:1.2">
+			<datasources>
+                <datasource jndi-name="java:jboss/datasources/magazineds" pool-name="MagazineDSPool" enabled="true" use-java-context="true">
+                    <connection-url>jdbc:postgresql://localhost:5432/magazinedb</connection-url>
+                    <driver>postgresql</driver>
+                    <security>
+                        <user-name>magazine_user</user-name>
+                        <password>123topSECret321</password>
+                    </security>
+                    <validation>
+                        <check-valid-connection-sql>SELECT 1</check-valid-connection-sql>
+                        <validate-on-match>true</validate-on-match>
+                        <background-validation>false</background-validation>
+                    </validation>
+                    <statement>
+                        <share-prepared-statements>false</share-prepared-statements>
+                    </statement>
+                </datasource>
+			</datasources>
+		</subsystem>
+		...
+        <subsystem xmlns="urn:jboss:domain:security:1.2">
+			<security-domains>
+                <security-domain name="oe-security-db-domain">
+                    <authentication>
+                        <login-module code="Database" flag="required">
+                            <module-option name="dsJndiName" value="java:jboss/datasources/magazineds"/>
+                            <module-option name="principalsQuery" value="SELECT appuser_password FROM appuser WHERE appuser_name = ?"/>
+                            <module-option name="rolesQuery" value="SELECT role_name, 'Roles' FROM userrole INNER JOIN appuser ON (appuser_id = userrole_appuser_id) INNER JOIN role ON (role_id = userrole_role_id) WHERE appuser_name = ?"/>
+                        </login-module>
+                    </authentication>
+                </security-domain>
+            </security-domains>
+		</subsystem>
+		...
+    </profile>
+	...
+</server>

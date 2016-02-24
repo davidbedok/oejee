@@ -1,0 +1,32 @@
+apply plugin: 'eclipse'
+apply plugin: 'ear'
+
+ext {
+	log4jVersion = '1.2.17'
+	testngVersion = '6.9.+'
+	jeeVersion = '6.0'  
+	servletapiVersion = '3.0.1'
+	hibernateVersion = '4.3.10.Final'
+}
+
+subprojects {
+	apply plugin: 'eclipse'
+	apply plugin: 'java'
+
+	sourceCompatibility = 1.7
+	targetCompatibility = 1.7
+
+	repositories { mavenCentral() }
+
+	dependencies {
+		compile group: 'log4j', name: 'log4j', version: log4jVersion
+		compile group: 'javax', name: 'javaee-api', version: jeeVersion
+		testCompile group: 'org.testng', name: 'testng', version: testngVersion
+	}
+}
+
+dependencies {
+	deploy project('mag-ejbservice')
+	deploy project('mag-persistence')
+	deploy project(path: 'mag-weblayer', configuration: 'archives')
+}
