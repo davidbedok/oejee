@@ -2,13 +2,13 @@ package hu.qwaevisz.magazine.ejbservice.facade;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-
-import org.apache.log4j.Logger;
 
 import hu.qwaevisz.magazine.ejbservice.converter.MagazineConverter;
 import hu.qwaevisz.magazine.ejbservice.domain.MagazineCategoryStub;
@@ -24,7 +24,7 @@ import hu.qwaevisz.magazine.persistence.service.MagazineService;
 @Stateless(mappedName = "ejb/magazineFacade")
 public class MagazineFacadeImpl implements MagazineFacade {
 
-	private static final Logger LOGGER = Logger.getLogger(MagazineFacadeImpl.class);
+	private static final Logger LOGGER = Logger.getLogger(MagazineFacadeImpl.class.getName());
 
 	@EJB
 	private MagazineService service;
@@ -36,12 +36,10 @@ public class MagazineFacadeImpl implements MagazineFacade {
 	public MagazineStub getReference(final String reference) throws FacadeException {
 		try {
 			final MagazineStub stub = this.converter.to(this.service.read(reference));
-			if (LOGGER.isDebugEnabled()) {
-				LOGGER.debug("Get Magazine by reference (" + reference + ") --> " + stub);
-			}
+			LOGGER.finer("Get Magazine by reference (" + reference + ") --> " + stub);
 			return stub;
 		} catch (final PersistenceServiceException e) {
-			LOGGER.error(e, e);
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 			throw new FacadeException(e.getLocalizedMessage());
 		}
 	}
@@ -57,11 +55,9 @@ public class MagazineFacadeImpl implements MagazineFacade {
 				magazines = this.service.read(MagazineCategory.valueOf(criteria.getCategory().name()));
 			}
 			stubs = this.converter.to(magazines);
-			if (LOGGER.isDebugEnabled()) {
-				LOGGER.debug("Get Magazines by criteria (" + criteria + ") --> " + stubs.size() + " magazine(s)");
-			}
+			LOGGER.finer("Get Magazines by criteria (" + criteria + ") --> " + stubs.size() + " magazine(s)");
 		} catch (final PersistenceServiceException e) {
-			LOGGER.error(e, e);
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 			throw new FacadeException(e.getLocalizedMessage());
 		}
 		return stubs;
@@ -79,18 +75,18 @@ public class MagazineFacadeImpl implements MagazineFacade {
 			}
 			return this.converter.to(magazine);
 		} catch (final PersistenceServiceException e) {
-			LOGGER.error(e, e);
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 			throw new FacadeException(e.getLocalizedMessage());
 		}
 	}
 
 	@Override
-	@RolesAllowed("magadmin")
+	@RolesAllowed("mag-admin")
 	public void removeMagazine(final String reference) throws FacadeException {
 		try {
 			this.service.delete(reference);
 		} catch (final PersistenceServiceException e) {
-			LOGGER.error(e, e);
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 			throw new FacadeException(e.getLocalizedMessage());
 		}
 	}

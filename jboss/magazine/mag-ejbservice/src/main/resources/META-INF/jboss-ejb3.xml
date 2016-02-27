@@ -9,7 +9,7 @@
     <assembly-descriptor>
         <s:security>
             <ejb-name>*</ejb-name>
-            <s:security-domain>oe-security-db-domain</s:security-domain>
+            <s:security-domain>mag-security-db-domain</s:security-domain>
         </s:security>
     </assembly-descriptor>
     

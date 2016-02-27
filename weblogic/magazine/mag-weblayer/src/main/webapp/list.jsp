@@ -49,7 +49,7 @@
                         <th>Category</th>
                         <th>Price</th>
                         <th>Number of pages</th>
-                        <% if (request.isUserInRole("magadmin")) { %>
+                        <% if (request.isUserInRole("mag-admin")) { %>
                         	<th>&nbsp;</th>
                         <% } %>
                         <th>&nbsp;</th>
@@ -63,7 +63,7 @@
                             <td><c:out value="${magazine.category.label}" /></td>
                             <td><bt:formatPrice value="${magazine.price}"/></td>
                             <td><c:out value="${magazine.numberOfPages}" /></td>
-                            <% if (request.isUserInRole("magadmin")) { %>
+                            <% if (request.isUserInRole("mag-admin")) { %>
                             	<td><a href="MagazineDelete?reference=<c:out value="${magazine.reference}" />">delete</a></td>
                             <% } %>
                             <td><a href="MagazineDelete?reference=<c:out value="${magazine.reference}" />">delete (unsafe)</a></td>
@@ -75,7 +75,7 @@
         </c:otherwise>
 	</c:choose>
 	<br/><br/>
-	<% if (request.isUserInRole("magadmin")) { %>
+	<% if (request.isUserInRole("mag-admin")) { %>
 		<div>
 		    <a href="Magazine?reference=-1&edit=1">Create</a> a brand new magazine.
 		</div>

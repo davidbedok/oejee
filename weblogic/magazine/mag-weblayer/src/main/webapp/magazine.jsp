@@ -18,7 +18,7 @@
     <br/><br/>
     <div>
         <a href="MagazineList">back</a>
-        <% if (request.isUserInRole("magadmin")) { %>
+        <% if (request.isUserInRole("mag-admin")) { %>
             <a href="Magazine?reference=<% out.print(magazine.getReference()); %>&edit=1">edit</a>
         <% } %>
     </div>

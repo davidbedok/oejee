@@ -23,8 +23,8 @@
 			<http-method>TRACE</http-method>
 		</web-resource-collection>
 		<auth-constraint>
-			<role-name>maguser</role-name>
-			<role-name>magadmin</role-name>
+			<role-name>mag-user</role-name>
+			<role-name>mag-admin</role-name>
 		</auth-constraint>
 		<user-data-constraint>
 			<transport-guarantee>NONE</transport-guarantee>
@@ -51,12 +51,12 @@
 	
 	<security-role>
 		<description>Generic user</description>
-		<role-name>maguser</role-name>
+		<role-name>mag-user</role-name>
 	</security-role>
 	
 	<security-role>
 		<description>Administrator</description>
-		<role-name>magadmin</role-name>
+		<role-name>mag-admin</role-name>
 	</security-role>
 	
 	<error-page>

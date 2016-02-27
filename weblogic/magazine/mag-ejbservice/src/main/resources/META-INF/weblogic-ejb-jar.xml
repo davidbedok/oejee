@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<weblogic-ejb-jar xmlns="http://www.bea.com/ns/weblogic/90" xmlns:j2ee="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bea.com/ns/weblogic/90 http://www.bea.com/ns/weblogic/90/weblogic-ejb-jar.xsd">
+	
+	<security-role-assignment>
+		<role-name>mag-user</role-name>
+		<principal-name>maguser</principal-name>
+	</security-role-assignment>
+	<security-role-assignment>
+		<role-name>mag-admin</role-name>
+		<principal-name>magadmin</principal-name>
+	</security-role-assignment>
+
+</weblogic-ejb-jar>

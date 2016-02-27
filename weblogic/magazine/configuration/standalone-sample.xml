@@ -3,9 +3,9 @@
 
 	<management>
         <security-realms>
-            <security-realm name="mag-realm">
+            <security-realm name="OERealm">
                 <authentication>
-                    <jaas name="mag-security-db-domain"/>
+                    <jaas name="oe-security-db-domain"/>
                 </authentication>
             </security-realm>
         </security-realms>
@@ -44,7 +44,7 @@
 		...
         <subsystem xmlns="urn:jboss:domain:security:1.2">
 			<security-domains>
-                <security-domain name="mag-security-db-domain">
+                <security-domain name="oe-security-db-domain">
                     <authentication>
                         <login-module code="Database" flag="required">
                             <module-option name="dsJndiName" value="java:jboss/datasources/magazineds"/>
