@@ -1,0 +1,53 @@
+apply plugin: 'eclipse'
+apply plugin: 'ear'
+
+ext {
+	log4jVersion = '1.2.17'
+	testngVersion = '6.9.+'
+	jeeVersion = '6.0'  
+	servletapiVersion = '3.0.1'
+	hibernateVersion = '4.3.10.Final'
+	jstlVersion = '1.2'
+	jasperVersion = '6.2.0'
+	itextVersion = '2.1.7'
+	olap4jVersion = '1.2.0'
+	postgresqlVersion = '9.4.1208.jre7'
+	
+	webapplicationName = 'sh-weblayer.war'
+	webapplicationContextPath = 'shopping'
+}
+
+allprojects {
+	repositories { 
+		mavenCentral() 
+		maven { url "http://repository.pentaho.org/artifactory/repo" }
+	}
+}
+
+subprojects {
+	apply plugin: 'eclipse'
+	apply plugin: 'java'
+
+	sourceCompatibility = 1.7
+	targetCompatibility = 1.7
+
+	dependencies {
+		compile group: 'log4j', name: 'log4j', version: log4jVersion
+		compile group: 'javax', name: 'javaee-api', version: jeeVersion
+		testCompile group: 'org.testng', name: 'testng', version: testngVersion
+	}
+}
+
+ear {
+    deploymentDescriptor { 
+    	webModule( webapplicationName, webapplicationContextPath ) 
+    }
+}
+
+dependencies {
+	deploy project('sh-report')
+	deploy project(path: 'sh-weblayer', configuration: 'archives')
+	earlib group: 'com.lowagie', name: 'itext', version: itextVersion
+	earlib group: 'org.olap4j', name: 'olap4j', version: olap4jVersion
+	earlib group: 'net.sf.jasperreports', name: 'jasperreports', version: jasperVersion
+}

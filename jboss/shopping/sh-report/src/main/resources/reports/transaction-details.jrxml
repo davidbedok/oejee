@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="transaction-details" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fb7c9a02-1ebb-49c5-b007-0fc15ee86e38">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="24"/>
+	<parameter name="TRANSACTION_ID" class="java.lang.Long"/>
+	<parameter name="TRANSACTION_DATE" class="java.util.Date"/>
+	<parameter name="TRANSACTION_COMMENT" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+	product_name,
+	product_price,
+	productcategory_name,
+	item_quantity,
+	( product_price * item_quantity) AS total_price
+FROM item
+	INNER JOIN product ON ( product_id = item_product_id )
+	INNER JOIN productcategory ON ( product_productcategory_id = productcategory_id )
+WHERE ( 1 = 1 )
+	AND ( item_transaction_id = $P{TRANSACTION_ID} )]]>
+	</queryString>
+	<field name="product_name" class="java.lang.String"/>
+	<field name="product_price" class="java.lang.Float"/>
+	<field name="productcategory_name" class="java.lang.String"/>
+	<field name="item_quantity" class="java.lang.Integer"/>
+	<field name="total_price" class="java.lang.Double"/>
+	<variable name="total_price_1" class="java.lang.Double" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{total_price}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="35" uuid="6f526f7e-c7ac-4708-acda-35270d736902"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="24"/>
+				</textElement>
+				<text><![CDATA[Transaction details]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="35" width="100" height="20" uuid="9adef5b1-1b73-4155-bb09-527450f357d0"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="55" width="100" height="20" uuid="dd19e195-92e2-47fc-aac0-2d4bb4b1bcc6"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Comment: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="35" width="100" height="20" uuid="4c5cdcc8-ba76-45ee-930e-f432d4efd5cd"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TRANSACTION_DATE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="55" width="455" height="20" uuid="e63d0b8a-ef52-4148-8872-a534d9a7a282"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TRANSACTION_COMMENT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="8" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="29" y="0" width="100" height="20" uuid="a0d4bc6f-a29d-41d1-b2db-9e320bf81cc7"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="127" y="0" width="100" height="20" uuid="c0c44f10-0f6b-4f88-ac35-f55fd8fb0748"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Price]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="227" y="0" width="100" height="20" uuid="eac8e5d4-3500-444f-b7d0-89c4a2c9228c"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Category]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="327" y="0" width="100" height="20" uuid="a92f6060-6092-40e6-887b-acfad7bfed14"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Quantity]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="427" y="0" width="100" height="20" uuid="6bc17490-2f96-4733-8ed4-38a3189c4b5c"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total price]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="29" y="0" width="100" height="20" uuid="85afbba4-c419-497f-80ab-7203c1dad368"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{product_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="127" y="0" width="100" height="20" uuid="faede974-df33-4a13-aa99-aa26f3fb63b7"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{product_price} + " Ft"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="227" y="0" width="100" height="20" uuid="6032ba2d-5b40-4ad1-8db6-321874946ea5"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{productcategory_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="327" y="0" width="100" height="20" uuid="c8545991-86e8-46c0-9586-3d3c196b2e50"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{item_quantity}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="427" y="0" width="100" height="20" uuid="a43e951e-b549-41f7-9c6b-cf13a15f1d7b"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_price} + " Ft"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="7" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="9" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="134" splitType="Stretch">
+			<textField>
+				<reportElement x="427" y="0" width="100" height="20" uuid="db7516ac-9f63-4f4b-ac7a-3e9fd0c0bae0"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{total_price_1} + " Ft"]]></textFieldExpression>
+			</textField>
+			<bar3DChart>
+				<chart>
+					<reportElement x="0" y="20" width="395" height="106" uuid="1a2a29e7-33be-49a5-bb3e-c064bfbd9361"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["Total price"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{productcategory_name}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{total_price}]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["Item price"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{productcategory_name}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{product_price}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<bar3DPlot>
+					<plot/>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</bar3DPlot>
+			</bar3DChart>
+		</band>
+	</summary>
+</jasperReport>

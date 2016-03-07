@@ -1,0 +1,7 @@
+apply plugin: 'war'
+
+dependencies {
+	providedCompile project(':sh-report')
+	providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: servletapiVersion
+	providedCompile group: 'jstl', name: 'jstl', version: jstlVersion	
+}

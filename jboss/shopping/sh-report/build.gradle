@@ -1,0 +1,5 @@
+dependencies {
+	compile group: 'com.lowagie', name: 'itext', version: itextVersion
+	compile group: 'org.olap4j', name: 'olap4j', version: olap4jVersion
+	compile group: 'net.sf.jasperreports', name: 'jasperreports', version: jasperVersion
+}
