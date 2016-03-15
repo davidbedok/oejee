@@ -8,6 +8,6 @@ import hu.qwaevisz.diskstore.ejbserviceclient.exception.ServiceException;
 @Remote
 public interface DiskFacadeRemote {
 
-    DiskStub getDisk(int diskId) throws ServiceException;
+	DiskStub getDisk(String reference) throws ServiceException;
 
 }

@@ -4,38 +4,37 @@ import java.io.Serializable;
 
 public class DiskStub implements Serializable {
 
-	private static final long serialVersionUID = 4438944490512543719L;
-
-	private int diskId;
+	private String reference;
 	private String author;
 	private String title;
+	private DiskCategoryStub category;
 	private double price;
+	private int numberOfSongs;
 
-	public DiskStub() {
-		this(0, null, null, 0);
-	}
-
-	public DiskStub(int diskId, String author, String title, double price) {
+	public DiskStub(final String reference, final String author, final String title, final DiskCategoryStub category, final double price,
+			final int numberOfSongs) {
 		super();
-		this.diskId = diskId;
+		this.reference = reference;
 		this.author = author;
 		this.title = title;
+		this.category = category;
 		this.price = price;
+		this.numberOfSongs = numberOfSongs;
 	}
 
-	public int getDiskId() {
-		return this.diskId;
+	public String getReference() {
+		return this.reference;
 	}
 
-	public void setDiskId(int diskId) {
-		this.diskId = diskId;
+	public void setReference(final String reference) {
+		this.reference = reference;
 	}
 
 	public String getAuthor() {
 		return this.author;
 	}
 
-	public void setAuthor(String author) {
+	public void setAuthor(final String author) {
 		this.author = author;
 	}
 
@@ -43,21 +42,38 @@ public class DiskStub implements Serializable {
 		return this.title;
 	}
 
-	public void setTitle(String title) {
+	public void setTitle(final String title) {
 		this.title = title;
+	}
+
+	public DiskCategoryStub getCategory() {
+		return this.category;
+	}
+
+	public void setCategory(final DiskCategoryStub category) {
+		this.category = category;
 	}
 
 	public double getPrice() {
 		return this.price;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(final double price) {
 		this.price = price;
+	}
+
+	public int getNumberOfSongs() {
+		return this.numberOfSongs;
+	}
+
+	public void setNumberOfSongs(final int numberOfSongs) {
+		this.numberOfSongs = numberOfSongs;
 	}
 
 	@Override
 	public String toString() {
-		return "DiskStub [diskId=" + this.diskId + ", author=" + this.author + ", title=" + this.title + ", price=" + this.price + "]";
+		return "DiskStub [reference=" + this.reference + ", author=" + this.author + ", title=" + this.title + ", category=" + this.category + ", price="
+				+ this.price + ", numberOfSongs=" + this.numberOfSongs + "]";
 	}
 
 }

@@ -1,0 +1,5 @@
+dependencies {
+	compile group: 'javax', name: 'javaee-api', version: jeeVersion
+	compile group: 'org.mybatis', name: 'mybatis', version: mybatisVersion
+	compile group: 'org.mybatis', name: 'mybatis-cdi', version: mybatiscdiVersion
+}

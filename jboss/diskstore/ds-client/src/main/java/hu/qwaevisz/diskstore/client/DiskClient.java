@@ -23,15 +23,15 @@ public class DiskClient {
 
 	private static final Logger LOGGER = Logger.getLogger(DiskClient.class);
 
-	public static void main(String[] args) throws Exception {
-		System.out.println(new DiskClient().invoke(1001));
+	public static void main(final String[] args) throws Exception {
+		System.out.println(new DiskClient().invoke("WAM124"));
 	}
 
-	private DiskStub invoke(int diskId) {
+	private DiskStub invoke(final String reference) {
 		DiskStub disk = null;
 		try {
 			final DiskFacadeRemote facade = this.lookup();
-			disk = facade.getDisk(diskId);
+			disk = facade.getDisk(reference);
 			LOGGER.info(disk);
 		} catch (final ServiceException e) {
 			e.printStackTrace();

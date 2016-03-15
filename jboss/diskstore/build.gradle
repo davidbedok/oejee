@@ -7,9 +7,16 @@ ext {
 	jeeVersion = '6.0' 
 	jbossjee6Version = '3.0.3.Final'  
 	servletapiVersion = '3.0.1'
+	jstlVersion = '1.2'
+	mybatisVersion = '3.3.1'
+	mybatiscdiVersion = '1.0.0-beta3'
 	
 	webapplicationName = 'ds-weblayer.war'
 	webapplicationContextPath = 'diskstore'
+}
+
+allprojects {
+	repositories { mavenCentral() }
 }
 
 subprojects {
@@ -18,8 +25,6 @@ subprojects {
 
 	sourceCompatibility = 1.7
 	targetCompatibility = 1.7
-
-	repositories { mavenCentral() }
 
 	dependencies {
 		compile group: 'log4j', name: 'log4j', version: log4jVersion
@@ -34,7 +39,10 @@ ear {
 }
 
 dependencies {
+	deploy project('ds-persistence')
 	deploy project('ds-ejbservice')
 	deploy project('ds-ejbserviceclient')
 	deploy project(path: 'ds-weblayer', configuration: 'archives')
+	earlib group: 'org.mybatis', name: 'mybatis', version: mybatisVersion
+	earlib group: 'org.mybatis', name: 'mybatis-cdi', version: mybatiscdiVersion
 }

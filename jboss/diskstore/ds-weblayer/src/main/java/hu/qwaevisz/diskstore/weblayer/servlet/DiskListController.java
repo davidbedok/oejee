@@ -1,9 +1,10 @@
 package hu.qwaevisz.diskstore.weblayer.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.List;
 
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,30 +16,30 @@ import org.apache.log4j.Logger;
 import hu.qwaevisz.diskstore.ejbservice.facade.DiskFacade;
 import hu.qwaevisz.diskstore.ejbserviceclient.domain.DiskStub;
 import hu.qwaevisz.diskstore.ejbserviceclient.exception.ServiceException;
+import hu.qwaevisz.diskstore.weblayer.common.ListAttribute;
+import hu.qwaevisz.diskstore.weblayer.common.Page;
 
-@WebServlet("/DiskPing")
-public class DiskPingServlet extends HttpServlet {
+@WebServlet("/DiskList")
+public class DiskListController extends HttpServlet implements ListAttribute {
 
-	private static final long serialVersionUID = -1572822784106689571L;
+	private static final long serialVersionUID = 9202482703644116140L;
 
-	private static final Logger LOGGER = Logger.getLogger(DiskPingServlet.class);
+	private static final Logger LOGGER = Logger.getLogger(DiskListController.class);
 
 	@EJB
 	private DiskFacade facade;
 
 	@Override
 	protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
-		LOGGER.info("Get Disk by reference");
-		response.setCharacterEncoding("UTF-8");
-		final PrintWriter out = response.getWriter();
+		LOGGER.info("Get All Books");
 		try {
-			final DiskStub disk = this.facade.getDisk("REF002");
-			out.println(disk.toString());
+			final List<DiskStub> disks = this.facade.getDisks();
+			request.setAttribute(ATTR_DISKS, disks);
 		} catch (final ServiceException e) {
 			LOGGER.error(e, e);
-			out.println(e.getLocalizedMessage());
 		}
-		out.close();
+		final RequestDispatcher view = request.getRequestDispatcher(Page.LIST.getJspName());
+		view.forward(request, response);
 	}
 
 }

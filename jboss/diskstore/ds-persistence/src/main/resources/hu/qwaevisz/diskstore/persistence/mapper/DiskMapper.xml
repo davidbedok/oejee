@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hu.qwaevisz.diskstore.persistence.mapper.DiskMapper">
+
+	<resultMap type="Disk" id="DiskResult">
+		<id property="id" column="disk_id" />
+		<result property="reference" column="disk_reference" />
+		<result property="author" column="disk_author" />
+		<result property="title" column="disk_title" />
+		<result property="category" column="disk_diskcategory_id" />
+		<result property="price" column="disk_price" />
+		<result property="numberOfSongs" column="disk_number_of_songs" />
+	</resultMap>
+	
+	<select id="count" parameterType="String" resultType="int">
+		SELECT COUNT(1)
+		FROM disk
+		WHERE disk_reference = #{reference}
+	</select>
+	
+	<insert id="create" parameterType="Disk" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO disk (
+			disk_reference, 
+			disk_author, 
+			disk_title, 
+			disk_diskcategory_id,
+			disk_price, 
+			disk_number_of_songs
+		) VALUES (
+			#{reference}, 
+			#{author}, 
+			#{title}, 
+			#{category}, 
+			#{price}, 
+			#{numberOfSongs}
+		)
+	</insert>
+
+	<select id="readById" parameterType="int" resultType="hu.qwaevisz.diskstore.persistence.entity.Disk">
+		SELECT
+			disk_id AS id,
+			disk_reference AS reference,
+			disk_author AS author,
+			disk_title AS title,
+			disk_diskcategory_id AS category,
+			disk_price AS price,
+			disk_number_of_songs AS numberOfSongs 
+		FROM disk
+		WHERE disk_id = #{id}
+	</select>
+	
+	<select id="readByReference" parameterType="String" resultType="Disk">
+		SELECT
+			disk_id AS id,
+			disk_reference AS reference,
+			disk_author AS author,
+			disk_title AS title,
+			disk_diskcategory_id AS category,
+			disk_price AS price,
+			disk_number_of_songs AS numberOfSongs 
+		FROM disk
+		WHERE disk_reference = #{reference}
+	</select>
+
+	<select id="readAll" resultMap="DiskResult">
+		SELECT * FROM disk
+	</select>
+
+	<update id="update" parameterType="Disk">
+		UPDATE disk SET
+			disk_reference = #{reference},
+			disk_author = #{author},
+			disk_title = #{title},
+			disk_diskcategory_id = #{category},
+			disk_price = #{price},
+			disk_number_of_songs = #{numberOfSongs} 
+		WHERE disk_id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		DELETE FROM disk WHERE disk_id = #{id}
+	</delete>
+
+</mapper>
