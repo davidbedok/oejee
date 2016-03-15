@@ -17,7 +17,7 @@ public enum Page {
 		return this.url;
 	}
 
-	private Page(String jspName, String url) {
+	private Page(final String jspName, final String url) {
 		this.jspName = jspName;
 		this.url = url;
 	}
