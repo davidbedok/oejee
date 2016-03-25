@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<server xmlns="urn:jboss:domain:1.7">
+    <profile>
+		...
+        <subsystem xmlns="urn:jboss:domain:datasources:1.2">
+            <datasources>
+                ...
+                <datasource jndi-name="java:jboss/datasources/diskstoreds" pool-name="DiskStoreDSPool" enabled="true" use-java-context="true">
+                    <connection-url>jdbc:postgresql://localhost:5432/diskstoredb</connection-url>
+                    <driver>postgresql</driver>
+                    <security>
+                        <user-name>diskstore_user</user-name>
+                        <password>123topSECret321</password>
+                    </security>
+                    <validation>
+                        <check-valid-connection-sql>SELECT 1</check-valid-connection-sql>
+                        <validate-on-match>true</validate-on-match>
+                        <background-validation>false</background-validation>
+                    </validation>
+                    <statement>
+                        <share-prepared-statements>false</share-prepared-statements>
+                    </statement>
+                </datasource>
+                ...
+            </datasources>
+        </subsystem>
+		...
+    </profile>
+	...
+</server>
