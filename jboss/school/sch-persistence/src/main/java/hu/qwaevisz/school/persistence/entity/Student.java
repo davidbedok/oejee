@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -26,7 +27,8 @@ import hu.qwaevisz.school.persistence.query.StudentQuery;
 @Table(name = "student")
 @NamedQueries(value = { //
 		@NamedQuery(name = StudentQuery.COUNT_BY_NAME, query = "SELECT COUNT(s) FROM Student s WHERE s.neptun=:" + StudentParameter.NEPTUN),
-		@NamedQuery(name = StudentQuery.GET_BY_NEPTUN, query = "SELECT s FROM Student s JOIN s.marks WHERE s.neptun=:" + StudentParameter.NEPTUN),
+		@NamedQuery(name = StudentQuery.GET_BY_NEPTUN, query = "SELECT st FROM Student st JOIN FETCH st.marks m JOIN FETCH m.subject su JOIN FETCH su.teacher WHERE st.neptun=:"
+				+ StudentParameter.NEPTUN),
 		@NamedQuery(name = StudentQuery.GET_BY_ID, query = "SELECT s FROM Student s WHERE s.id=:" + StudentParameter.ID),
 		@NamedQuery(name = StudentQuery.GET_ALL, query = "SELECT s FROM Student s ORDER BY s.name"),
 		@NamedQuery(name = StudentQuery.REMOVE_BY_NEPTUN, query = "DELETE FROM Student s WHERE s.neptun=:" + StudentParameter.NEPTUN)
@@ -52,7 +54,7 @@ public class Student implements Serializable {
 	@Column(name = "student_institute_id", nullable = false)
 	private Institute institute;
 
-	@OneToMany(fetch = FetchType.LAZY, targetEntity = Mark.class, mappedBy = "student")
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, targetEntity = Mark.class, mappedBy = "student")
 	private final Set<Mark> marks;
 
 	public Student() {

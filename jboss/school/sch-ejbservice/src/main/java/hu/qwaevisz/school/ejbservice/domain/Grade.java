@@ -18,16 +18,16 @@ public enum Grade {
 		return this.value;
 	}
 
-	// public static Grade fromString(String name) {
-	// Grade grade = INSUFFICIENT;
-	// final Grade[] grades = Grade.values();
-	// for (final Grade current : grades) {
-	// if (current.name().equals(name)) {
-	// grade = current;
-	// break;
-	// }
-	// }
-	// return grade;
-	// }
+	public static Grade fromValue(int value) {
+		Grade grade = INSUFFICIENT;
+		final Grade[] grades = Grade.values();
+		for (final Grade current : grades) {
+			if (current.value == value) {
+				grade = current;
+				break;
+			}
+		}
+		return grade;
+	}
 
 }

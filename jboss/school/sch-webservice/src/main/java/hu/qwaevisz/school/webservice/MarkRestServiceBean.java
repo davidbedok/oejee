@@ -1,6 +1,5 @@
 package hu.qwaevisz.school.webservice;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -13,8 +12,6 @@ import hu.qwaevisz.school.ejbservice.domain.MarkCriteria;
 import hu.qwaevisz.school.ejbservice.domain.MarkDetailStub;
 import hu.qwaevisz.school.ejbservice.domain.MarkInputStub;
 import hu.qwaevisz.school.ejbservice.domain.MarkStub;
-import hu.qwaevisz.school.ejbservice.domain.SubjectStub;
-import hu.qwaevisz.school.ejbservice.domain.TeacherStub;
 import hu.qwaevisz.school.ejbservice.exception.AdaptorException;
 import hu.qwaevisz.school.ejbservice.facade.MarkFacade;
 
@@ -41,9 +38,6 @@ public class MarkRestServiceBean implements MarkRestService {
 	@Override
 	public MarkStub getMatchingMark(String studentNeptun, MarkCriteria criteria) throws AdaptorException {
 		LOGGER.info("Get first matching Mark (studentNeptun: " + studentNeptun + ", criteria: " + criteria + ")");
-		final MarkStub stub = new MarkStub(new SubjectStub("subject1", new TeacherStub("teacher1", "teacher1neptun"), "subject1description"), 2, "note1",
-				new Date());
-		LOGGER.info("MarkStub: " + stub);
 		return this.facade.getMatchingMark(studentNeptun, criteria.getSubjectNameTerm(), criteria.getMinimumGrade(), criteria.getMaximumGrade());
 	}
 

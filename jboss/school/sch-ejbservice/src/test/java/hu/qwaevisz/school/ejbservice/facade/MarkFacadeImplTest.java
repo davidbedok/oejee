@@ -50,22 +50,22 @@ public class MarkFacadeImplTest {
 
 	@Test
 	public void createListOfMarkDetailsFromSubjectName() throws AdaptorException, PersistenceServiceException {
-		Subject subject = Mockito.mock(Subject.class);
+		final Subject subject = Mockito.mock(Subject.class);
 		Mockito.when(this.subjectService.read(SUBJECT_NAME)).thenReturn(subject);
 		Mockito.when(subject.getId()).thenReturn(SUBJECT_ID);
-		List<MarkDetailResult> results = new ArrayList<>();
+		final List<MarkDetailResult> results = new ArrayList<>();
 		results.add(new MarkDetailResult(Institute.NEUMANN, new Date(), 0));
 		results.add(new MarkDetailResult(Institute.KANDO, new Date(), 0));
 		Mockito.when(this.markService.read(SUBJECT_ID)).thenReturn(results);
-		List<MarkDetailStub> stubs = new ArrayList<>();
-		MarkDetailStub neumannStub = Mockito.mock(MarkDetailStub.class);
+		final List<MarkDetailStub> stubs = new ArrayList<>();
+		final MarkDetailStub neumannStub = Mockito.mock(MarkDetailStub.class);
 		stubs.add(neumannStub);
-		int yearKando = 2014;
-		double averageGradeKando = 2.4142;
+		final int yearKando = 2014;
+		final double averageGradeKando = 2.4142;
 		stubs.add(new MarkDetailStub(Institute.KANDO.toString(), yearKando, averageGradeKando));
 		Mockito.when(this.markConverter.to(results)).thenReturn(stubs);
 
-		List<MarkDetailStub> markDetailStubs = this.facade.getMarkDetails(SUBJECT_NAME);
+		final List<MarkDetailStub> markDetailStubs = this.facade.getMarkDetails(SUBJECT_NAME);
 
 		Mockito.verify(this.markService).read(SUBJECT_ID);
 

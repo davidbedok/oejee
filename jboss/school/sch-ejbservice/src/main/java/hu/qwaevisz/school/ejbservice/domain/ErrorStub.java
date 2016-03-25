@@ -2,17 +2,17 @@ package hu.qwaevisz.school.ejbservice.domain;
 
 public class ErrorStub {
 
-	private final int code;
+	private int code;
 
-	private final String message;
+	private String message;
 
-	private final String fields;
+	private String fields;
 
 	public ErrorStub() {
 		this(0, null, null);
 	}
 
-	public ErrorStub(int code, String message, String fields) {
+	public ErrorStub(final int code, final String message, final String fields) {
 		this.code = code;
 		this.message = message;
 		this.fields = fields;
@@ -28,6 +28,18 @@ public class ErrorStub {
 
 	public String getFields() {
 		return this.fields;
+	}
+
+	public void setCode(final int code) {
+		this.code = code;
+	}
+
+	public void setMessage(final String message) {
+		this.message = message;
+	}
+
+	public void setFields(final String fields) {
+		this.fields = fields;
 	}
 
 	@Override

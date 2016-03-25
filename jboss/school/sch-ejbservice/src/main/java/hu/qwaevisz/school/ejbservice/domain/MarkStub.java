@@ -9,17 +9,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class MarkStub {
 
 	private final SubjectStub subject;
-	private final int grade;
+	private final Grade grade;
+	private final int gradeValue;
 	private final String note;
 	private final Date date;
 
 	public MarkStub() {
-		this(null, 0, null, null);
+		this(null, Grade.INSUFFICIENT, null, null);
 	}
 
-	public MarkStub(SubjectStub subject, int grade, String note, Date date) {
+	public MarkStub(SubjectStub subject, Grade grade, String note, Date date) {
 		this.subject = subject;
 		this.grade = grade;
+		this.gradeValue = grade.getValue();
 		this.note = note;
 		this.date = date;
 	}
@@ -30,8 +32,13 @@ public class MarkStub {
 	}
 
 	@XmlElement(name = "grade")
-	public int getGrade() {
+	public Grade getGrade() {
 		return this.grade;
+	}
+
+	@XmlElement(name = "gradeValue")
+	public int getGradeValue() {
+		return this.gradeValue;
 	}
 
 	@XmlElement(name = "note")

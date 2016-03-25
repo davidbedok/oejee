@@ -4,6 +4,7 @@ RESP: 200 OK
 	"name": "Juanita A. Jenkins",
 	"neptun": "WI53085",
 	"institute": "BANKI",
+	"numberOfMarks": 2,
 	"marks": [{
 		"subject": {
 			"name": "C/C++ Programming",
@@ -13,37 +14,60 @@ RESP: 200 OK
 			},
 			"description": "Maecenas a nisl nisl. Nam consectetur auctor arcu, sed elementum justo suscipit nec."
 		},
-		"grade": 2,
+		"grade": "WEAK",
+		"gradeValue": 2,
 		"note": "Vivamus",
 		"date": 1401956934000
 	},
 	{
 		"subject": {
-			"name": "Scala Functional Programming",
+			"name": "C/C++ Programming",
 			"teacher": {
-				"name": "Richard B. Cambra",
-				"neptun": "UT84113"
+				"name": "Lorine B. Pine",
+				"neptun": "MD21921"
 			},
-			"description": "Cras posuere cursus nulla vel feugiat. Integer sagittis efficitur enim vitae posuere."
+			"description": "Maecenas a nisl nisl. Nam consectetur auctor arcu, sed elementum justo suscipit nec."
 		},
-		"grade": 1,
-		"note": "Facilisis",
-		"date": 1391956934000
-	},
-	{
-		"subject": {
-			"name": "Python Programming",
-			"teacher": {
-				"name": "Christine W. Culp",
-				"neptun": "OK73109"
-			},
-			"description": "Fusce sem turpis, iaculis non lobortis ac, accumsan et purus."
-		},
-		"grade": 3,
-		"note": "Phasellus",
-		"date": 1411956934000
+		"grade": "WEAK",
+		"gradeValue": 2,
+		"note": "Vivamus",
+		"date": 1401956934000
 	}]
 }
+
+select
+    student0_.student_id as student_1_2_0_,
+    marks1_.mark_id as mark_id1_0_1_,
+    subject2_.subject_id as subject_1_3_2_,
+    teacher3_.teacher_id as teacher_1_4_3_,
+    student0_.student_institute_id as student_2_2_0_,
+    student0_.student_name as student_3_2_0_,
+    student0_.student_neptun as student_4_2_0_,
+    marks1_.mark_date as mark_dat2_0_1_,
+    marks1_.mark_grade as mark_gra3_0_1_,
+    marks1_.mark_note as mark_not4_0_1_,
+    marks1_.mark_student_id as mark_stu5_0_1_,
+    marks1_.mark_subject_id as mark_sub6_0_1_,
+    marks1_.mark_student_id as mark_stu5_2_0__,
+    marks1_.mark_id as mark_id1_0_0__,
+    subject2_.subject_description as subject_2_3_2_,
+    subject2_.subject_name as subject_3_3_2_,
+    subject2_.subject_teacher_id as subject_4_3_2_,
+    teacher3_.teacher_name as teacher_2_4_3_,
+    teacher3_.teacher_neptun as teacher_3_4_3_ 
+from
+    student student0_ 
+inner join
+    mark marks1_ 
+        on student0_.student_id=marks1_.mark_student_id 
+inner join
+    subject subject2_ 
+        on marks1_.mark_subject_id=subject2_.subject_id 
+inner join
+    teacher teacher3_ 
+        on subject2_.subject_teacher_id=teacher3_.teacher_id 
+where
+    student0_.student_neptun='WI53085'
 
 
 =========================================================================================================

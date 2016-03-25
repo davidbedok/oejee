@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 
+import hu.qwaevisz.school.ejbservice.domain.Grade;
 import hu.qwaevisz.school.ejbservice.domain.MarkDetailStub;
 import hu.qwaevisz.school.ejbservice.domain.MarkStub;
 import hu.qwaevisz.school.ejbservice.domain.SubjectStub;
@@ -23,7 +24,7 @@ public class MarkConverterImpl implements MarkConverter {
 	public MarkStub to(Mark mark) {
 		MarkStub stub = null;
 		if (mark != null) {
-			stub = new MarkStub(this.to(mark.getSubject()), mark.getGrade(), mark.getNote(), mark.getDate());
+			stub = new MarkStub(this.to(mark.getSubject()), Grade.fromValue(mark.getGrade()), mark.getNote(), mark.getDate());
 		}
 		return stub;
 	}

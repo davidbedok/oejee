@@ -1,1 +1,1 @@
-gradle clean build ear war
+gradle clean build

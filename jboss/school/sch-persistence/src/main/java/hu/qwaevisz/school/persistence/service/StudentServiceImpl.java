@@ -28,7 +28,7 @@ public class StudentServiceImpl implements StudentService {
 	private EntityManager entityManager;
 
 	@Override
-	public boolean exists(String neptun) throws PersistenceServiceException {
+	public boolean exists(final String neptun) throws PersistenceServiceException {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("Check Student by neptun (" + neptun + ")");
 		}
@@ -41,7 +41,7 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public Student read(Long id) throws PersistenceServiceException {
+	public Student read(final Long id) throws PersistenceServiceException {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("Get Student by id (" + id + ")");
 		}
@@ -55,7 +55,7 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public Student read(String neptun) throws PersistenceServiceException {
+	public Student read(final String neptun) throws PersistenceServiceException {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("Get Student by neptun (" + neptun + ")");
 		}
@@ -63,7 +63,6 @@ public class StudentServiceImpl implements StudentService {
 		try {
 			result = this.entityManager.createNamedQuery(StudentQuery.GET_BY_NEPTUN, Student.class).setParameter(StudentParameter.NEPTUN, neptun)
 					.getSingleResult();
-			result.getMarks().size();
 		} catch (final Exception e) {
 			throw new PersistenceServiceException("Unknown error when fetching Student by neptun (" + neptun + ")! " + e.getLocalizedMessage(), e);
 		}
@@ -88,7 +87,7 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public void delete(String neptun) throws PersistenceServiceException {
+	public void delete(final String neptun) throws PersistenceServiceException {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("Remove Student by neptun (" + neptun + ")");
 		}
