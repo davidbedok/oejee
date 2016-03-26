@@ -82,7 +82,7 @@ public class DataService implements AutoCloseable {
 			}
 		}
 
-		final int numberOfItems = this.generator.generateNumberOfitems();
+		final int numberOfItems = this.generator.generateNumberOfItems();
 
 		for (int i = 0; i < numberOfItems; i++) {
 			this.addItem(transactionId, catalog);

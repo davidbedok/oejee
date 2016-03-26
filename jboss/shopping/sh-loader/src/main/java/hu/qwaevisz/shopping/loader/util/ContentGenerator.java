@@ -23,7 +23,7 @@ public class ContentGenerator {
 		return this.random.nextInt(2) + 1;
 	}
 
-	public int generateNumberOfitems() {
+	public int generateNumberOfItems() {
 		return this.random.nextInt(15) + 5;
 	}
 
