@@ -5,7 +5,7 @@ import java.io.Serializable;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name = "errorStub")
+@XmlRootElement(name = "ServiceError")
 public class ServiceError implements Serializable {
 
 	private static final long serialVersionUID = 6351508957255647272L;

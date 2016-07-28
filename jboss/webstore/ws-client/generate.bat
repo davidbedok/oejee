@@ -1,0 +1,1 @@
+wsimport -s src/main/java -d bin -keep -p hu.qwaevisz.webstore.client.generated http://localhost:8080/webstore/WebStoreService?wsdl

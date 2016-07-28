@@ -4,30 +4,28 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name = "basketItem")
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class BasketItem {
 
-	private Product product;
+	private ProductStub product;
 	private int quantity;
 
 	public BasketItem() {
 
 	}
 
-	public BasketItem(Product product, int quantity) {
+	public BasketItem(ProductStub product, int quantity) {
 		this.product = product;
 		this.quantity = quantity;
 	}
 
-	@XmlElement(name = "product")
-	public Product getProduct() {
+	@XmlElement(name = "Product")
+	public ProductStub getProduct() {
 		return this.product;
 	}
 
-	public void setProduct(Product product) {
+	public void setProduct(ProductStub product) {
 		this.product = product;
 	}
 

@@ -8,8 +8,8 @@ public class ServiceException extends Exception {
 
 	private final int code;
 
-	public ServiceException(int code, String message) {
-		this(code, message, null);
+	public ServiceException(WebStoreError error, String message) {
+		this(error.getCode(), message, null);
 	}
 
 	public ServiceException(int code, String message, Throwable cause) {

@@ -7,6 +7,7 @@ pmd {
 }
 
 dependencies {
+	compile project(':ws-persistence')
 	compile project(':ws-common')
 	wsdoclet project(':ws-doclet')
 	compile group: 'log4j', name: 'log4j', version: log4jVersion

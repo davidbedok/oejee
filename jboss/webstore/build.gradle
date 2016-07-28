@@ -47,6 +47,7 @@ ear {
 }
 
 dependencies {
+	deploy project('ws-persistence')
 	deploy project('ws-ejbservice')
 	deploy project(path: 'ws-weblayer', configuration: 'archives')
 	deploy project(path: 'ws-webservice', configuration: 'archives')

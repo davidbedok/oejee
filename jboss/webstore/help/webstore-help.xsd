@@ -13,25 +13,27 @@
 	
 	<xsd:complexType name="serviceType">
 		<xsd:sequence>
-			<xsd:attribute name="description" type="xs:string"/>
-			<xsd:attribute name="name" type="xs:string"/>
 			<xsd:element name="operation" type="operationType" minOccurs="0" maxOccurs="unbounded" />
 		</xsd:sequence>
+		<xsd:attribute name="description" type="xsd:string"/>
+		<xsd:attribute name="name" type="xsd:string"/>
 	</xsd:complexType>
 	
 	<xsd:complexType name="operationType">
 		<xsd:sequence>
-			<xsd:attribute name="description" type="xs:string"/>
-			<xsd:attribute name="name" type="xs:string"/>
 			<xsd:element name="argument" type="argumentType" minOccurs="0" maxOccurs="unbounded" />
 		</xsd:sequence>
+		<xsd:attribute name="description" type="xsd:string"/>
+		<xsd:attribute name="name" type="xsd:string"/>
 	</xsd:complexType>	
 
-	<xsd:complexType name="argumentType">		
+	<xsd:complexType name="argumentType">
 		<xsd:simpleContent>
-			<xsd:attribute name="name" type="xs:string"/>
-			<xsd:attribute name="type" type="xs:string"/>
-		</xsd:simpleContent>
+			<xsd:extension base="xsd:string">
+				<xsd:attribute name="name" type="xsd:string"/>
+				<xsd:attribute name="type" type="xsd:string"/>
+        	</xsd:extension>
+		</xsd:simpleContent>		
 	</xsd:complexType>
 
 </xsd:schema>

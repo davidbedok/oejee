@@ -1,0 +1,520 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.qwaevisz.hu/WebStore" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="WebStoreService" targetNamespace="http://www.qwaevisz.hu/WebStore">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.qwaevisz.hu/WebStore" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://www.qwaevisz.hu/WebStore">
+  <xs:element name="AddItemToBasket" type="tns:AddItemToBasket"/>
+  <xs:element name="AddItemToBasketResponse" type="tns:AddItemToBasketResponse"/>
+  <xs:element name="AddProduct" type="tns:AddProduct"/>
+  <xs:element name="AddProductResponse" type="tns:AddProductResponse"/>
+  <xs:element name="Basket" type="tns:basket"/>
+  <xs:element name="BasketItem" type="tns:basketItem"/>
+  <xs:element name="DeleteProduct" type="tns:DeleteProduct"/>
+  <xs:element name="DeleteProductResponse" type="tns:DeleteProductResponse"/>
+  <xs:element name="GetBasketContent" type="tns:GetBasketContent"/>
+  <xs:element name="GetBasketContentResponse" type="tns:GetBasketContentResponse"/>
+  <xs:element name="GetBasketIdentifier" type="tns:GetBasketIdentifier"/>
+  <xs:element name="GetBasketIdentifierResponse" type="tns:GetBasketIdentifierResponse"/>
+  <xs:element name="GetBasketSize" type="tns:GetBasketSize"/>
+  <xs:element name="GetBasketSizeResponse" type="tns:GetBasketSizeResponse"/>
+  <xs:element name="GetProduct" type="tns:GetProduct"/>
+  <xs:element name="GetProductResponse" type="tns:GetProductResponse"/>
+  <xs:element name="ListAllProducts" type="tns:ListAllProducts"/>
+  <xs:element name="ListAllProductsResponse" type="tns:ListAllProductsResponse"/>
+  <xs:element name="ListProductsByBrand" type="tns:ListProductsByBrand"/>
+  <xs:element name="ListProductsByBrandResponse" type="tns:ListProductsByBrandResponse"/>
+  <xs:element name="ListProductsByNameTerm" type="tns:ListProductsByNameTerm"/>
+  <xs:element name="ListProductsByNameTermResponse" type="tns:ListProductsByNameTermResponse"/>
+  <xs:element name="Product" type="tns:productStub"/>
+  <xs:element name="RemoveItemFromBasket" type="tns:RemoveItemFromBasket"/>
+  <xs:element name="RemoveItemFromBasketResponse" type="tns:RemoveItemFromBasketResponse"/>
+  <xs:element name="ServiceError" type="tns:serviceError"/>
+  <xs:element name="SetBasketIdentifier" type="tns:SetBasketIdentifier"/>
+  <xs:element name="SetBasketIdentifierResponse" type="tns:SetBasketIdentifierResponse"/>
+  <xs:complexType name="GetBasketIdentifier">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="GetBasketIdentifierResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Identifier" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="serviceError">
+    <xs:sequence>
+      <xs:element name="code" type="xs:int"/>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GetBasketContent">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="GetBasketContentResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="tns:Basket"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="basket">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="items" type="tns:basketItem"/>
+    </xs:sequence>
+    <xs:attribute name="identifier" type="xs:string"/>
+    <xs:attribute name="total" type="xs:int" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="basketItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="product" type="tns:productStub"/>
+    </xs:sequence>
+    <xs:attribute name="quantity" type="xs:int" use="required"/>
+    <xs:attribute name="total" type="xs:int" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="productStub">
+    <xs:sequence/>
+    <xs:attribute name="brand" type="tns:brandStub"/>
+    <xs:attribute name="productName" type="xs:string"/>
+    <xs:attribute name="price" type="xs:int" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="RemoveItemFromBasket">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ProductName" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RemoveItemFromBasketResponse">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="DeleteProduct">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Name" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DeleteProductResponse">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="AddProduct">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="product" type="tns:productStub"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AddProductResponse">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="ListProductsByNameTerm">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="NameTerm" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ListProductsByNameTermResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:Product"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ListProductsByBrand">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Brand" type="tns:brandStub"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ListProductsByBrandResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:Product"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GetProduct">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Name" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GetProductResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="tns:Product"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SetBasketIdentifier">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Identifier" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SetBasketIdentifierResponse">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="ListAllProducts">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="ListAllProductsResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:Product"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GetBasketSize">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="GetBasketSizeResponse">
+    <xs:sequence>
+      <xs:element name="BasketSize" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AddItemToBasket">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ProductName" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AddItemToBasketResponse">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:simpleType name="brandStub">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PHILIPS"/>
+      <xs:enumeration value="SONY"/>
+      <xs:enumeration value="PANASONIC"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="WebStoreServiceFault" nillable="true" type="tns:serviceError"/>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="SetBasketIdentifierResponse">
+    <wsdl:part element="tns:SetBasketIdentifierResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ListAllProductsResponse">
+    <wsdl:part element="tns:ListAllProductsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetBasketIdentifier">
+    <wsdl:part element="tns:GetBasketIdentifier" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetBasketSizeResponse">
+    <wsdl:part element="tns:GetBasketSizeResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="RemoveItemFromBasket">
+    <wsdl:part element="tns:RemoveItemFromBasket" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DeleteProduct">
+    <wsdl:part element="tns:DeleteProduct" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ListProductsByNameTerm">
+    <wsdl:part element="tns:ListProductsByNameTerm" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ListProductsByBrand">
+    <wsdl:part element="tns:ListProductsByBrand" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SetBasketIdentifier">
+    <wsdl:part element="tns:SetBasketIdentifier" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetBasketSize">
+    <wsdl:part element="tns:GetBasketSize" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="AddItemToBasketResponse">
+    <wsdl:part element="tns:AddItemToBasketResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ListProductsByNameTermResponse">
+    <wsdl:part element="tns:ListProductsByNameTermResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetBasketIdentifierResponse">
+    <wsdl:part element="tns:GetBasketIdentifierResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetBasketContent">
+    <wsdl:part element="tns:GetBasketContent" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DeleteProductResponse">
+    <wsdl:part element="tns:DeleteProductResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="AddProduct">
+    <wsdl:part element="tns:AddProduct" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetProduct">
+    <wsdl:part element="tns:GetProduct" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="RemoveItemFromBasketResponse">
+    <wsdl:part element="tns:RemoveItemFromBasketResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ListProductsByBrandResponse">
+    <wsdl:part element="tns:ListProductsByBrandResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ListAllProducts">
+    <wsdl:part element="tns:ListAllProducts" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="WebStoreServiceException">
+    <wsdl:part element="tns:WebStoreServiceFault" name="WebStoreServiceException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="AddProductResponse">
+    <wsdl:part element="tns:AddProductResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetProductResponse">
+    <wsdl:part element="tns:GetProductResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="AddItemToBasket">
+    <wsdl:part element="tns:AddItemToBasket" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetBasketContentResponse">
+    <wsdl:part element="tns:GetBasketContentResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="WebStore">
+    <wsdl:operation name="GetBasketIdentifier">
+      <wsdl:input message="tns:GetBasketIdentifier" name="GetBasketIdentifier">
+    </wsdl:input>
+      <wsdl:output message="tns:GetBasketIdentifierResponse" name="GetBasketIdentifierResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:WebStoreServiceException" name="WebStoreServiceException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetBasketContent">
+      <wsdl:input message="tns:GetBasketContent" name="GetBasketContent">
+    </wsdl:input>
+      <wsdl:output message="tns:GetBasketContentResponse" name="GetBasketContentResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:WebStoreServiceException" name="WebStoreServiceException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveItemFromBasket">
+      <wsdl:input message="tns:RemoveItemFromBasket" name="RemoveItemFromBasket">
+    </wsdl:input>
+      <wsdl:output message="tns:RemoveItemFromBasketResponse" name="RemoveItemFromBasketResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:WebStoreServiceException" name="WebStoreServiceException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteProduct">
+      <wsdl:input message="tns:DeleteProduct" name="DeleteProduct">
+    </wsdl:input>
+      <wsdl:output message="tns:DeleteProductResponse" name="DeleteProductResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:WebStoreServiceException" name="WebStoreServiceException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AddProduct">
+      <wsdl:input message="tns:AddProduct" name="AddProduct">
+    </wsdl:input>
+      <wsdl:output message="tns:AddProductResponse" name="AddProductResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:WebStoreServiceException" name="WebStoreServiceException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ListProductsByNameTerm">
+      <wsdl:input message="tns:ListProductsByNameTerm" name="ListProductsByNameTerm">
+    </wsdl:input>
+      <wsdl:output message="tns:ListProductsByNameTermResponse" name="ListProductsByNameTermResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:WebStoreServiceException" name="WebStoreServiceException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ListProductsByBrand">
+      <wsdl:input message="tns:ListProductsByBrand" name="ListProductsByBrand">
+    </wsdl:input>
+      <wsdl:output message="tns:ListProductsByBrandResponse" name="ListProductsByBrandResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:WebStoreServiceException" name="WebStoreServiceException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetProduct">
+      <wsdl:input message="tns:GetProduct" name="GetProduct">
+    </wsdl:input>
+      <wsdl:output message="tns:GetProductResponse" name="GetProductResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:WebStoreServiceException" name="WebStoreServiceException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="SetBasketIdentifier">
+      <wsdl:input message="tns:SetBasketIdentifier" name="SetBasketIdentifier">
+    </wsdl:input>
+      <wsdl:output message="tns:SetBasketIdentifierResponse" name="SetBasketIdentifierResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:WebStoreServiceException" name="WebStoreServiceException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ListAllProducts">
+      <wsdl:input message="tns:ListAllProducts" name="ListAllProducts">
+    </wsdl:input>
+      <wsdl:output message="tns:ListAllProductsResponse" name="ListAllProductsResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:WebStoreServiceException" name="WebStoreServiceException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetBasketSize">
+      <wsdl:input message="tns:GetBasketSize" name="GetBasketSize">
+    </wsdl:input>
+      <wsdl:output message="tns:GetBasketSizeResponse" name="GetBasketSizeResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:WebStoreServiceException" name="WebStoreServiceException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AddItemToBasket">
+      <wsdl:input message="tns:AddItemToBasket" name="AddItemToBasket">
+    </wsdl:input>
+      <wsdl:output message="tns:AddItemToBasketResponse" name="AddItemToBasketResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:WebStoreServiceException" name="WebStoreServiceException">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WebStoreServiceSoapBinding" type="tns:WebStore">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="GetBasketIdentifier">
+      <soap:operation soapAction="http://www.qwaevisz.hu/WebStore/getBasketIdentifier" style="document"/>
+      <wsdl:input name="GetBasketIdentifier">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="GetBasketIdentifierResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WebStoreServiceException">
+        <soap:fault name="WebStoreServiceException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetBasketContent">
+      <soap:operation soapAction="http://www.qwaevisz.hu/WebStore/getBasketContent" style="document"/>
+      <wsdl:input name="GetBasketContent">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="GetBasketContentResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WebStoreServiceException">
+        <soap:fault name="WebStoreServiceException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveItemFromBasket">
+      <soap:operation soapAction="http://www.qwaevisz.hu/WebStore/removeItemFromBasket" style="document"/>
+      <wsdl:input name="RemoveItemFromBasket">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="RemoveItemFromBasketResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WebStoreServiceException">
+        <soap:fault name="WebStoreServiceException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteProduct">
+      <soap:operation soapAction="http://www.qwaevisz.hu/WebStore/deleteProduct" style="document"/>
+      <wsdl:input name="DeleteProduct">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="DeleteProductResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WebStoreServiceException">
+        <soap:fault name="WebStoreServiceException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AddProduct">
+      <soap:operation soapAction="http://www.qwaevisz.hu/WebStore/addProduct" style="document"/>
+      <wsdl:input name="AddProduct">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="AddProductResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WebStoreServiceException">
+        <soap:fault name="WebStoreServiceException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ListProductsByNameTerm">
+      <soap:operation soapAction="http://www.qwaevisz.hu/WebStore/listProductsByNameTerm" style="document"/>
+      <wsdl:input name="ListProductsByNameTerm">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="ListProductsByNameTermResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WebStoreServiceException">
+        <soap:fault name="WebStoreServiceException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ListProductsByBrand">
+      <soap:operation soapAction="http://www.qwaevisz.hu/WebStore/listProductsByBrand" style="document"/>
+      <wsdl:input name="ListProductsByBrand">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="ListProductsByBrandResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WebStoreServiceException">
+        <soap:fault name="WebStoreServiceException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetProduct">
+      <soap:operation soapAction="http://www.qwaevisz.hu/WebStore/getProduct" style="document"/>
+      <wsdl:input name="GetProduct">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="GetProductResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WebStoreServiceException">
+        <soap:fault name="WebStoreServiceException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="SetBasketIdentifier">
+      <soap:operation soapAction="http://www.qwaevisz.hu/WebStore/setBasketIdentifier" style="document"/>
+      <wsdl:input name="SetBasketIdentifier">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="SetBasketIdentifierResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WebStoreServiceException">
+        <soap:fault name="WebStoreServiceException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ListAllProducts">
+      <soap:operation soapAction="http://www.qwaevisz.hu/WebStore/listAllProducts" style="document"/>
+      <wsdl:input name="ListAllProducts">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="ListAllProductsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WebStoreServiceException">
+        <soap:fault name="WebStoreServiceException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetBasketSize">
+      <soap:operation soapAction="http://www.qwaevisz.hu/WebStore/getBasketSize" style="document"/>
+      <wsdl:input name="GetBasketSize">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="GetBasketSizeResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WebStoreServiceException">
+        <soap:fault name="WebStoreServiceException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AddItemToBasket">
+      <soap:operation soapAction="http://www.qwaevisz.hu/WebStore/addItemToBasket" style="document"/>
+      <wsdl:input name="AddItemToBasket">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="AddItemToBasketResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WebStoreServiceException">
+        <soap:fault name="WebStoreServiceException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WebStoreService">
+    <wsdl:port binding="tns:WebStoreServiceSoapBinding" name="WebStorePort">
+      <soap:address location="http://localhost:8080/webstore/WebStoreService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,28 +1,10 @@
-package hu.qwaevisz.webstore.ejbservice.domain;
+package hu.qwaevisz.webstore.persistence.domain;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
-
-import hu.qwaevisz.webstore.common.doclet.Description;
-
-@XmlRootElement(name = "product")
-@XmlAccessorType(XmlAccessType.FIELD)
-@Description("Product is the core object in the application.")
 public class Product {
 
-	@XmlAttribute(name = "brand")
 	private Brand brand;
-
-	@XmlAttribute(name = "name")
 	private String name;
-	@XmlAttribute(name = "price")
 	private int price;
-
-	public Product() {
-
-	}
 
 	public Product(Brand brand, String name, int price) {
 		this.brand = brand;
@@ -30,7 +12,6 @@ public class Product {
 		this.price = price;
 	}
 
-	@Description("Retrieve the brand of the project.")
 	public Brand getBrand() {
 		return this.brand;
 	}
@@ -39,7 +20,6 @@ public class Product {
 		this.brand = brand;
 	}
 
-	@Description("Retrieve the name of the project.")
 	public String getName() {
 		return this.name;
 	}
@@ -48,7 +28,6 @@ public class Product {
 		this.name = name;
 	}
 
-	@Description("Retrieve the price of the project.")
 	public int getPrice() {
 		return this.price;
 	}

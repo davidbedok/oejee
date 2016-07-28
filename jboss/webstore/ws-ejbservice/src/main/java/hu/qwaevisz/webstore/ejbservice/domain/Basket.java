@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name = "basket")
+@XmlRootElement(name = "Basket")
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class Basket {
 
@@ -20,11 +20,15 @@ public class Basket {
 		this.items = new ArrayList<>();
 	}
 
-	public void add(Product product) {
+	public void add(ProductStub product) {
 		this.items.add(new BasketItem(product, 1));
 	}
 
-	public void increment(Product product) {
+	public void remove(ProductStub product) {
+		this.items.remove(product);
+	}
+
+	public void increment(ProductStub product) {
 		for (final BasketItem item : this.items) {
 			if (item.getProduct().equals(product)) {
 				item.increment();
@@ -33,7 +37,7 @@ public class Basket {
 		}
 	}
 
-	public boolean find(Product product) {
+	public boolean find(ProductStub product) {
 		boolean result = false;
 		for (final BasketItem item : this.items) {
 			if (item.getProduct().equals(product)) {
@@ -57,7 +61,7 @@ public class Basket {
 		return this.identifier != null;
 	}
 
-	@XmlElement(name = "items")
+	@XmlElement(name = "Item")
 	public List<BasketItem> getItems() {
 		return this.items;
 	}

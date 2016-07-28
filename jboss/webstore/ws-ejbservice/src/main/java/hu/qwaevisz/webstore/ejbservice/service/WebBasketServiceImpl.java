@@ -1,14 +1,19 @@
 package hu.qwaevisz.webstore.ejbservice.service;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.ejb.Remove;
 import javax.ejb.Stateful;
 
 import org.apache.log4j.Logger;
 
+import hu.qwaevisz.webstore.ejbservice.converter.ProductConverter;
 import hu.qwaevisz.webstore.ejbservice.domain.Basket;
-import hu.qwaevisz.webstore.ejbservice.domain.Product;
+import hu.qwaevisz.webstore.ejbservice.domain.ProductStub;
 import hu.qwaevisz.webstore.ejbservice.exception.ServiceException;
+import hu.qwaevisz.webstore.ejbservice.exception.WebStoreError;
+import hu.qwaevisz.webstore.persistence.exception.PersistenceException;
+import hu.qwaevisz.webstore.persistence.service.PersistenceService;
 
 @Stateful(mappedName = "ejb/webBasketService")
 public class WebBasketServiceImpl implements WebBasketService {
@@ -16,6 +21,12 @@ public class WebBasketServiceImpl implements WebBasketService {
 	private static final Logger LOGGER = Logger.getLogger(WebBasketServiceImpl.class);
 
 	private Basket basket;
+
+	@EJB
+	private PersistenceService service;
+
+	@EJB
+	private ProductConverter converter;
 
 	@PostConstruct
 	public void setup() {
@@ -28,7 +39,7 @@ public class WebBasketServiceImpl implements WebBasketService {
 		if (!this.basket.hasIdentifier()) {
 			this.basket.setIdentifier(identifier);
 		} else {
-			throw new ServiceException(42, "Basket already has an identifier (" + this.basket.getIdentifier() + ").");
+			throw new ServiceException(WebStoreError.IDENTIFIER, "Basket already has an identifier (" + this.basket.getIdentifier() + ").");
 		}
 	}
 
@@ -45,12 +56,43 @@ public class WebBasketServiceImpl implements WebBasketService {
 	}
 
 	@Override
-	public void addItem(Product product) throws ServiceException {
-		LOGGER.debug("Add Product (" + product + ") to " + this.basket);
-		if (this.basket.find(product)) {
-			this.basket.increment(product);
-		} else {
-			this.basket.add(product);
+	public void addItem(String productName) throws ServiceException {
+		LOGGER.debug("Add Product (" + productName + ") to " + this.basket);
+		try {
+			ProductStub product = this.converter.toStub(this.service.read(productName));
+			if (product != null) {
+				if (this.basket.find(product)) {
+					this.basket.increment(product);
+				} else {
+					this.basket.add(product);
+				}
+			} else {
+				throw new ServiceException(WebStoreError.PRODUCT, "Unknown product (name: " + productName + ").");
+			}
+		} catch (PersistenceException e) {
+			LOGGER.error(e, e);
+			throw new ServiceException(WebStoreError.PERSISTENCE, e.getMessage());
+		}
+	}
+
+	@Override
+	public void removeItem(String productName) throws ServiceException {
+		LOGGER.debug("Remove Product (" + productName + ") from " + this.basket);
+		try {
+			ProductStub product = this.converter.toStub(this.service.read(productName));
+			if (product != null) {
+				if (this.basket.find(product)) {
+					this.basket.remove(product);
+				} else {
+					throw new ServiceException(WebStoreError.IDENTIFIER,
+							"Basket (" + this.basket.getIdentifier() + ") doesn't contain this product (" + productName + ").");
+				}
+			} else {
+				throw new ServiceException(WebStoreError.PRODUCT, "Unknown product (name: " + productName + ").");
+			}
+		} catch (PersistenceException e) {
+			LOGGER.error(e, e);
+			throw new ServiceException(WebStoreError.PERSISTENCE, e.getMessage());
 		}
 	}
 

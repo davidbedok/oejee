@@ -4,11 +4,10 @@ import javax.ejb.Local;
 
 import hu.qwaevisz.webstore.common.doclet.Description;
 import hu.qwaevisz.webstore.ejbservice.domain.Basket;
-import hu.qwaevisz.webstore.ejbservice.domain.Product;
 import hu.qwaevisz.webstore.ejbservice.exception.ServiceException;
 
 @Local
-@Description("This Basket service is good for handling customer purchase process.")
+@Description("This Basket service is good for handling customer's purchase process.")
 public interface WebBasketService {
 
 	@Description("Use that method when a new customer appears in the webstore.")
@@ -21,7 +20,10 @@ public interface WebBasketService {
 	int getBasketSize() throws ServiceException;
 
 	@Description("Use that method if the customer buys something new in the webstore.")
-	void addItem(@Description("The product which is put into the webbasket.") Product product) throws ServiceException;
+	void addItem(@Description("The product name which is put into the webbasket.") String productName) throws ServiceException;
+
+	@Description("Use that method if the customer removes an existing item from his/her basket.")
+	void removeItem(@Description("The name of the product") String productName) throws ServiceException;
 
 	@Description("Provides all the available information about the basket.")
 	Basket getContent() throws ServiceException;

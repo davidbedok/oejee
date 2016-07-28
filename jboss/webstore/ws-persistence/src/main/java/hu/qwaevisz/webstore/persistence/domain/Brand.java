@@ -1,4 +1,4 @@
-package hu.qwaevisz.webstore.ejbservice.domain;
+package hu.qwaevisz.webstore.persistence.domain;
 
 public enum Brand {
 
