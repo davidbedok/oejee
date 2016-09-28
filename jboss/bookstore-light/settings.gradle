@@ -1,0 +1,2 @@
+include 'bs-ejbservice'
+include 'bs-weblayer'
