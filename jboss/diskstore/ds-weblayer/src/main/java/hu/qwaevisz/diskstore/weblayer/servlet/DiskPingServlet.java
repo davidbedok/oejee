@@ -32,7 +32,7 @@ public class DiskPingServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		final PrintWriter out = response.getWriter();
 		try {
-			final DiskStub disk = this.facade.getDisk("REF002");
+			final DiskStub disk = this.facade.getDisk("WAM124");
 			out.println(disk.toString());
 		} catch (final ServiceException e) {
 			LOGGER.error(e, e);
