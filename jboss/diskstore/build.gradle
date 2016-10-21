@@ -41,8 +41,10 @@ ear {
 dependencies {
 	deploy project('ds-persistence')
 	deploy project('ds-ejbservice')
-	deploy project('ds-ejbserviceclient')
 	deploy project(path: 'ds-weblayer', configuration: 'archives')
+	earlib ( project('ds-ejbserviceclient') ) {
+		transitive = false
+	}
 	earlib group: 'org.mybatis', name: 'mybatis', version: mybatisVersion
 	earlib group: 'org.mybatis', name: 'mybatis-cdi', version: mybatiscdiVersion
 }
