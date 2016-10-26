@@ -18,7 +18,7 @@ import hu.qwaevisz.bookstore.persistence.exception.PersistenceServiceException;
 import hu.qwaevisz.bookstore.persistence.parameter.BookParameter;
 import hu.qwaevisz.bookstore.persistence.query.BookQuery;
 
-@Stateless(mappedName = "ejb/groupService")
+@Stateless(mappedName = "ejb/bookService")
 @TransactionManagement(TransactionManagementType.CONTAINER)
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class BookServiceImpl implements BookService {

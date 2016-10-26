@@ -1,5 +1,1 @@
 jar { archiveName 'bs-persistence.jar' }
-
-dependencies {
-	compile group: 'org.hibernate', name: 'hibernate-core', version: hibernateVersion
-}

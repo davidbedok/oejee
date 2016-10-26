@@ -23,9 +23,6 @@ subprojects {
 	apply plugin: 'eclipse'
 	apply plugin: 'java'
 
-	sourceCompatibility = 1.7
-	targetCompatibility = 1.7
-
 	repositories { 
 		mavenCentral() 
 	}

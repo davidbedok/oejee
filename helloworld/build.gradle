@@ -1,7 +1,6 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
 
-sourceCompatibility = 1.7
 version = '1.0'
 
 def testngVersion = '6.9.6'
