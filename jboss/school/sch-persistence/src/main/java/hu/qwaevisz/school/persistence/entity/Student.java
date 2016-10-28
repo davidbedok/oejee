@@ -27,7 +27,7 @@ import hu.qwaevisz.school.persistence.query.StudentQuery;
 @Table(name = "student")
 @NamedQueries(value = { //
 		@NamedQuery(name = StudentQuery.COUNT_BY_NAME, query = "SELECT COUNT(s) FROM Student s WHERE s.neptun=:" + StudentParameter.NEPTUN),
-		@NamedQuery(name = StudentQuery.GET_BY_NEPTUN, query = "SELECT st FROM Student st JOIN FETCH st.marks m JOIN FETCH m.subject su JOIN FETCH su.teacher WHERE st.neptun=:"
+		@NamedQuery(name = StudentQuery.GET_BY_NEPTUN, query = "SELECT st FROM Student st LEFT JOIN FETCH st.marks m LEFT JOIN FETCH m.subject su LEFT JOIN FETCH su.teacher WHERE st.neptun=:"
 				+ StudentParameter.NEPTUN),
 		@NamedQuery(name = StudentQuery.GET_BY_ID, query = "SELECT s FROM Student s WHERE s.id=:" + StudentParameter.ID),
 		@NamedQuery(name = StudentQuery.GET_ALL, query = "SELECT s FROM Student s ORDER BY s.name"),
