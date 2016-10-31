@@ -21,7 +21,7 @@ public class StudentRestServiceBean implements StudentRestService {
 	private StudentFacade facade;
 
 	@Override
-	public StudentStub getStudent(String neptun) throws AdaptorException {
+	public StudentStub getStudent(final String neptun) throws AdaptorException {
 		LOGGER.info("Get Student (" + neptun + ")");
 		return this.facade.getStudent(neptun);
 	}
@@ -33,13 +33,19 @@ public class StudentRestServiceBean implements StudentRestService {
 	}
 
 	@Override
-	public void removeStudent(String neptun) throws AdaptorException {
+	public void removeStudent(final String neptun) throws AdaptorException {
 		LOGGER.info("Remove Student (" + neptun + ")");
 		this.facade.removeStudent(neptun);
 	}
 
 	@Override
-	public Response optionsAll(String path) {
+	public void removeStudentAdvanced(final String neptun) throws AdaptorException {
+		LOGGER.info("Remove Student Advanced (" + neptun + ")");
+		this.facade.removeStudentAdvanced(neptun);
+	}
+
+	@Override
+	public Response optionsAll(final String path) {
 		return Response.status(Response.Status.NO_CONTENT).build();
 	}
 

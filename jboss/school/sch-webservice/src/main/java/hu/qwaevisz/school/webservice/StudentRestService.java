@@ -30,6 +30,10 @@ public interface StudentRestService {
 	@Path("/{neptun}")
 	void removeStudent(@PathParam("neptun") String neptun) throws AdaptorException;
 
+	@DELETE
+	@Path("/advanced/{neptun}")
+	void removeStudentAdvanced(@PathParam("neptun") String neptun) throws AdaptorException;
+
 	@OPTIONS
 	@Path("{path:.*}")
 	Response optionsAll(@PathParam("path") String path);

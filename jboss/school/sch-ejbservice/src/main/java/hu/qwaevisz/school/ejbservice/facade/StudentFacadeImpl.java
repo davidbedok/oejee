@@ -12,6 +12,7 @@ import hu.qwaevisz.school.ejbservice.converter.StudentConverter;
 import hu.qwaevisz.school.ejbservice.domain.StudentStub;
 import hu.qwaevisz.school.ejbservice.exception.AdaptorException;
 import hu.qwaevisz.school.ejbservice.util.ApplicationError;
+import hu.qwaevisz.school.persistence.exception.AdvancedPersistenceServiceException;
 import hu.qwaevisz.school.persistence.exception.PersistenceServiceException;
 import hu.qwaevisz.school.persistence.service.MarkService;
 import hu.qwaevisz.school.persistence.service.StudentService;
@@ -31,7 +32,7 @@ public class StudentFacadeImpl implements StudentFacade {
 	private StudentConverter converter;
 
 	@Override
-	public StudentStub getStudent(String neptun) throws AdaptorException {
+	public StudentStub getStudent(final String neptun) throws AdaptorException {
 		try {
 			final StudentStub stub = this.converter.to(this.studentService.read(neptun));
 			if (LOGGER.isDebugEnabled()) {
@@ -60,7 +61,7 @@ public class StudentFacadeImpl implements StudentFacade {
 	}
 
 	@Override
-	public void removeStudent(String neptun) throws AdaptorException {
+	public void removeStudent(final String neptun) throws AdaptorException {
 		try {
 			if (this.studentService.exists(neptun)) {
 				if (this.markService.count(neptun) == 0) {
@@ -71,6 +72,19 @@ public class StudentFacadeImpl implements StudentFacade {
 			} else {
 				throw new AdaptorException(ApplicationError.NOT_EXISTS, "Student doesn't exist", neptun);
 			}
+		} catch (final PersistenceServiceException e) {
+			LOGGER.error(e, e);
+			throw new AdaptorException(ApplicationError.UNEXPECTED, e.getLocalizedMessage());
+		}
+	}
+
+	@Override
+	public void removeStudentAdvanced(final String neptun) throws AdaptorException {
+		try {
+			this.studentService.deleteAdvanced(neptun);
+		} catch (final AdvancedPersistenceServiceException e) {
+			final ApplicationError error = ApplicationError.valueOf(e.getError().name());
+			throw new AdaptorException(error, e.getLocalizedMessage(), e.getField());
 		} catch (final PersistenceServiceException e) {
 			LOGGER.error(e, e);
 			throw new AdaptorException(ApplicationError.UNEXPECTED, e.getLocalizedMessage());

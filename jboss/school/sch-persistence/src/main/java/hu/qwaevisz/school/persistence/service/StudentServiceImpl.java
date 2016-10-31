@@ -2,6 +2,7 @@ package hu.qwaevisz.school.persistence.service;
 
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -13,9 +14,11 @@ import javax.persistence.PersistenceContext;
 import org.apache.log4j.Logger;
 
 import hu.qwaevisz.school.persistence.entity.Student;
+import hu.qwaevisz.school.persistence.exception.AdvancedPersistenceServiceException;
 import hu.qwaevisz.school.persistence.exception.PersistenceServiceException;
 import hu.qwaevisz.school.persistence.parameter.StudentParameter;
 import hu.qwaevisz.school.persistence.query.StudentQuery;
+import hu.qwaevisz.school.persistence.util.PersistenceApplicationError;
 
 @Stateless(mappedName = "ejb/studentService")
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -27,7 +30,11 @@ public class StudentServiceImpl implements StudentService {
 	@PersistenceContext(unitName = "sch-persistence-unit")
 	private EntityManager entityManager;
 
+	@EJB
+	private MarkService markService;
+
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public boolean exists(final String neptun) throws PersistenceServiceException {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("Check Student by neptun (" + neptun + ")");
@@ -95,6 +102,26 @@ public class StudentServiceImpl implements StudentService {
 			this.entityManager.createNamedQuery(StudentQuery.REMOVE_BY_NEPTUN).setParameter(StudentParameter.NEPTUN, neptun).executeUpdate();
 		} catch (final Exception e) {
 			throw new PersistenceServiceException("Unknown error when removing Student by neptun (" + neptun + ")! " + e.getLocalizedMessage(), e);
+		}
+	}
+
+	@Override
+	public void deleteAdvanced(final String neptun) throws PersistenceServiceException {
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("Remove Student by neptun (" + neptun + ")");
+		}
+		if (this.exists(neptun)) {
+			if (this.markService.count(neptun) == 0) {
+				try {
+					this.entityManager.createNamedQuery(StudentQuery.REMOVE_BY_NEPTUN).setParameter(StudentParameter.NEPTUN, neptun).executeUpdate();
+				} catch (final Exception e) {
+					throw new PersistenceServiceException("Unknown error when removing Student by neptun (" + neptun + ")! " + e.getLocalizedMessage(), e);
+				}
+			} else {
+				throw new AdvancedPersistenceServiceException(PersistenceApplicationError.HAS_DEPENDENCY, "Student has undeleted mark(s)", neptun);
+			}
+		} else {
+			throw new AdvancedPersistenceServiceException(PersistenceApplicationError.NOT_EXISTS, "Student doesn't exist", neptun);
 		}
 	}
 

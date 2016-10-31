@@ -16,4 +16,6 @@ public interface StudentFacade {
 
 	void removeStudent(String neptun) throws AdaptorException;
 
+	void removeStudentAdvanced(String neptun) throws AdaptorException;
+
 }

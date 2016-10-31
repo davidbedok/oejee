@@ -17,7 +17,7 @@ public interface MarkRestService {
 	@POST
 	@Consumes("application/xml")
 	@Produces("application/xml")
-	@Path("/get/{studentneptun}")
-	ClientResponse<MarkStub> getMarks(@PathParam("studentneptun") String studentNeptun, MarkCriteria criteria);
+	@Path("/get/{neptun}")
+	ClientResponse<MarkStub> getMarks(@PathParam("neptun") String studentNeptun, MarkCriteria criteria);
 
 }
