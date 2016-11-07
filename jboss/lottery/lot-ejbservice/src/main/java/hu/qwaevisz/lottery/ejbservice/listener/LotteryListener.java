@@ -17,7 +17,8 @@ import org.apache.log4j.Logger;
 import hu.qwaevisz.lottery.ejbservice.exception.AdaptorException;
 import hu.qwaevisz.lottery.ejbservice.facade.LotteryFacade;
 
-@MessageDriven(name = "LotteryListener", activationConfig = { @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
+@MessageDriven(name = "LotteryListener", activationConfig = { //
+		@ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
 		@ActivationConfigProperty(propertyName = "destination", propertyValue = "lotteryqueue"),
 		@ActivationConfigProperty(propertyName = "acknowledgeMode", propertyValue = "Auto-acknowledge") })
 public class LotteryListener implements MessageListener {

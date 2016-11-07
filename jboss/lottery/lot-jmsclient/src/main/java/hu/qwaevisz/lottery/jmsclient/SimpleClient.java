@@ -21,17 +21,17 @@ public class SimpleClient {
 		environment.put(Context.PROVIDER_URL, "remote://localhost:4447");
 		environment.put(Context.SECURITY_PRINCIPAL, "jmstestuser");
 		environment.put(Context.SECURITY_CREDENTIALS, "User#70365");
-		Context context = new InitialContext(environment);
+		final Context context = new InitialContext(environment);
 
 		final ConnectionFactory connectionFactory = (ConnectionFactory) context.lookup("jms/RemoteConnectionFactory");
 		final Destination destination = (Destination) context.lookup("jms/queue/lotteryqueue");
 
-		Connection connection = connectionFactory.createConnection("jmstestuser", "User#70365");
+		final Connection connection = connectionFactory.createConnection("jmstestuser", "User#70365");
 		final Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 		final MessageProducer producer = session.createProducer(destination);
 		connection.start();
 
-		final TextMessage textMessage = session.createTextMessage("1, 2, 3, 4, 5");
+		final TextMessage textMessage = session.createTextMessage("1, 2, 3, 4, 9");
 		producer.send(textMessage);
 
 		connection.close();
