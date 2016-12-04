@@ -1,0 +1,42 @@
+body {
+	font-size: 100%;
+	font-family: Arial, Verdana, sans-serif;
+	background-color: #ffffff;
+}
+
+.inventorytable {
+	color: black;
+	font-weight: normal;
+	padding: 0px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 20px;
+	margin-right: 20px;
+	border: 0px;
+	border-spacing: 0px;
+	width: 600px;
+	white-space: nowrap;
+}
+
+.inventorytable thead {
+	text-align: center;
+	font-weight: bold;
+}
+
+.inventorytable td, 
+.inventorytable th {
+	border: 1px solid;
+	padding: 3px;
+}
+
+label {
+	font-weight: bold;
+}
+
+.inputheader {
+	font-size: 17px;
+}
+
+.frame {
+	padding: 5px;
+}

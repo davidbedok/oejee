@@ -1,4 +1,4 @@
-package hu.qwaevisz.school.webservice.filter;
+package hu.qwaevisz.inventory.webservice.filter;
 
 import java.io.IOException;
 

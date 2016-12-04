@@ -1,4 +1,4 @@
-package hu.qwaevisz.school.webservice.mapper;
+package hu.qwaevisz.inventory.webservice.mapper;
 
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
@@ -9,7 +9,7 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 import hu.qwaevisz.inventory.ejbservice.exception.AdaptorException;
-import hu.qwaevisz.school.webservice.filter.InventoryCrossOriginRequestFilter;
+import hu.qwaevisz.inventory.webservice.filter.InventoryCrossOriginRequestFilter;
 
 @Provider
 public class AdaptorExceptionMapper implements ExceptionMapper<AdaptorException> {

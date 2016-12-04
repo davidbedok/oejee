@@ -4,16 +4,16 @@ import java.util.List;
 
 import javax.ejb.Local;
 
-import hu.qwaevisz.inventory.persistence.domain.Inventory;
+import hu.qwaevisz.inventory.persistence.domain.InventoryItem;
 import hu.qwaevisz.inventory.persistence.domain.InventoryType;
 
 @Local
 public interface InventoryHolder {
 
-	Inventory get(String reference);
+	InventoryItem get(String reference);
 
-	List<Inventory> list(InventoryType type);
+	List<InventoryItem> list(InventoryType type);
 
-	List<Inventory> getAll();
+	List<InventoryItem> getAll();
 
 }

@@ -1,17 +1,17 @@
 package hu.qwaevisz.inventory.persistence.domain;
 
-public class Inventory {
+public class InventoryItem {
 
 	private String reference;
 	private String name;
 	private InventoryType type;
 	private int value;
 
-	public Inventory() {
+	public InventoryItem() {
 		this(null, null, InventoryType.BOOK, 0);
 	}
 
-	public Inventory(String reference, String name, InventoryType type, int value) {
+	public InventoryItem(String reference, String name, InventoryType type, int value) {
 		this.reference = reference;
 		this.name = name;
 		this.type = type;

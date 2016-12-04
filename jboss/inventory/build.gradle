@@ -8,6 +8,9 @@ ext {
 	servletapiVersion = '3.0.1'
 	jaxrsVersion = '2.0.1'
 	groovyVersion = '2.4.5'
+	jstlVersion = '1.2'
+	jacksonVersion = '1.9.9'
+	autovalueVersion = '1.2'
 
 	webapplicationName = 'inv-webservice.war'
 	webapplicationContextPath = 'inventory'

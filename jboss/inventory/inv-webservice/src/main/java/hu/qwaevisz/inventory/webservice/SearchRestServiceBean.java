@@ -1,4 +1,4 @@
-package hu.qwaevisz.school.webservice;
+package hu.qwaevisz.inventory.webservice;
 
 import java.util.List;
 
@@ -8,9 +8,10 @@ import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
 
+import hu.qwaevisz.inventory.ejbservice.domain.InventoryItemStub;
 import hu.qwaevisz.inventory.ejbservice.exception.AdaptorException;
 import hu.qwaevisz.inventory.ejbservice.facade.InventoryFacade;
-import hu.qwaevisz.inventory.persistence.domain.Inventory;
+import hu.qwaevisz.inventory.persistence.domain.InventoryItem;
 import hu.qwaevisz.inventory.persistence.domain.InventoryType;
 
 @Stateless
@@ -22,21 +23,37 @@ public class SearchRestServiceBean implements SearchRestService {
 	private InventoryFacade facade;
 
 	@Override
-	public Inventory getInventory(String reference) throws AdaptorException {
+	public InventoryItem getInventory(String reference) throws AdaptorException {
 		LOGGER.info("Get Inventory by " + reference + " (reference)");
 		return this.facade.getInventory(reference);
 	}
 
 	@Override
-	public List<Inventory> getInventories(InventoryType type) throws AdaptorException {
+	public List<InventoryItem> getInventories(InventoryType type) throws AdaptorException {
 		LOGGER.info("Get Inventories by " + type + " type");
 		return this.facade.getInventories(type);
 	}
 
 	@Override
-	public List<Inventory> getInventories(InventoryType type, String nameTerm) throws AdaptorException {
+	public List<InventoryItem> getInventories(InventoryType type, String nameTerm) throws AdaptorException {
 		LOGGER.info("Get Inventories by " + type + " type and " + nameTerm + " name");
 		return this.facade.getInventories(type, nameTerm);
+	}
+
+	@Override
+	public String getHost() throws AdaptorException {
+		return this.facade.getHost();
+	}
+
+	@Override
+	public InventoryItemStub getInventoryStub(String reference) throws AdaptorException {
+		LOGGER.info("Get Inventory by " + reference + " (reference)");
+		return this.facade.getInventoryStub(reference);
+	}
+
+	@Override
+	public List<Integer> getRandomNumbers(int quantity) throws AdaptorException {
+		return this.facade.getRandomNumbers(quantity);
 	}
 
 	@Override

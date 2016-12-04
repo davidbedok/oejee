@@ -2,7 +2,7 @@ package hu.qwaevisz.inventory.ejbservice.event;
 
 import java.io.Serializable;
 
-import hu.qwaevisz.inventory.persistence.domain.Client;
+import hu.qwaevisz.inventory.ejbservice.domain.Client;
 
 public class NotifierEvent implements Serializable {
 

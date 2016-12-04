@@ -1,3 +1,21 @@
+http://localhost:8080/inventory/JSPList
+http://localhost:8080/inventory/GSPList
+http://localhost:8080/inventory/GroovyList
+
+http://localhost:8080/inventory/api/search/
+
+http://localhost:8080/inventory/api/search/numbers/5
+[91,64,25,77,66]
+
+
+
+REQ: http://localhost:8080/inventory/api/search/stub/IPS65
+RESP: {"price":"65 HUF","product":"IPS65:Ipsum"}
+
+REQ: http://localhost:8080/inventory/api/search/assets
+RESP: 
+
+
 REQ: GET http://localhost:8080/inventory/api/search/IPS65
 RESP: 200 OK
 {

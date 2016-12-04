@@ -7,13 +7,9 @@ import java.lang.annotation.Target;
 
 import javax.inject.Qualifier;
 
-import hu.qwaevisz.inventory.ejbservice.domain.ClientType;
-
 @Qualifier
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.TYPE, ElementType.METHOD, ElementType.FIELD })
-public @interface ClientFlag {
-
-	ClientType value();
+@Target({ ElementType.TYPE, ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER })
+public @interface Converter {
 
 }

@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<server xmlns="urn:jboss:domain:1.7">
+    <profile>
+		...
+        <subsystem xmlns="urn:jboss:domain:ee:1.2">
+            <global-modules>
+                ...
+				<module name="org.codehaus.groovy" slot="main"/>
+				...
+            </global-modules>
+            ...
+        </subsystem>
+		...
+		<subsystem xmlns="urn:jboss:domain:naming:1.4">
+			<remote-naming/>
+			<bindings>
+				<simple name="java:global/inventoryhost" value="lorem"/>   
+				<simple name="java:global/currency" value="HUF"/>
+				<simple name="java:global/exchangeRate" value="305" type="int" />	
+				<simple name="java:global/maxNumber" value="100" type="int" />	
+				<simple name="java:global/customClientName" value="Dolores M. Putto" />			
+			</bindings>
+        </subsystem>
+		...
+    </profile>
+	...
+</server>

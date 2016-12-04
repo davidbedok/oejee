@@ -1,4 +1,4 @@
-package hu.qwaevisz.school.webservice.main;
+package hu.qwaevisz.inventory.webservice.main;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;

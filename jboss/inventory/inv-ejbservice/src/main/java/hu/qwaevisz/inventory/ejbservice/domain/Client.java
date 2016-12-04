@@ -1,4 +1,4 @@
-package hu.qwaevisz.inventory.persistence.domain;
+package hu.qwaevisz.inventory.ejbservice.domain;
 
 public class Client {
 

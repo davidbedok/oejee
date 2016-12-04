@@ -9,34 +9,34 @@ import javax.ejb.LockType;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
-import hu.qwaevisz.inventory.persistence.domain.Inventory;
+import hu.qwaevisz.inventory.persistence.domain.InventoryItem;
 import hu.qwaevisz.inventory.persistence.domain.InventoryType;
 
 @Startup
 @Singleton
 public class InventoryHolderImpl implements InventoryHolder {
 
-	private List<Inventory> items;
+	private List<InventoryItem> items;
 
 	@PostConstruct
 	private void init() {
 		this.items = new ArrayList<>();
-		this.items.add(new Inventory("LOR42", "Lorem10", InventoryType.BOOK, 42));
-		this.items.add(new Inventory("LOR78", "Lorem20", InventoryType.BOOK, 78));
-		this.items.add(new Inventory("LOR34", "Lorem30", InventoryType.BOOK, 34));
-		this.items.add(new Inventory("IPS65", "Ipsum", InventoryType.DISK, 65));
-		this.items.add(new Inventory("DOL30", "Dolor", InventoryType.CASSETTE, 30));
-		this.items.add(new Inventory("SIT78", "Sit", InventoryType.BOOK, 78));
-		this.items.add(new Inventory("AME85", "Amet", InventoryType.DISK, 85));
-		this.items.add(new Inventory("CON01", "Consectetur", InventoryType.DISK, 1));
-		this.items.add(new Inventory("ADI03", "Adipiscing", InventoryType.CASSETTE, 3));
+		this.items.add(new InventoryItem("LOR42", "Lorem10", InventoryType.BOOK, 42));
+		this.items.add(new InventoryItem("LOR78", "Lorem20", InventoryType.BOOK, 78));
+		this.items.add(new InventoryItem("LOR34", "Lorem30", InventoryType.BOOK, 34));
+		this.items.add(new InventoryItem("IPS65", "Ipsum", InventoryType.DISK, 65));
+		this.items.add(new InventoryItem("DOL30", "Dolor", InventoryType.CASSETTE, 30));
+		this.items.add(new InventoryItem("SIT78", "Sit", InventoryType.BOOK, 78));
+		this.items.add(new InventoryItem("AME85", "Amet", InventoryType.DISK, 85));
+		this.items.add(new InventoryItem("CON01", "Consectetur", InventoryType.DISK, 1));
+		this.items.add(new InventoryItem("ADI03", "Adipiscing", InventoryType.CASSETTE, 3));
 	}
 
 	@Override
 	@Lock(LockType.READ)
-	public Inventory get(String reference) {
-		Inventory result = null;
-		for (final Inventory current : this.items) {
+	public InventoryItem get(String reference) {
+		InventoryItem result = null;
+		for (final InventoryItem current : this.items) {
 			if (current.getReference().equals(reference)) {
 				result = current;
 				break;
@@ -47,9 +47,9 @@ public class InventoryHolderImpl implements InventoryHolder {
 
 	@Override
 	@Lock(LockType.READ)
-	public List<Inventory> list(InventoryType type) {
-		final List<Inventory> result = new ArrayList<>();
-		for (final Inventory current : this.items) {
+	public List<InventoryItem> list(InventoryType type) {
+		final List<InventoryItem> result = new ArrayList<>();
+		for (final InventoryItem current : this.items) {
 			if (current.getType() == type) {
 				result.add(current);
 			}
@@ -58,7 +58,7 @@ public class InventoryHolderImpl implements InventoryHolder {
 	}
 
 	@Override
-	public List<Inventory> getAll() {
+	public List<InventoryItem> getAll() {
 		return this.items;
 	}
 
