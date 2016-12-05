@@ -23,6 +23,11 @@ public class SearchRestServiceBean implements SearchRestService {
 	private InventoryFacade facade;
 
 	@Override
+	public void checkInterceptor() throws AdaptorException {
+		this.facade.test();
+	}
+
+	@Override
 	public InventoryItem getInventory(String reference) throws AdaptorException {
 		LOGGER.info("Get Inventory by " + reference + " (reference)");
 		return this.facade.getInventory(reference);

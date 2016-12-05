@@ -8,6 +8,9 @@ import javax.ejb.Stateless;
 import javax.enterprise.event.Event;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
+import javax.interceptor.Interceptors;
+
+import org.apache.log4j.Logger;
 
 import hu.qwaevisz.inventory.ejbservice.client.ClientHolder;
 import hu.qwaevisz.inventory.ejbservice.converter.InventoryItemConverter;
@@ -18,6 +21,7 @@ import hu.qwaevisz.inventory.ejbservice.domain.InventoryItemStub;
 import hu.qwaevisz.inventory.ejbservice.event.NotifierEvent;
 import hu.qwaevisz.inventory.ejbservice.exception.AdaptorException;
 import hu.qwaevisz.inventory.ejbservice.interceptor.Logged;
+import hu.qwaevisz.inventory.ejbservice.interceptor.LoggedInterceptor;
 import hu.qwaevisz.inventory.ejbservice.qualifier.ClientFlag;
 import hu.qwaevisz.inventory.ejbservice.qualifier.Discount;
 import hu.qwaevisz.inventory.ejbservice.qualifier.Random;
@@ -29,6 +33,8 @@ import hu.qwaevisz.inventory.persistence.service.InventorySearch;
 
 @Stateless(mappedName = "ejb/inventoryFacade")
 public class InventoryFacadeImpl implements InventoryFacade {
+
+	private static final Logger LOGGER = Logger.getLogger(InventoryFacadeImpl.class);
 
 	@Inject
 	@Discount
@@ -60,6 +66,12 @@ public class InventoryFacadeImpl implements InventoryFacade {
 
 	@Inject
 	private InventoryItemConverter converter;
+
+	@Override
+	@Interceptors({ LoggedInterceptor.class })
+	public void test() {
+		LOGGER.info("Test method call");
+	}
 
 	@Logged
 	@Override

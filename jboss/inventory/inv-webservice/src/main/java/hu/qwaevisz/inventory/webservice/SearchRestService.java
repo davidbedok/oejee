@@ -19,6 +19,10 @@ import hu.qwaevisz.inventory.persistence.domain.InventoryType;
 public interface SearchRestService {
 
 	@GET
+	@Path("/test")
+	void checkInterceptor() throws AdaptorException;
+
+	@GET
 	@Path("/{reference}")
 	@Produces(MediaType.APPLICATION_JSON)
 	InventoryItem getInventory(@PathParam("reference") String reference) throws AdaptorException;

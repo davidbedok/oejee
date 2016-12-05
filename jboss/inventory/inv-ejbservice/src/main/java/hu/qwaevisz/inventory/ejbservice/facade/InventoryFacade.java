@@ -12,6 +12,8 @@ import hu.qwaevisz.inventory.persistence.domain.InventoryType;
 @Local
 public interface InventoryFacade {
 
+	void test();
+
 	InventoryItem getInventory(String reference) throws AdaptorException;
 
 	List<InventoryItem> getInventories(InventoryType type) throws AdaptorException;
