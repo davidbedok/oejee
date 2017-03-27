@@ -28,8 +28,16 @@ public class BookServiceImpl implements BookService {
 	@PersistenceContext(unitName = "bs-persistence-unit")
 	private EntityManager entityManager;
 
+	protected void setEntityManager(final EntityManager entityManager) {
+		this.entityManager = entityManager;
+	}
+
+	protected EntityManager getEntityManager() {
+		return this.entityManager;
+	}
+
 	@Override
-	public boolean exists(String isbn) throws PersistenceServiceException {
+	public boolean exists(final String isbn) throws PersistenceServiceException {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("Check Book by ISBN (" + isbn + ")");
 		}
@@ -41,7 +49,8 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public Book create(String isbn, String author, String title, int numberOfPages, double price, BookCategory category) throws PersistenceServiceException {
+	public Book create(final String isbn, final String author, final String title, final int numberOfPages, final double price, final BookCategory category)
+			throws PersistenceServiceException {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("Create Book (isbn: " + isbn + ", author: " + author + ", title: " + title + ", numberOfPages: " + numberOfPages + ", price: " + price
 					+ ", category: " + category + ")");
@@ -49,6 +58,7 @@ public class BookServiceImpl implements BookService {
 		try {
 			final Book book = new Book(isbn, author, title, numberOfPages, price, category);
 			this.entityManager.persist(book);
+			this.entityManager.flush();
 			return book;
 		} catch (final Exception e) {
 			throw new PersistenceServiceException("Unknown error during persisting Book (" + isbn + ")! " + e.getLocalizedMessage(), e);
@@ -56,7 +66,7 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public Book read(Long id) throws PersistenceServiceException {
+	public Book read(final Long id) throws PersistenceServiceException {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("Get Book by id (" + id + ")");
 		}
@@ -70,7 +80,7 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public Book read(String isbn) throws PersistenceServiceException {
+	public Book read(final String isbn) throws PersistenceServiceException {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("Get Book by ISBN (" + isbn + ")");
 		}
@@ -98,7 +108,7 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public List<Book> read(BookCategory category) throws PersistenceServiceException {
+	public List<Book> read(final BookCategory category) throws PersistenceServiceException {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("Get Books by Category");
 		}
@@ -113,7 +123,8 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public Book update(String isbn, String author, String title, int numberOfPages, double price, BookCategory category) throws PersistenceServiceException {
+	public Book update(final String isbn, final String author, final String title, final int numberOfPages, final double price, final BookCategory category)
+			throws PersistenceServiceException {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("Update Book (isbn: " + isbn + ", author: " + author + ", title: " + title + ", numberOfPages: " + numberOfPages + ", price: " + price
 					+ ", category: " + category + ")");
@@ -132,7 +143,7 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public void delete(String isbn) throws PersistenceServiceException {
+	public void delete(final String isbn) throws PersistenceServiceException {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("Remove Book by ISBN (" + isbn + ")");
 		}

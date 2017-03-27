@@ -8,23 +8,34 @@ ext {
 	servletapiVersion = '3.0.1'
 	hibernateVersion = '4.3.10.Final'
 	jstlVersion = '1.2'
+	postgresqlVersion = '9.4+'
 }
 
 allprojects {
 	repositories { 
 		mavenCentral() 
 		maven { url "http://repository.pentaho.org/artifactory/repo" }
+		maven { url "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases/" }
 	}
 }
 
 subprojects {
 	apply plugin: 'eclipse'
 	apply plugin: 'java'
-
+	
 	dependencies {
 		compile group: 'log4j', name: 'log4j', version: log4jVersion
-		compile group: 'javax', name: 'javaee-api', version: jeeVersion
 		testCompile group: 'org.testng', name: 'testng', version: testngVersion
+	}
+	
+	test {
+		useTestNG()
+	}	
+}
+
+configure(subprojects.findAll {it.name != 'bs-persistence'}) {
+	dependencies {	
+		compile group: 'javax', name: 'javaee-api', version: jeeVersion
 	}
 }
 

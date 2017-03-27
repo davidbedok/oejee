@@ -1,0 +1,8 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="integration-test-suite" verbose="1" >
+	<test name="bookservice">
+		<classes>
+			<class name="hu.qwaevisz.bookstore.persistence.service.BookServiceImplIntegrationTest" />
+		</classes>
+	</test>
+</suite>

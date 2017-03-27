@@ -1,0 +1,41 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+        version="2.0">
+        	
+	<persistence-unit name="bs-persistence-test-unit" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider> 
+		<class>hu.qwaevisz.bookstore.persistence.entity.Book</class> 
+		<properties>
+			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/bookstoredb" />
+			<property name="javax.persistence.jdbc.user" value="bookstore_user" />
+			<property name="javax.persistence.jdbc.password" value="123topSECret321" />
+			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />		
+		
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+			<property name="hibernate.show_sql" value="true"/>
+			<property name="hibernate.format_sql" value="true"/>
+		</properties>
+	</persistence-unit>
+	
+	<persistence-unit name="bs-persistence-init-unit" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider> 
+		<class>hu.qwaevisz.bookstore.persistence.entity.Book</class> 
+		<properties>
+			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/bookstoredb" />
+			<property name="javax.persistence.jdbc.user" value="bookstore_user" />
+			<property name="javax.persistence.jdbc.password" value="123topSECret321" />
+			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />		
+		
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+			<property name="hibernate.show_sql" value="true"/>
+			<property name="hibernate.format_sql" value="true"/>
+			<property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+			<property name="javax.persistence.schema-generation.scripts.action" value="drop-and-create"/>
+			<property name="javax.persistence.schema-generation.scripts.create-target" value="sampleCreate.ddl"/>
+			<property name="javax.persistence.schema-generation.scripts.drop-target" value="sampleDrop.ddl"/>
+			<property name="javax.persistence.sql-load-script-source" value="insert.sql"/>		
+		</properties>
+	</persistence-unit>
+		
+</persistence>

@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="unit-test-suite" verbose="1">
+	<test name="bookservice">
+		<groups>
+			<run>
+				<exclude name="integration" />
+			</run>
+		</groups>	
+		<packages>
+			<package name="hu.qwaevisz.bookstore.persistence.service.*" />
+		</packages>		
+	</test>
+</suite>
