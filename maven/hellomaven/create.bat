@@ -1,0 +1,1 @@
+mvn archetype:generate -DgroupId=hu.qwaevisz.hello -DartifactId=hellomaven -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false

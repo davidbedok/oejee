@@ -1,0 +1,1 @@
+java -cp target/hellomaven-1.0.jar hu.qwaevisz.maven.Application
