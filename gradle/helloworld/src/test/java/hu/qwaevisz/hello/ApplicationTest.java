@@ -1,4 +1,4 @@
-package hu.qwaevisz.gradle;
+package hu.qwaevisz.hello;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;

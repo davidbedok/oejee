@@ -1,4 +1,4 @@
-package hu.qwaevisz.maven;
+package hu.qwaevisz.hello;
 
 public class Application {
 

@@ -1,4 +1,4 @@
-package hu.qwaevisz.maven;
+package hu.qwaevisz.hello;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;

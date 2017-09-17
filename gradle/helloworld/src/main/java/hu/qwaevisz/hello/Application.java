@@ -1,4 +1,4 @@
-package hu.qwaevisz.gradle;
+package hu.qwaevisz.hello;
 
 public class Application {
 
@@ -7,7 +7,7 @@ public class Application {
 	}
 
 	public int add(int a, int b) {
-		return a + b;
+		return a - b;
 	}
 
 }
