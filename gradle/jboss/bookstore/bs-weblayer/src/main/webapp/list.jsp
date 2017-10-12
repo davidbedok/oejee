@@ -16,7 +16,7 @@
 </head>
 <body>
     <bt:header>List of Books</bt:header>
-	<form method="post" action="BookList.do">
+	<form method="post" action="BookList">
 		<div>
 			<label for="category">Category: </label>
 			<select name="category" id="category">
