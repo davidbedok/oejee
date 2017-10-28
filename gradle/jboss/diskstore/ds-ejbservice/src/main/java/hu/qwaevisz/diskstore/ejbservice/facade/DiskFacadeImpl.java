@@ -17,7 +17,7 @@ import hu.qwaevisz.diskstore.persistence.entity.trunk.DiskCategory;
 import hu.qwaevisz.diskstore.persistence.exception.PersistenceServiceException;
 import hu.qwaevisz.diskstore.persistence.service.DiskService;
 
-@Stateless(mappedName = "ejb/diskFacade")
+@Stateless(mappedName = "ejb/diskFacade", name = "DiskStoreService")
 public class DiskFacadeImpl implements DiskFacade, DiskFacadeRemote {
 
 	private static final Logger LOGGER = Logger.getLogger(DiskFacadeImpl.class);

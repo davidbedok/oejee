@@ -48,7 +48,7 @@ public class DiskClient {
 		jndiProperties.put(Context.URL_PKG_PREFIXES, JBOSS_URL_PKG_PREFIXES);
 		jndiProperties.put(JBOSS_NAMING_CLIENT_EJB_CONTEXT_KEY, JBOSS_NAMING_CLIENT_EJB_CONTEXT_VALUE);
 		final Context context = new InitialContext(jndiProperties);
-		return (DiskFacadeRemote) context.lookup("diskstore/ds-ejbservice/DiskFacadeImpl!hu.qwaevisz.diskstore.ejbserviceclient.DiskFacadeRemote");
+		return (DiskFacadeRemote) context.lookup("diskstoreapp/dsservicemodule/DiskStoreService!hu.qwaevisz.diskstore.ejbserviceclient.DiskFacadeRemote");
 	}
 
 }

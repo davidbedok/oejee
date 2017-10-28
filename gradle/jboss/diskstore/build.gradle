@@ -11,8 +11,7 @@ ext {
 	mybatisVersion = '3.3.1'
 	mybatiscdiVersion = '1.0.0-beta3'
 	
-	webapplicationName = 'ds-weblayer.war'
-	webapplicationContextPath = 'diskstore'
+	webapplicationArtifact = 'ds-weblayer.war'
 }
 
 allprojects {
@@ -30,9 +29,12 @@ subprojects {
 }
 
 ear {
-    deploymentDescriptor { 
-    	webModule( webapplicationName, webapplicationContextPath ) 
-    }
+	deploymentDescriptor {
+		version = "6"
+		applicationName = "diskstoreapp"
+		displayName = "Disk Store Application"
+		webModule( webapplicationArtifact, 'diskstore' ) 
+	}
 }
 
 dependencies {
