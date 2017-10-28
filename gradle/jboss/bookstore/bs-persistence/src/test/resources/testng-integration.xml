@@ -3,6 +3,7 @@
 	<test name="bookservice">
 		<classes>
 			<class name="hu.qwaevisz.bookstore.persistence.service.BookServiceImplIntegrationTest" />
+			<class name="hu.qwaevisz.bookstore.persistence.service.BookSearchImplIntegrationTest" />
 		</classes>
 	</test>
 </suite>

@@ -10,4 +10,20 @@
 			<property name="hibernate.format_sql" value="true"/>
 		</properties>
 	</persistence-unit>
+	<persistence-unit name="bs-persistence-test-unit" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider> 
+		<class>com.ericsson.bookstore.persistence.entity.Book</class> 
+		<properties>
+			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/bookstoredb" />
+			<property name="javax.persistence.jdbc.user" value="bookstore_user" />
+			<property name="javax.persistence.jdbc.password" value="123topSECret321" />
+			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />		
+		
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+			<property name="hibernate.show_sql" value="true"/>
+			<property name="hibernate.format_sql" value="true"/>
+			
+			<property name="jboss.as.jpa.managed" value="false" />
+		</properties>
+	</persistence-unit>	
 </persistence>
