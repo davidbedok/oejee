@@ -9,13 +9,14 @@ ext {
 	hibernateVersion = '4.3.10.Final'
 	jstlVersion = '1.2'
 	postgresqlVersion = '9.4+'
+	jbossjee6Version = '3.0.3.Final'
 }
 
 allprojects {
 	repositories { 
 		mavenCentral() 
-		maven { url "http://repository.pentaho.org/artifactory/repo" }
-		maven { url "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases/" }
+		// maven { url "http://repository.pentaho.org/artifactory/repo" }
+		// maven { url "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases/" }
 	}
 }
 

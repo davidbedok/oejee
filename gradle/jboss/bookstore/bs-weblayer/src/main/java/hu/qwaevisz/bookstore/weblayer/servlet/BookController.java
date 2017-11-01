@@ -23,7 +23,7 @@ import hu.qwaevisz.bookstore.weblayer.common.Page;
 @WebServlet("/Book")
 public class BookController extends HttpServlet implements BookParameter, BookAttribute {
 
-	private static final long serialVersionUID = -4068275526750462197L;
+	private static final long serialVersionUID = 1L;
 
 	private static final Logger LOGGER = Logger.getLogger(BookController.class);
 

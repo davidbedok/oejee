@@ -1,12 +1,5 @@
 package hu.qwaevisz.bookstore.persistence.service;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Enumeration;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -30,15 +23,16 @@ public class BookServiceImplIntegrationTest {
 
 	@BeforeClass
 	private void setUp() {
-		Thread.currentThread().setContextClassLoader(new ClassLoader() {
-			@Override
-			public Enumeration<URL> getResources(String name) throws IOException {
-				if (name.equals("META-INF/persistence.xml")) {
-					return Collections.enumeration(Arrays.asList(new File("src/test/resources/persistence.xml").toURI().toURL()));
-				}
-				return super.getResources(name);
-			}
-		});
+		// Thread.currentThread().setContextClassLoader(new ClassLoader() {
+		// @Override
+		// public Enumeration<URL> getResources(String name) throws IOException {
+		// if (name.equals("META-INF/persistence.xml")) {
+		// return Collections.enumeration(Arrays.asList(new
+		// File("src/test/resources/persistence.xml").toURI().toURL()));
+		// }
+		// return super.getResources(name);
+		// }
+		// });
 
 		final EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
 		final EntityManager entityManager = factory.createEntityManager();

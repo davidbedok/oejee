@@ -24,11 +24,11 @@ public class BookSearchImpl implements BookSearch {
 	@PersistenceContext(unitName = "bs-persistence-unit")
 	private EntityManager entityManager;
 
-	protected void setEntityManager(final EntityManager entityManager) {
+	void setEntityManager(final EntityManager entityManager) {
 		this.entityManager = entityManager;
 	}
 
-	protected EntityManager getEntityManager() {
+	EntityManager getEntityManager() {
 		return this.entityManager;
 	}
 

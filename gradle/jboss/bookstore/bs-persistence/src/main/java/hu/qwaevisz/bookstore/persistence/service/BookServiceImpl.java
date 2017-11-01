@@ -15,8 +15,6 @@ import org.apache.log4j.Logger;
 import hu.qwaevisz.bookstore.persistence.entity.Book;
 import hu.qwaevisz.bookstore.persistence.entity.trunk.BookCategory;
 import hu.qwaevisz.bookstore.persistence.exception.PersistenceServiceException;
-import hu.qwaevisz.bookstore.persistence.parameter.BookParameter;
-import hu.qwaevisz.bookstore.persistence.query.BookQuery;
 
 @Stateless(mappedName = "ejb/bookService")
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -28,11 +26,11 @@ public class BookServiceImpl implements BookService {
 	@PersistenceContext(unitName = "bs-persistence-unit")
 	private EntityManager entityManager;
 
-	protected void setEntityManager(final EntityManager entityManager) {
+	void setEntityManager(final EntityManager entityManager) {
 		this.entityManager = entityManager;
 	}
 
-	protected EntityManager getEntityManager() {
+	EntityManager getEntityManager() {
 		return this.entityManager;
 	}
 
@@ -42,7 +40,7 @@ public class BookServiceImpl implements BookService {
 			LOGGER.debug("Check Book by ISBN (" + isbn + ")");
 		}
 		try {
-			return this.entityManager.createNamedQuery(BookQuery.COUNT_BY_ISBN, Long.class).setParameter(BookParameter.ISBN, isbn).getSingleResult() == 1;
+			return this.entityManager.createNamedQuery(Book.COUNT_BY_ISBN, Long.class).setParameter("isbn", isbn).getSingleResult() == 1;
 		} catch (final Exception e) {
 			throw new PersistenceServiceException("Unknown error during counting Books by ISBN (" + isbn + ")! " + e.getLocalizedMessage(), e);
 		}
@@ -72,7 +70,7 @@ public class BookServiceImpl implements BookService {
 		}
 		Book result = null;
 		try {
-			result = this.entityManager.createNamedQuery(BookQuery.GET_BY_ID, Book.class).setParameter(BookParameter.ID, id).getSingleResult();
+			result = this.entityManager.createNamedQuery(Book.GET_BY_ID, Book.class).setParameter("id", id).getSingleResult();
 		} catch (final Exception e) {
 			throw new PersistenceServiceException("Unknown error when fetching Book by id (" + id + ")! " + e.getLocalizedMessage(), e);
 		}
@@ -86,7 +84,7 @@ public class BookServiceImpl implements BookService {
 		}
 		Book result = null;
 		try {
-			result = this.entityManager.createNamedQuery(BookQuery.GET_BY_ISBN, Book.class).setParameter(BookParameter.ISBN, isbn).getSingleResult();
+			result = this.entityManager.createNamedQuery(Book.GET_BY_ISBN, Book.class).setParameter("isbn", isbn).getSingleResult();
 		} catch (final Exception e) {
 			throw new PersistenceServiceException("Unknown error when fetching Book by ISBN (" + isbn + ")! " + e.getLocalizedMessage(), e);
 		}
@@ -100,7 +98,7 @@ public class BookServiceImpl implements BookService {
 		}
 		List<Book> result = null;
 		try {
-			result = this.entityManager.createNamedQuery(BookQuery.GET_ALL, Book.class).getResultList();
+			result = this.entityManager.createNamedQuery(Book.GET_ALL, Book.class).getResultList();
 		} catch (final Exception e) {
 			throw new PersistenceServiceException("Unknown error when fetching Books! " + e.getLocalizedMessage(), e);
 		}
@@ -114,8 +112,7 @@ public class BookServiceImpl implements BookService {
 		}
 		List<Book> result = null;
 		try {
-			result = this.entityManager.createNamedQuery(BookQuery.GET_ALL_BY_CATEGORY, Book.class).setParameter(BookParameter.CATEGORY, category)
-					.getResultList();
+			result = this.entityManager.createNamedQuery(Book.GET_ALL_BY_CATEGORY, Book.class).setParameter("category", category).getResultList();
 		} catch (final Exception e) {
 			throw new PersistenceServiceException("Unknown error when fetching Books! " + e.getLocalizedMessage(), e);
 		}
@@ -148,7 +145,7 @@ public class BookServiceImpl implements BookService {
 			LOGGER.debug("Remove Book by ISBN (" + isbn + ")");
 		}
 		try {
-			this.entityManager.createNamedQuery(BookQuery.REMOVE_BY_ISBN).setParameter(BookParameter.ISBN, isbn).executeUpdate();
+			this.entityManager.createNamedQuery(Book.REMOVE_BY_ISBN).setParameter("isbn", isbn).executeUpdate();
 		} catch (final Exception e) {
 			throw new PersistenceServiceException("Unknown error when removing Book by ISBN (" + isbn + ")! " + e.getLocalizedMessage(), e);
 		}

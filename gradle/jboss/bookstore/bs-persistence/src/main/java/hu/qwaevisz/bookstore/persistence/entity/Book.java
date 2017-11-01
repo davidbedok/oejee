@@ -15,23 +15,28 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import hu.qwaevisz.bookstore.persistence.entity.trunk.BookCategory;
-import hu.qwaevisz.bookstore.persistence.parameter.BookParameter;
-import hu.qwaevisz.bookstore.persistence.query.BookQuery;
 
 @Entity
 @Table(name = "book")
 @NamedQueries(value = { //
-		@NamedQuery(name = BookQuery.COUNT_BY_ISBN, query = "SELECT COUNT(b) FROM Book b WHERE b.isbn=:" + BookParameter.ISBN),
-		@NamedQuery(name = BookQuery.GET_BY_ISBN, query = "SELECT b FROM Book b WHERE b.isbn=:" + BookParameter.ISBN),
-		@NamedQuery(name = BookQuery.GET_BY_ID, query = "SELECT b FROM Book b WHERE b.id=:" + BookParameter.ID),
-		@NamedQuery(name = BookQuery.GET_ALL, query = "SELECT b FROM Book b ORDER BY b.title"),
-		@NamedQuery(name = BookQuery.GET_ALL_BY_CATEGORY, query = "SELECT b FROM Book b WHERE b.category=:" + BookParameter.CATEGORY + " ORDER BY b.title"),
-		@NamedQuery(name = BookQuery.REMOVE_BY_ISBN, query = "DELETE FROM Book b WHERE b.isbn=:" + BookParameter.ISBN)
+		@NamedQuery(name = Book.COUNT_BY_ISBN, query = "SELECT COUNT(b) FROM Book b WHERE b.isbn=:isbn"),
+		@NamedQuery(name = Book.GET_BY_ISBN, query = "SELECT b FROM Book b WHERE b.isbn=:isbn"),
+		@NamedQuery(name = Book.GET_BY_ID, query = "SELECT b FROM Book b WHERE b.id=:id"),
+		@NamedQuery(name = Book.GET_ALL, query = "SELECT b FROM Book b ORDER BY b.title"),
+		@NamedQuery(name = Book.GET_ALL_BY_CATEGORY, query = "SELECT b FROM Book b WHERE b.category=:category ORDER BY b.title"),
+		@NamedQuery(name = Book.REMOVE_BY_ISBN, query = "DELETE FROM Book b WHERE b.isbn=:isbn")
 		//
 })
 public class Book implements Serializable {
 
-	private static final long serialVersionUID = 1525352421414297015L;
+	private static final long serialVersionUID = 1L;
+
+	public static final String COUNT_BY_ISBN = "Book.countByIsbn";
+	public static final String GET_BY_ID = "Book.getById";
+	public static final String GET_BY_ISBN = "Book.getByIsbn";
+	public static final String GET_ALL = "Book.getAll";
+	public static final String GET_ALL_BY_CATEGORY = "Book.getAllByCategory";
+	public static final String REMOVE_BY_ISBN = "Book.removeByIsbn";
 
 	@Id
 	@SequenceGenerator(name = "generatorBook", sequenceName = "book_book_id_seq", allocationSize = 1)
