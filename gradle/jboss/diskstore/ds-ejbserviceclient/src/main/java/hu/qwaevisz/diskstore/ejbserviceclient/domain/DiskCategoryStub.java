@@ -7,4 +7,8 @@ public enum DiskCategoryStub {
 	POP,
 	OTHER;
 
+	public String getName() {
+		return this.name();
+	}
+
 }

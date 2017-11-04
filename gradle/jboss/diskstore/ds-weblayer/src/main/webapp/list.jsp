@@ -3,12 +3,14 @@
 <%@ page import="java.util.List" %>
 <%@ page import="hu.qwaevisz.diskstore.ejbserviceclient.domain.DiskStub" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="style/page.css" />
 <title>:: Disks ::</title>
+<fmt:setLocale value="hu_HU"/>
 </head>
 <body>
     <h1>List of Disks</h1>
@@ -17,7 +19,7 @@
             <span>Disk list is <strong>empty</strong>.</span>
         </c:when>
         <c:otherwise>
-            <table class="bookstable">
+            <table class="pagetable">
                 <thead>
                     <tr>
                         <th>Author</th>
@@ -31,12 +33,12 @@
                 <tbody>
                     <c:forEach items="${requestScope.disks}" var="disk">
                         <tr>
-                            <td><c:out value="${disk.author}" /></td>
-                            <td><a href="Disk?reference=<c:out value="${disk.reference}" />"><c:out value="${disk.title}" /></a></td>
-                            <td><c:out value="${disk.category}" /></td>
-                            <td><c:out value="${disk.price}" /> Ft</td>
-                            <td><c:out value="${disk.numberOfSongs}" /></td>
-                            <td><a href="DiskDelete?reference=<c:out value="${disk.reference}" />">delete</a></td>
+                            <td>${disk.author}</td>
+                            <td><a href="Disk?reference=${disk.reference}">${disk.title}</a></td>
+                            <td>${disk.category}</td>
+                            <td><fmt:formatNumber type="currency" value="${disk.price}" /></td>
+                            <td>${disk.numberOfSongs}</td>
+                            <td><a href="DiskDelete?reference=${disk.reference}">delete</a></td>
                         </tr>
                     </c:forEach>
                 </tbody>

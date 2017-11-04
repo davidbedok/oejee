@@ -22,7 +22,7 @@ import hu.qwaevisz.diskstore.weblayer.common.Page;
 @WebServlet("/DiskList")
 public class DiskListController extends HttpServlet implements ListAttribute {
 
-	private static final long serialVersionUID = 9202482703644116140L;
+	private static final long serialVersionUID = 1L;
 
 	private static final Logger LOGGER = Logger.getLogger(DiskListController.class);
 

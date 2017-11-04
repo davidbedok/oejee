@@ -1,6 +1,5 @@
 jar { archiveName 'ds-ejbservice-client.jar' }
 
 dependencies {
-	// compile group: 'javax', name: 'javaee-api', version: jeeVersion
 	compile group: 'org.jboss.spec', name: 'jboss-javaee-6.0', version: '3.0.3.Final'
 }

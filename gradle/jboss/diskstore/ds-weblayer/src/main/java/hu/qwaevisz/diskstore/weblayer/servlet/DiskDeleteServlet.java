@@ -19,7 +19,7 @@ import hu.qwaevisz.diskstore.weblayer.common.Page;
 @WebServlet("/DiskDelete")
 public class DiskDeleteServlet extends HttpServlet implements DiskParameter {
 
-	private static final long serialVersionUID = 3115047172240434441L;
+	private static final long serialVersionUID = 1L;
 
 	private static final Logger LOGGER = Logger.getLogger(DiskDeleteServlet.class);
 

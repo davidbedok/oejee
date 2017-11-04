@@ -14,14 +14,14 @@ import hu.qwaevisz.diskstore.ejbserviceclient.exception.ServiceException;
 
 public class DiskClient {
 
+	private static final Logger LOGGER = Logger.getLogger(DiskClient.class);
+
 	private static final String JBOSS_INITIAL_CONTEXT_FACTORY = "org.jboss.naming.remote.client.InitialContextFactory";
 	private static final String JBOSS_PROVIDER_URL = "remote://localhost:4447";
 	private static final String JBOSS_URL_PKG_PREFIXES = "org.jboss.ejb.client.naming";
 
 	private static final String JBOSS_NAMING_CLIENT_EJB_CONTEXT_KEY = "jboss.naming.client.ejb.context";
 	private static final String JBOSS_NAMING_CLIENT_EJB_CONTEXT_VALUE = "true";
-
-	private static final Logger LOGGER = Logger.getLogger(DiskClient.class);
 
 	public static void main(final String[] args) throws Exception {
 		System.out.println(new DiskClient().invoke("WAM124"));
@@ -48,7 +48,9 @@ public class DiskClient {
 		jndiProperties.put(Context.URL_PKG_PREFIXES, JBOSS_URL_PKG_PREFIXES);
 		jndiProperties.put(JBOSS_NAMING_CLIENT_EJB_CONTEXT_KEY, JBOSS_NAMING_CLIENT_EJB_CONTEXT_VALUE);
 		final Context context = new InitialContext(jndiProperties);
-		return (DiskFacadeRemote) context.lookup("diskstoreapp/dsservicemodule/DiskStoreService!hu.qwaevisz.diskstore.ejbserviceclient.DiskFacadeRemote");
+
+		// "diskstoreapp/dsservicemodule/DiskStoreService!hu.qwaevisz.diskstore.ejbserviceclient.DiskFacadeRemote"
+		return (DiskFacadeRemote) context.lookup(DiskApplicationHelper.getServiceJndiName());
 	}
 
 }

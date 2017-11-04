@@ -4,7 +4,7 @@ body {
 	background-color: #ffffff;
 }
 
-.bookstable {
+.pagetable {
 	color: black;
 	font-weight: normal;
 	padding: 0px;
@@ -18,12 +18,12 @@ body {
 	white-space: nowrap;
 }
 
-.bookstable thead {
+.pagetable thead {
 	text-align: center;
 	font-weight: bold;
 }
 
-.bookstable td, .bookstable th {
+.pagetable td, .bookstable th {
 	border: 1px solid;
 	padding: 3px;
 }

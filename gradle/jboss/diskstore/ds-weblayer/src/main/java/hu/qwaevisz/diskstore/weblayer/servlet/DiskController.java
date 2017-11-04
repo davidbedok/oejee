@@ -23,7 +23,7 @@ import hu.qwaevisz.diskstore.weblayer.common.Page;
 @WebServlet("/Disk")
 public class DiskController extends HttpServlet implements DiskParameter, DiskAttribute {
 
-	private static final long serialVersionUID = 3103216416592475987L;
+	private static final long serialVersionUID = 1L;
 
 	private static final Logger LOGGER = Logger.getLogger(DiskController.class);
 

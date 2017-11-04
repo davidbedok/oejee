@@ -19,7 +19,7 @@ import hu.qwaevisz.diskstore.ejbserviceclient.exception.ServiceException;
 @WebServlet("/DiskPing")
 public class DiskPingServlet extends HttpServlet {
 
-	private static final long serialVersionUID = -1572822784106689571L;
+	private static final long serialVersionUID = 1L;
 
 	private static final Logger LOGGER = Logger.getLogger(DiskPingServlet.class);
 
