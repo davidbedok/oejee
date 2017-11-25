@@ -15,6 +15,6 @@ public interface MarkFacade {
 
 	MarkStub addMark(String subject, String neptun, int grade, String note) throws AdaptorException;
 
-	MarkStub getMatchingMark(String studentNeptun, String subjectNameTerm, int minimumGrade, int maximumGrade) throws AdaptorException;
+	List<MarkStub> getMarks(String studentNeptun, String subjectNameTerm, int minimumGrade, int maximumGrade) throws AdaptorException;
 
 }

@@ -14,10 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-@WebFilter(filterName = "SchoolCrossOriginRequestFilter", urlPatterns = { "/*" })
-public class SchoolCrossOriginRequestFilter implements Filter {
+@WebFilter(filterName = "SchoolCrossOriginResourceSharingFilter", urlPatterns = { "/*" })
+public class SchoolCORSFilter implements Filter {
 
-	private static final Logger LOGGER = Logger.getLogger(SchoolCrossOriginRequestFilter.class);
+	private static final Logger LOGGER = Logger.getLogger(SchoolCORSFilter.class);
 
 	public static final String ALLOW_ORIGIN = "Access-Control-Allow-Origin";
 	public static final String ALLOW_CREDENTIALS = "Access-Control-Allow-Credentials";

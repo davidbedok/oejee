@@ -10,7 +10,6 @@ public class MarkStub {
 
 	private final SubjectStub subject;
 	private final Grade grade;
-	private final int gradeValue;
 	private final String note;
 	private final Date date;
 
@@ -21,7 +20,6 @@ public class MarkStub {
 	public MarkStub(SubjectStub subject, Grade grade, String note, Date date) {
 		this.subject = subject;
 		this.grade = grade;
-		this.gradeValue = grade.getValue();
 		this.note = note;
 		this.date = date;
 	}
@@ -38,7 +36,7 @@ public class MarkStub {
 
 	@XmlElement(name = "gradeValue")
 	public int getGradeValue() {
-		return this.gradeValue;
+		return this.grade.getValue();
 	}
 
 	@XmlElement(name = "note")

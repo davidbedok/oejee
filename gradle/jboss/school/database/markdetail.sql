@@ -8,7 +8,7 @@ FROM
 			mark_subject_id,
 			student_institute_id,
 			mark_grade,
-			DATE_TRUNC('year', mark_date) AS mark_year     
+			DATE_PART('year', mark_date) AS mark_year     
 		FROM mark
 			INNER JOIN student ON ( mark_student_id = student_id ) 
 		WHERE ( 1 = 1 ) 

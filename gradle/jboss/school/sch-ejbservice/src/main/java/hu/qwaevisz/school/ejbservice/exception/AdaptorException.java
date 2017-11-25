@@ -1,35 +1,37 @@
 package hu.qwaevisz.school.ejbservice.exception;
 
+import javax.ws.rs.core.Response.Status;
+
 import hu.qwaevisz.school.ejbservice.domain.ErrorStub;
 import hu.qwaevisz.school.ejbservice.util.ApplicationError;
 
 public class AdaptorException extends Exception {
 
-	private static final long serialVersionUID = 8830269357818978996L;
+	private static final long serialVersionUID = 1L;
 
 	private final ApplicationError error;
-	private final String field;
+	private final String fields;
 
 	public AdaptorException(ApplicationError error, String message) {
 		this(error, message, null);
 	}
 
-	public AdaptorException(ApplicationError error, String message, String field) {
-		this(error, message, null, field);
+	public AdaptorException(ApplicationError error, String message, String fields) {
+		this(error, message, null, fields);
 	}
 
-	public AdaptorException(ApplicationError error, String message, Throwable cause, String field) {
+	public AdaptorException(ApplicationError error, String message, Throwable cause, String fields) {
 		super(message, cause);
 		this.error = error;
-		this.field = field;
+		this.fields = fields;
 	}
 
-	public ApplicationError getErrorCode() {
-		return this.error;
+	public Status getHttpStatus() {
+		return this.error.getHttpStatus();
 	}
 
 	public ErrorStub build() {
-		return this.error.build(this.field);
+		return this.error.build(this.fields);
 	}
 
 }

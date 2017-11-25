@@ -21,22 +21,29 @@ import javax.persistence.Table;
 
 import hu.qwaevisz.school.persistence.entity.trunk.Institute;
 import hu.qwaevisz.school.persistence.parameter.StudentParameter;
-import hu.qwaevisz.school.persistence.query.StudentQuery;
 
 @Entity
 @Table(name = "student")
 @NamedQueries(value = { //
-		@NamedQuery(name = StudentQuery.COUNT_BY_NAME, query = "SELECT COUNT(s) FROM Student s WHERE s.neptun=:" + StudentParameter.NEPTUN),
-		@NamedQuery(name = StudentQuery.GET_BY_NEPTUN, query = "SELECT st FROM Student st LEFT JOIN FETCH st.marks m LEFT JOIN FETCH m.subject su LEFT JOIN FETCH su.teacher WHERE st.neptun=:"
+		@NamedQuery(name = Student.COUNT_BY_NAME, query = "SELECT COUNT(s) FROM Student s WHERE s.neptun=:" + StudentParameter.NEPTUN),
+		@NamedQuery(name = Student.GET_BY_NEPTUN, query = "SELECT st FROM Student st LEFT JOIN FETCH st.marks m LEFT JOIN FETCH m.subject su LEFT JOIN FETCH su.teacher WHERE st.neptun=:"
 				+ StudentParameter.NEPTUN),
-		@NamedQuery(name = StudentQuery.GET_BY_ID, query = "SELECT s FROM Student s WHERE s.id=:" + StudentParameter.ID),
-		@NamedQuery(name = StudentQuery.GET_ALL, query = "SELECT s FROM Student s ORDER BY s.name"),
-		@NamedQuery(name = StudentQuery.REMOVE_BY_NEPTUN, query = "DELETE FROM Student s WHERE s.neptun=:" + StudentParameter.NEPTUN)
+		@NamedQuery(name = Student.GET_BY_ID, query = "SELECT s FROM Student s WHERE s.id=:" + StudentParameter.ID),
+		@NamedQuery(name = Student.GET_ALL, query = "SELECT s FROM Student s ORDER BY s.name"),
+		@NamedQuery(name = Student.REMOVE_BY_NEPTUN, query = "DELETE FROM Student s WHERE s.neptun=:" + StudentParameter.NEPTUN),
+		@NamedQuery(name = Student.GET_BY_IDS, query = "SELECT st FROM Student st LEFT JOIN FETCH st.marks m LEFT JOIN FETCH m.subject su LEFT JOIN FETCH su.teacher WHERE st.id IN :ids")
 		//
 })
 public class Student implements Serializable {
 
-	private static final long serialVersionUID = -6461691410947537135L;
+	private static final long serialVersionUID = 1L;
+
+	public static final String COUNT_BY_NAME = "Student.countByName";
+	public static final String GET_BY_ID = "Student.getById";
+	public static final String GET_BY_IDS = "Student.getByIds";
+	public static final String GET_BY_NEPTUN = "Student.getByNeptun";
+	public static final String GET_ALL = "Student.getAll";
+	public static final String REMOVE_BY_NEPTUN = "Student.removeByNeptun";
 
 	@Id
 	@SequenceGenerator(name = "generatorStudent", sequenceName = "student_student_id_seq", allocationSize = 1)
@@ -54,7 +61,7 @@ public class Student implements Serializable {
 	@Column(name = "student_institute_id", nullable = false)
 	private Institute institute;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, targetEntity = Mark.class, mappedBy = "student")
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "student")
 	private final Set<Mark> marks;
 
 	public Student() {

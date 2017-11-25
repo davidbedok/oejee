@@ -11,7 +11,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
-import hu.qwaevisz.school.ejbservice.domain.MarkCriteria;
 import hu.qwaevisz.school.ejbservice.domain.MarkDetailStub;
 import hu.qwaevisz.school.ejbservice.domain.MarkInputStub;
 import hu.qwaevisz.school.ejbservice.domain.MarkStub;
@@ -30,12 +29,6 @@ public interface MarkRestService {
 	@Consumes("application/json")
 	@Produces("application/json")
 	MarkStub addMark(MarkInputStub stub) throws AdaptorException;
-
-	@POST
-	@Consumes("application/xml")
-	@Produces("application/xml")
-	@Path("/get/{studentneptun}")
-	MarkStub getMatchingMark(@PathParam("studentneptun") String studentNeptun, MarkCriteria criteria) throws AdaptorException;
 
 	@OPTIONS
 	@Path("{path:.*}")

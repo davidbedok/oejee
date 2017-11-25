@@ -1,6 +1,8 @@
 package hu.qwaevisz.school.restclient;
 
-import hu.qwaevisz.school.restclient.domain.MarkCriteria;
+import java.util.List;
+
+import hu.qwaevisz.school.restclient.domain.MarkConditions;
 import hu.qwaevisz.school.restclient.domain.MarkStub;
 
 public class Application {
@@ -10,8 +12,10 @@ public class Application {
 
 	public static void main(String[] args) {
 		final SchoolRestClient client = new SchoolRestClient(HOST, PORT);
-		final MarkStub mark = client.process("WI53085", new MarkCriteria("Python", 2, 4));
-		System.out.println(mark);
+		final List<MarkStub> marks = client.process("WI53085", new MarkConditions("Programming", 1, 3));
+		for (MarkStub mark : marks) {
+			System.out.println(mark.toString());
+		}
 	}
 
 }

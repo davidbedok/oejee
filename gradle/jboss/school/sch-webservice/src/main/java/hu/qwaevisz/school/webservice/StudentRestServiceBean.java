@@ -4,12 +4,17 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import org.apache.log4j.Logger;
 
+import hu.qwaevisz.school.ejbservice.domain.MarkCriteria;
+import hu.qwaevisz.school.ejbservice.domain.MarkStub;
 import hu.qwaevisz.school.ejbservice.domain.StudentStub;
 import hu.qwaevisz.school.ejbservice.exception.AdaptorException;
+import hu.qwaevisz.school.ejbservice.facade.MarkFacade;
 import hu.qwaevisz.school.ejbservice.facade.StudentFacade;
 
 @Stateless
@@ -20,6 +25,9 @@ public class StudentRestServiceBean implements StudentRestService {
 	@EJB
 	private StudentFacade facade;
 
+	@EJB
+	private MarkFacade markFacade;
+
 	@Override
 	public StudentStub getStudent(final String neptun) throws AdaptorException {
 		LOGGER.info("Get Student (" + neptun + ")");
@@ -27,9 +35,15 @@ public class StudentRestServiceBean implements StudentRestService {
 	}
 
 	@Override
-	public List<StudentStub> getAllStudent() throws AdaptorException {
+	public List<StudentStub> getAllStudents() throws AdaptorException {
 		LOGGER.info("Get all Students");
 		return this.facade.getAllStudents();
+	}
+
+	@Override
+	public Response getStudents(int pageSize, int page) throws AdaptorException {
+		List<StudentStub> students = this.facade.getStudents(pageSize, page);
+		return Response.status(Status.OK).entity(students).type(MediaType.APPLICATION_JSON).build();
 	}
 
 	@Override
@@ -39,9 +53,9 @@ public class StudentRestServiceBean implements StudentRestService {
 	}
 
 	@Override
-	public void removeStudentAdvanced(final String neptun) throws AdaptorException {
-		LOGGER.info("Remove Student Advanced (" + neptun + ")");
-		this.facade.removeStudentAdvanced(neptun);
+	public List<MarkStub> getMarks(String neptun, MarkCriteria criteria) throws AdaptorException {
+		LOGGER.info("Get matching Marks (neptun: " + neptun + ", criteria: " + criteria + ")");
+		return this.markFacade.getMarks(neptun, criteria.getSubjectNameTerm(), criteria.getMinimumGrade(), criteria.getMaximumGrade());
 	}
 
 	@Override

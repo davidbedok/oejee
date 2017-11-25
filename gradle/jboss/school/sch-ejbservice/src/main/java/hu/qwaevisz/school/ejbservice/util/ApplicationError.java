@@ -1,29 +1,35 @@
 package hu.qwaevisz.school.ejbservice.util;
 
+import javax.ws.rs.core.Response.Status;
+
 import hu.qwaevisz.school.ejbservice.domain.ErrorStub;
 
 public enum ApplicationError {
 
-	UNEXPECTED(10, 500, "Unexpected error"), // Internal Server Error
-	NOT_EXISTS(40, 400, "Resource not found"), // Bad Request
-	HAS_DEPENDENCY(50, 412, "Has dependency"); // Precondition Failed
+	UNEXPECTED(10, Status.INTERNAL_SERVER_ERROR, "Unexpected error"),
+	NOT_EXISTS(40, Status.BAD_REQUEST, "Resource not found"),
+	HAS_DEPENDENCY(50, Status.PRECONDITION_FAILED, "Has dependency");
 
 	private final int code;
-	private final int httpStatusCode;
+	private final Status httpStatus;
 	private final String message;
 
-	private ApplicationError(int code, int httpStatusCode, String message) {
+	private ApplicationError(int code, Status httpStatus, String message) {
 		this.code = code;
-		this.httpStatusCode = httpStatusCode;
+		this.httpStatus = httpStatus;
 		this.message = message;
 	}
 
-	public int getHttpStatusCode() {
-		return this.httpStatusCode;
+	public Status getHttpStatus() {
+		return this.httpStatus;
 	}
 
-	public ErrorStub build(String field) {
-		return new ErrorStub(this.code, this.message, field);
+	public int getHttpStatusCode() {
+		return this.httpStatus.getStatusCode();
+	}
+
+	public ErrorStub build(String fields) {
+		return new ErrorStub(this.code, this.message, fields);
 	}
 
 }

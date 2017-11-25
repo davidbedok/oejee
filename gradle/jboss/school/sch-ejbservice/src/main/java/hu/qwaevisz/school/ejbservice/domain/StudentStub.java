@@ -8,7 +8,6 @@ public class StudentStub {
 	private final String name;
 	private final String neptun;
 	private final InstituteStub institute;
-	private int numberOfMarks;
 	private final List<MarkStub> marks;
 
 	public StudentStub(String name, String neptun, InstituteStub institute) {
@@ -16,7 +15,6 @@ public class StudentStub {
 		this.neptun = neptun;
 		this.institute = institute;
 		this.marks = new ArrayList<>();
-		this.numberOfMarks = 0;
 	}
 
 	public String getName() {
@@ -36,12 +34,11 @@ public class StudentStub {
 	}
 
 	public int getNumberOfMarks() {
-		return this.numberOfMarks;
+		return this.marks.size();
 	}
 
 	public void addMark(MarkStub stub) {
 		this.marks.add(stub);
-		this.numberOfMarks++;
 	}
 
 	@Override

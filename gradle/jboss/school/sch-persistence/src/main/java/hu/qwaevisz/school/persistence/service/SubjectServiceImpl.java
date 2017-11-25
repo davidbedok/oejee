@@ -13,7 +13,6 @@ import org.apache.log4j.Logger;
 import hu.qwaevisz.school.persistence.entity.Subject;
 import hu.qwaevisz.school.persistence.exception.PersistenceServiceException;
 import hu.qwaevisz.school.persistence.parameter.SubjectParameter;
-import hu.qwaevisz.school.persistence.query.SubjectQuery;
 
 @Stateless(mappedName = "ejb/subjectService")
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -32,7 +31,7 @@ public class SubjectServiceImpl implements SubjectService {
 		}
 		Subject result = null;
 		try {
-			result = this.entityManager.createNamedQuery(SubjectQuery.GET_BY_ID, Subject.class).setParameter(SubjectParameter.ID, id).getSingleResult();
+			result = this.entityManager.createNamedQuery(Subject.GET_BY_ID, Subject.class).setParameter(SubjectParameter.ID, id).getSingleResult();
 		} catch (final Exception e) {
 			throw new PersistenceServiceException("Unknown error when fetching Subject by id (" + id + ")! " + e.getLocalizedMessage(), e);
 		}
@@ -40,13 +39,14 @@ public class SubjectServiceImpl implements SubjectService {
 	}
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public Subject read(String name) throws PersistenceServiceException {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("Get Subject by name (" + name + ")");
 		}
 		Subject result = null;
 		try {
-			result = this.entityManager.createNamedQuery(SubjectQuery.GET_BY_NAME, Subject.class).setParameter(SubjectParameter.NAME, name).getSingleResult();
+			result = this.entityManager.createNamedQuery(Subject.GET_BY_NAME, Subject.class).setParameter(SubjectParameter.NAME, name).getSingleResult();
 		} catch (final Exception e) {
 			throw new PersistenceServiceException("Unknown error when fetching Subject by name (" + name + ")! " + e.getLocalizedMessage(), e);
 		}

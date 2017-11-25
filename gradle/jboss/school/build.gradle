@@ -6,7 +6,7 @@ version = '1.0'
 ext {
 	log4jVersion = '1.2.17'
 	testngVersion = '6.9.+'
-	mockitoVersion = '1.10.8'
+	mockitoVersion = '2.12.0'
 	jeeVersion = '6.0'  
 	servletapiVersion = '3.0.1'
 	hibernateVersion = '4.3.10.Final'
@@ -16,7 +16,6 @@ ext {
 	commonsloggingVersion = '1.2'
 	
 	webserviceArchiveName = 'sch-webservice.war'
-	webserviceContextPath = 'school'
 }
 
 subprojects {
@@ -31,11 +30,15 @@ subprojects {
 		testCompile group: 'org.testng', name: 'testng', version: testngVersion
 		testCompile group: 'org.mockito', name: 'mockito-core', version: mockitoVersion
 	}
+	
+	test {
+		useTestNG()
+	}	
 }
 
 ear {
     deploymentDescriptor { 
-    	webModule( webserviceArchiveName, webserviceContextPath ) 
+    	webModule( webserviceArchiveName, 'school' ) 
     }
 }
 

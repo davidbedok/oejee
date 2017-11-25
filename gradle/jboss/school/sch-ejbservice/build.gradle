@@ -1,7 +1,9 @@
 jar { archiveName 'sch-ejbservice.jar' }
 
 dependencies {
-	compile group: 'log4j', name: 'log4j', version: log4jVersion
-	compile group: 'javax', name: 'javaee-api', version: jeeVersion
 	compile project(':sch-persistence')
+	compile group: 'log4j', name: 'log4j', version: log4jVersion
+	compileOnly group: 'javax', name: 'javaee-api', version: jeeVersion
+	
+	testCompile group: 'org.jboss.spec', name: 'jboss-javaee-6.0', version: jbossjee6Version
 }

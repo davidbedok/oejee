@@ -15,8 +15,8 @@ public interface MarkService {
 
 	Mark create(Long studentId, Long subjectId, Integer grade, String note) throws PersistenceServiceException;
 
-	List<MarkDetailResult> read(Long subjectId) throws PersistenceServiceException;
+	List<MarkDetailResult> read(String subjectName) throws PersistenceServiceException;
 
-	Mark read(String studentNeptun, String subjectNameTerm, Integer minimumGrade, Integer maximumGrade) throws PersistenceServiceException;
+	List<Mark> read(String studentNeptun, String subjectNameTerm, Integer minimumGrade, Integer maximumGrade) throws PersistenceServiceException;
 
 }

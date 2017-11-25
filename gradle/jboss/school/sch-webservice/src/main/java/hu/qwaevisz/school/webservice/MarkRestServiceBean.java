@@ -8,7 +8,6 @@ import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
 
-import hu.qwaevisz.school.ejbservice.domain.MarkCriteria;
 import hu.qwaevisz.school.ejbservice.domain.MarkDetailStub;
 import hu.qwaevisz.school.ejbservice.domain.MarkInputStub;
 import hu.qwaevisz.school.ejbservice.domain.MarkStub;
@@ -33,12 +32,6 @@ public class MarkRestServiceBean implements MarkRestService {
 	public MarkStub addMark(MarkInputStub stub) throws AdaptorException {
 		LOGGER.info("Add Mark (" + stub + ")");
 		return this.facade.addMark(stub.getSubject(), stub.getNeptun(), stub.getGrade().getValue(), stub.getNote());
-	}
-
-	@Override
-	public MarkStub getMatchingMark(String studentNeptun, MarkCriteria criteria) throws AdaptorException {
-		LOGGER.info("Get first matching Mark (studentNeptun: " + studentNeptun + ", criteria: " + criteria + ")");
-		return this.facade.getMatchingMark(studentNeptun, criteria.getSubjectNameTerm(), criteria.getMinimumGrade(), criteria.getMaximumGrade());
 	}
 
 	@Override

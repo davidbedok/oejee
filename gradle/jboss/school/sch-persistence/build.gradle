@@ -2,6 +2,5 @@ jar { archiveName 'sch-persistence.jar' }
 
 dependencies {
 	compile group: 'log4j', name: 'log4j', version: log4jVersion
-	compile group: 'javax', name: 'javaee-api', version: jeeVersion
-	compile group: 'org.hibernate', name: 'hibernate-core', version: hibernateVersion
+	compileOnly group: 'javax', name: 'javaee-api', version: jeeVersion
 }

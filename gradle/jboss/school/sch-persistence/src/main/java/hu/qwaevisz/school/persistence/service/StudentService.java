@@ -18,8 +18,8 @@ public interface StudentService {
 
 	List<Student> readAll() throws PersistenceServiceException;
 
-	void delete(String neptun) throws PersistenceServiceException;
+	List<Student> read(int pageSize, int page) throws PersistenceServiceException;
 
-	void deleteAdvanced(String neptun) throws PersistenceServiceException;
+	void delete(String neptun) throws PersistenceServiceException;
 
 }

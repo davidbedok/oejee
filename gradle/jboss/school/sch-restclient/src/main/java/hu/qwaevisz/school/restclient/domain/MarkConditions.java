@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "markcriteria")
-public class MarkCriteria implements Serializable {
+public class MarkConditions implements Serializable {
 
 	private static final long serialVersionUID = -5781732904290824240L;
 
@@ -14,11 +14,11 @@ public class MarkCriteria implements Serializable {
 	private int minimumGrade;
 	private int maximumGrade;
 
-	public MarkCriteria() {
+	public MarkConditions() {
 		this(null, 0, 0);
 	}
 
-	public MarkCriteria(String subjectNameTerm, int minimumGrade, int maximumGrade) {
+	public MarkConditions(String subjectNameTerm, int minimumGrade, int maximumGrade) {
 		this.subjectNameTerm = subjectNameTerm;
 		this.minimumGrade = minimumGrade;
 		this.maximumGrade = maximumGrade;

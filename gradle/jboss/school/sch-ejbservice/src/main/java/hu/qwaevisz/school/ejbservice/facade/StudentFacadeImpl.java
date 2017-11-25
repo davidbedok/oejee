@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 
 import org.apache.log4j.Logger;
 
@@ -12,7 +14,6 @@ import hu.qwaevisz.school.ejbservice.converter.StudentConverter;
 import hu.qwaevisz.school.ejbservice.domain.StudentStub;
 import hu.qwaevisz.school.ejbservice.exception.AdaptorException;
 import hu.qwaevisz.school.ejbservice.util.ApplicationError;
-import hu.qwaevisz.school.persistence.exception.AdvancedPersistenceServiceException;
 import hu.qwaevisz.school.persistence.exception.PersistenceServiceException;
 import hu.qwaevisz.school.persistence.service.MarkService;
 import hu.qwaevisz.school.persistence.service.StudentService;
@@ -61,6 +62,22 @@ public class StudentFacadeImpl implements StudentFacade {
 	}
 
 	@Override
+	public List<StudentStub> getStudents(int pageSize, int page) throws AdaptorException {
+		List<StudentStub> stubs = new ArrayList<>();
+		try {
+			stubs = this.converter.to(this.studentService.read(pageSize, page));
+			if (LOGGER.isDebugEnabled()) {
+				LOGGER.debug("Get all Students --> " + stubs.size() + " item(s)");
+			}
+		} catch (final PersistenceServiceException e) {
+			LOGGER.error(e, e);
+			throw new AdaptorException(ApplicationError.UNEXPECTED, e.getLocalizedMessage());
+		}
+		return stubs;
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void removeStudent(final String neptun) throws AdaptorException {
 		try {
 			if (this.studentService.exists(neptun)) {
@@ -72,19 +89,6 @@ public class StudentFacadeImpl implements StudentFacade {
 			} else {
 				throw new AdaptorException(ApplicationError.NOT_EXISTS, "Student doesn't exist", neptun);
 			}
-		} catch (final PersistenceServiceException e) {
-			LOGGER.error(e, e);
-			throw new AdaptorException(ApplicationError.UNEXPECTED, e.getLocalizedMessage());
-		}
-	}
-
-	@Override
-	public void removeStudentAdvanced(final String neptun) throws AdaptorException {
-		try {
-			this.studentService.deleteAdvanced(neptun);
-		} catch (final AdvancedPersistenceServiceException e) {
-			final ApplicationError error = ApplicationError.valueOf(e.getError().name());
-			throw new AdaptorException(error, e.getLocalizedMessage(), e.getField());
 		} catch (final PersistenceServiceException e) {
 			LOGGER.error(e, e);
 			throw new AdaptorException(ApplicationError.UNEXPECTED, e.getLocalizedMessage());

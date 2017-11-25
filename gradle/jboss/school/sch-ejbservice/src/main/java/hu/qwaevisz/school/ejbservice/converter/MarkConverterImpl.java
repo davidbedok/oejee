@@ -47,7 +47,7 @@ public class MarkConverterImpl implements MarkConverter {
 	}
 
 	private MarkDetailStub to(final MarkDetailResult result) {
-		return new MarkDetailStub(result.getInstitute().toString(), this.getYearFromDate(result.getYear()), result.getAverageGrade());
+		return new MarkDetailStub(result.getInstitute().toString(), result.getYear(), result.getAverageGrade());
 	}
 
 	private int getYearFromDate(Date date) {

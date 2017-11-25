@@ -2,9 +2,12 @@ package hu.qwaevisz.school.ejbservice.facade;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 
 import org.apache.log4j.Logger;
 
@@ -39,8 +42,7 @@ public class MarkFacadeImpl implements MarkFacade {
 	public List<MarkDetailStub> getMarkDetails(String subject) throws AdaptorException {
 		List<MarkDetailStub> stubs = new ArrayList<>();
 		try {
-			final Long subjectId = this.subjectService.read(subject).getId();
-			stubs = this.converter.to(this.markService.read(subjectId));
+			stubs = this.converter.to(this.markService.read(subject));
 			if (LOGGER.isDebugEnabled()) {
 				LOGGER.debug("Get all MarkDetails --> " + stubs.size() + " item(s)");
 			}
@@ -52,6 +54,7 @@ public class MarkFacadeImpl implements MarkFacade {
 	}
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public MarkStub addMark(String subject, String neptun, int grade, String note) throws AdaptorException {
 		try {
 			final Long subjectId = this.subjectService.read(subject).getId();
@@ -68,19 +71,16 @@ public class MarkFacadeImpl implements MarkFacade {
 	}
 
 	@Override
-	public MarkStub getMatchingMark(String studentNeptun, String subjectNameTerm, int minimumGrade, int maximumGrade) throws AdaptorException {
-		MarkStub stub = null;
+	public List<MarkStub> getMarks(String studentNeptun, String subjectNameTerm, int minimumGrade, int maximumGrade) throws AdaptorException {
+		List<MarkStub> stubs = null;
 		try {
-			stub = this.converter.to(this.markService.read(studentNeptun, subjectNameTerm, minimumGrade, maximumGrade));
-			if (LOGGER.isDebugEnabled()) {
-				LOGGER.debug("Matching Mark (studentNeptun: " + studentNeptun + ", subjectNameTerm: " + subjectNameTerm + ", minimumGrade: " + minimumGrade
-						+ ", maximumGrade: " + maximumGrade + ") --> " + stub);
-			}
+			stubs = this.markService.read(studentNeptun, subjectNameTerm, minimumGrade, maximumGrade).stream().map(this.converter::to)
+					.collect(Collectors.toList());
 		} catch (PersistenceServiceException e) {
 			LOGGER.error(e, e);
 			throw new AdaptorException(ApplicationError.UNEXPECTED, e.getLocalizedMessage());
 		}
-		return stub;
+		return stubs;
 	}
 
 }

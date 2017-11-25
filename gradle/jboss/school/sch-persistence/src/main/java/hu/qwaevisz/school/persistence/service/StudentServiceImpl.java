@@ -1,6 +1,7 @@
 package hu.qwaevisz.school.persistence.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -14,11 +15,8 @@ import javax.persistence.PersistenceContext;
 import org.apache.log4j.Logger;
 
 import hu.qwaevisz.school.persistence.entity.Student;
-import hu.qwaevisz.school.persistence.exception.AdvancedPersistenceServiceException;
 import hu.qwaevisz.school.persistence.exception.PersistenceServiceException;
 import hu.qwaevisz.school.persistence.parameter.StudentParameter;
-import hu.qwaevisz.school.persistence.query.StudentQuery;
-import hu.qwaevisz.school.persistence.util.PersistenceApplicationError;
 
 @Stateless(mappedName = "ejb/studentService")
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -40,8 +38,7 @@ public class StudentServiceImpl implements StudentService {
 			LOGGER.debug("Check Student by neptun (" + neptun + ")");
 		}
 		try {
-			return this.entityManager.createNamedQuery(StudentQuery.COUNT_BY_NAME, Long.class).setParameter(StudentParameter.NEPTUN, neptun)
-					.getSingleResult() == 1;
+			return this.entityManager.createNamedQuery(Student.COUNT_BY_NAME, Long.class).setParameter(StudentParameter.NEPTUN, neptun).getSingleResult() == 1;
 		} catch (final Exception e) {
 			throw new PersistenceServiceException("Unknown error during counting Students by neptun (" + neptun + ")! " + e.getLocalizedMessage(), e);
 		}
@@ -54,7 +51,7 @@ public class StudentServiceImpl implements StudentService {
 		}
 		Student result = null;
 		try {
-			result = this.entityManager.createNamedQuery(StudentQuery.GET_BY_ID, Student.class).setParameter(StudentParameter.ID, id).getSingleResult();
+			result = this.entityManager.createNamedQuery(Student.GET_BY_ID, Student.class).setParameter(StudentParameter.ID, id).getSingleResult();
 		} catch (final Exception e) {
 			throw new PersistenceServiceException("Unknown error when fetching Student by id (" + id + ")! " + e.getLocalizedMessage(), e);
 		}
@@ -62,14 +59,14 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public Student read(final String neptun) throws PersistenceServiceException {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("Get Student by neptun (" + neptun + ")");
 		}
 		Student result = null;
 		try {
-			result = this.entityManager.createNamedQuery(StudentQuery.GET_BY_NEPTUN, Student.class).setParameter(StudentParameter.NEPTUN, neptun)
-					.getSingleResult();
+			result = this.entityManager.createNamedQuery(Student.GET_BY_NEPTUN, Student.class).setParameter(StudentParameter.NEPTUN, neptun).getSingleResult();
 		} catch (final Exception e) {
 			throw new PersistenceServiceException("Unknown error when fetching Student by neptun (" + neptun + ")! " + e.getLocalizedMessage(), e);
 		}
@@ -83,7 +80,7 @@ public class StudentServiceImpl implements StudentService {
 		}
 		List<Student> result = null;
 		try {
-			result = this.entityManager.createNamedQuery(StudentQuery.GET_ALL, Student.class).getResultList();
+			result = this.entityManager.createNamedQuery(Student.GET_ALL, Student.class).getResultList();
 			for (final Student student : result) {
 				student.getMarks().size();
 			}
@@ -94,34 +91,32 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
+	public List<Student> read(int pageSize, int page) throws PersistenceServiceException {
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("Get Students (pageSize: " + pageSize + ", page: " + page + ")");
+		}
+		List<Student> result = null;
+		try {
+			result = this.entityManager.createNamedQuery(Student.GET_ALL, Student.class).setFirstResult((page - 1) * pageSize).setMaxResults(pageSize)
+					.getResultList();
+			List<Long> studentIds = result.stream().map(Student::getId).collect(Collectors.toList());
+			result = this.entityManager.createNamedQuery(Student.GET_BY_IDS, Student.class).setParameter("ids", studentIds).getResultList();
+		} catch (final Exception e) {
+			throw new PersistenceServiceException("Unknown error when fetching Students! " + e.getLocalizedMessage(), e);
+		}
+		return result;
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void delete(final String neptun) throws PersistenceServiceException {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("Remove Student by neptun (" + neptun + ")");
 		}
 		try {
-			this.entityManager.createNamedQuery(StudentQuery.REMOVE_BY_NEPTUN).setParameter(StudentParameter.NEPTUN, neptun).executeUpdate();
+			this.entityManager.createNamedQuery(Student.REMOVE_BY_NEPTUN).setParameter(StudentParameter.NEPTUN, neptun).executeUpdate();
 		} catch (final Exception e) {
 			throw new PersistenceServiceException("Unknown error when removing Student by neptun (" + neptun + ")! " + e.getLocalizedMessage(), e);
-		}
-	}
-
-	@Override
-	public void deleteAdvanced(final String neptun) throws PersistenceServiceException {
-		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("Remove Student by neptun (" + neptun + ")");
-		}
-		if (this.exists(neptun)) {
-			if (this.markService.count(neptun) == 0) {
-				try {
-					this.entityManager.createNamedQuery(StudentQuery.REMOVE_BY_NEPTUN).setParameter(StudentParameter.NEPTUN, neptun).executeUpdate();
-				} catch (final Exception e) {
-					throw new PersistenceServiceException("Unknown error when removing Student by neptun (" + neptun + ")! " + e.getLocalizedMessage(), e);
-				}
-			} else {
-				throw new AdvancedPersistenceServiceException(PersistenceApplicationError.HAS_DEPENDENCY, "Student has undeleted mark(s)", neptun);
-			}
-		} else {
-			throw new AdvancedPersistenceServiceException(PersistenceApplicationError.NOT_EXISTS, "Student doesn't exist", neptun);
 		}
 	}
 

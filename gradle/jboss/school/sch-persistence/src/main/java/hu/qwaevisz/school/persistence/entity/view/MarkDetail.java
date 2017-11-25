@@ -1,7 +1,6 @@
 package hu.qwaevisz.school.persistence.entity.view;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,18 +18,19 @@ import javax.persistence.Table;
 import hu.qwaevisz.school.persistence.entity.Subject;
 import hu.qwaevisz.school.persistence.entity.trunk.Institute;
 import hu.qwaevisz.school.persistence.parameter.MarkDetailParameter;
-import hu.qwaevisz.school.persistence.query.MarkDetailQuery;
 
 @Entity
 @Table(name = "markdetail")
 @NamedQueries(value = { //
-		@NamedQuery(name = MarkDetailQuery.GET_AVG_MARKDETAILS, query = "SELECT new hu.qwaevisz.school.persistence.result.MarkDetailResult(md.institute, md.year, AVG(md.grade)) FROM MarkDetail md WHERE md.subject.id=:"
-				+ MarkDetailParameter.SUBJECT_ID + " GROUP BY md.institute, md.year ORDER BY md.institute, md.year"),
+		@NamedQuery(name = MarkDetail.GET_AVG_MARKDETAILS, query = "SELECT new hu.qwaevisz.school.persistence.result.MarkDetailResult(md.institute, md.year, AVG(md.grade)) FROM MarkDetail md WHERE md.subject.name=:"
+				+ MarkDetailParameter.SUBJECT + " GROUP BY md.institute, md.year ORDER BY md.institute, md.year"),
 		//
 })
 public class MarkDetail implements Serializable {
 
-	private static final long serialVersionUID = 4836583743719198725L;
+	private static final long serialVersionUID = 1L;
+
+	public static final String GET_AVG_MARKDETAILS = "MarkDetail.getAvgMarkDetails";
 
 	@Id
 	@Column(name = "markdetail_id", nullable = false)
@@ -48,7 +48,7 @@ public class MarkDetail implements Serializable {
 	private Integer grade;
 
 	@Column(name = "markdetail_year")
-	private Date year;
+	private Integer year;
 
 	public MarkDetail() {
 
@@ -86,11 +86,11 @@ public class MarkDetail implements Serializable {
 		this.grade = grade;
 	}
 
-	public Date getYear() {
+	public Integer getYear() {
 		return this.year;
 	}
 
-	public void setYear(Date year) {
+	public void setYear(Integer year) {
 		this.year = year;
 	}
 

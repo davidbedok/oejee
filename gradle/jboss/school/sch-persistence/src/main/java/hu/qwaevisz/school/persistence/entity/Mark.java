@@ -3,7 +3,6 @@ package hu.qwaevisz.school.persistence.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -20,20 +19,28 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import hu.qwaevisz.school.persistence.parameter.MarkParameter;
-import hu.qwaevisz.school.persistence.query.MarkQuery;
 
 @Entity
 @Table(name = "mark")
 @NamedQueries(value = { //
-		@NamedQuery(name = MarkQuery.COUNT_BY_STUDENT_NEPTUN, query = "SELECT COUNT(m) FROM Mark m WHERE m.student.neptun=:" + MarkParameter.STUDENT_NEPTUN),
-		@NamedQuery(name = MarkQuery.READ_BY_FILTER, query = "SELECT m FROM Mark m WHERE m.student.neptun=:" + MarkParameter.STUDENT_NEPTUN
-				+ " AND m.grade BETWEEN :" + MarkParameter.MIN_GRADE + " AND :" + MarkParameter.MAX_GRADE + " AND m.subject.name LIKE :"
-				+ MarkParameter.SUBJECT_NAME_TERM)
+		@NamedQuery(name = Mark.COUNT_BY_STUDENT_NEPTUN, query = "SELECT COUNT(m) FROM Mark m WHERE m.student.neptun=:" + MarkParameter.STUDENT_NEPTUN),
+		@NamedQuery(name = Mark.READ_BY_FILTER, query = "" //
+				+ "SELECT m FROM Mark m " //
+				+ " JOIN FETCH m.student " //
+				+ " JOIN FETCH m.subject s " //
+				+ " JOIN FETCH s.teacher " //
+				+ "WHERE ( 1 = 1 ) " //
+				+ " AND m.student.neptun=:" + MarkParameter.STUDENT_NEPTUN //
+				+ " AND m.grade BETWEEN :" + MarkParameter.MIN_GRADE + " AND :" + MarkParameter.MAX_GRADE //
+				+ " AND m.subject.name LIKE CONCAT('%',:" + MarkParameter.SUBJECT_NAME_TERM + ",'%')")
 		//
 })
 public class Mark implements Serializable {
 
-	private static final long serialVersionUID = 6159250760580178806L;
+	private static final long serialVersionUID = 1L;
+
+	public static final String COUNT_BY_STUDENT_NEPTUN = "Mark.countByStudentNeptun";
+	public static final String READ_BY_FILTER = "Mark.readByFilter";
 
 	@Id
 	@SequenceGenerator(name = "generatorMark", sequenceName = "mark_mark_id_seq", allocationSize = 1)
@@ -41,11 +48,11 @@ public class Mark implements Serializable {
 	@Column(name = "mark_id", nullable = false)
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "mark_student_id", referencedColumnName = "student_id", nullable = false)
 	private Student student;
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "mark_subject_id", referencedColumnName = "subject_id", nullable = false)
 	private Subject subject;
 
