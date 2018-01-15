@@ -2,7 +2,7 @@ package hu.qwaevisz.diskstore.client;
 
 import hu.qwaevisz.diskstore.ejbserviceclient.DiskFacadeRemote;
 
-public class DiskApplicationHelper {
+public class JndiNameBuilder {
 
 	private static final String APPLICATION_NAME = "diskstoreapp";
 	private static final String MODULE_NAME = "dsservicemodule";

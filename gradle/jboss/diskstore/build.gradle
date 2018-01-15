@@ -33,6 +33,7 @@ ear {
 		version = "6"
 		applicationName = "diskstoreapp"
 		displayName = "Disk Store Application"
+		libraryDirectory = "library"
 		webModule( webapplicationArtifact, 'diskstore' ) 
 	}
 }
