@@ -15,7 +15,7 @@ import javax.naming.NamingException;
 
 public class SimpleClient {
 
-	public static void main(String[] args) throws NamingException, JMSException {
+	public static void main(final String[] args) throws NamingException, JMSException {
 		final Properties environment = new Properties();
 		environment.put(Context.INITIAL_CONTEXT_FACTORY, "org.jboss.naming.remote.client.InitialContextFactory");
 		environment.put(Context.PROVIDER_URL, "remote://localhost:4447");
@@ -31,7 +31,7 @@ public class SimpleClient {
 		final MessageProducer producer = session.createProducer(destination);
 		connection.start();
 
-		final TextMessage textMessage = session.createTextMessage("1, 2, 3, 4, 9");
+		final TextMessage textMessage = session.createTextMessage("4, 85, 3, 34, 9");
 		producer.send(textMessage);
 
 		connection.close();

@@ -20,18 +20,17 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import hu.qwaevisz.lottery.persistence.query.EventQuery;
-
 @Entity
 @Table(name = "event")
 @NamedQueries(value = { //
-		@NamedQuery(name = EventQuery.GET_ALL, query = "SELECT e FROM Event e JOIN FETCH e.numbers ORDER BY e.prizePool"),
-		@NamedQuery(name = EventQuery.GET_LATEST, query = "SELECT e FROM Event e JOIN FETCH e.numbers ORDER BY e.date DESC")
+		@NamedQuery(name = Event.GET_ALL, query = "SELECT e FROM Event e JOIN FETCH e.numbers ORDER BY e.date DESC")
 		//
 })
 public class Event implements Serializable {
 
-	private static final long serialVersionUID = 8643163200023485701L;
+	private static final long serialVersionUID = 1L;
+
+	public static final String GET_ALL = "Event.getAll";
 
 	@Id
 	@SequenceGenerator(name = "generatorEvent", sequenceName = "event_event_id_seq", allocationSize = 1)

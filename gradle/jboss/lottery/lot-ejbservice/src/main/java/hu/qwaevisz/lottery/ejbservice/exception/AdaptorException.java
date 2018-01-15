@@ -4,7 +4,7 @@ import hu.qwaevisz.lottery.ejbservice.domain.ErrorStub;
 
 public class AdaptorException extends Exception {
 
-	private static final long serialVersionUID = 8830269357818978996L;
+	private static final long serialVersionUID = 1L;
 
 	private final String field;
 

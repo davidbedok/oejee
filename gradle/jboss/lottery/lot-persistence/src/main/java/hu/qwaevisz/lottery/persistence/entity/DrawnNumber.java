@@ -2,7 +2,6 @@ package hu.qwaevisz.lottery.persistence.entity;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,17 +15,17 @@ import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import hu.qwaevisz.lottery.persistence.query.DrawnNumberQuery;
-
 @Entity
 @Table(name = "drawnnumber")
 @NamedQueries(value = { //
-		@NamedQuery(name = DrawnNumberQuery.GET_ALL, query = "SELECT dn FROM DrawnNumber dn ORDER BY dn.event.id")
+		@NamedQuery(name = DrawnNumber.GET_ALL, query = "SELECT dn FROM DrawnNumber dn ORDER BY dn.event.id")
 		//
 })
 public class DrawnNumber implements Serializable {
 
-	private static final long serialVersionUID = 7213394173873548468L;
+	private static final long serialVersionUID = 1L;
+
+	public static final String GET_ALL = "DrawnNumber.getAll";
 
 	@Id
 	@SequenceGenerator(name = "generatorDrawnNumber", sequenceName = "drawnnumber_drawnnumber_id_seq", allocationSize = 1)
@@ -34,7 +33,7 @@ public class DrawnNumber implements Serializable {
 	@Column(name = "drawnnumber_id", nullable = false, updatable = false, insertable = false)
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "drawnnumber_event_id", referencedColumnName = "event_id", nullable = false)
 	private Event event;
 

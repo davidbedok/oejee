@@ -42,8 +42,11 @@ public class EventStub {
 
 	@Override
 	public String toString() {
-		return "EventStub [puller=" + this.puller + ", prizePool=" + this.prizePool + ", date=" + this.date + ", numbers: "
-				+ Arrays.toString(this.numbers.toArray(new Integer[] {})) + "]";
+		return "EventStub [puller=" + this.puller + ", prizePool=" + this.prizePool + ", date=" + this.date + ", numbers: " + this.printNumbers() + "]";
+	}
+
+	private String printNumbers() {
+		return Arrays.toString(this.numbers.toArray(new Integer[] {}));
 	}
 
 }

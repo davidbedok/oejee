@@ -63,7 +63,9 @@ public class LotteryFacadeImpl implements LotteryFacade {
 	@Override
 	public void createNewEvent(int[] numbers) throws AdaptorException {
 		try {
-			this.eventService.create(this.stateHolder.getCurrentPuller(), this.stateHolder.getCurrentPrizePool(), numbers);
+			String puller = this.stateHolder.getCurrentPuller();
+			Integer prizePool = this.stateHolder.getCurrentPrizePool();
+			this.eventService.create(puller, prizePool, numbers);
 		} catch (final PersistenceServiceException e) {
 			LOGGER.error(e, e);
 			throw new AdaptorException(e.getLocalizedMessage());
@@ -71,7 +73,7 @@ public class LotteryFacadeImpl implements LotteryFacade {
 	}
 
 	@Override
-	public int checkNumbers(int[] numbers) throws AdaptorException {
+	public int verifyTicket(int[] numbers) throws AdaptorException {
 		final EventStub event = this.getLatestEvent();
 		final List<Integer> drawnNumbers = event.getNumbers();
 		int numberOfHits = 0;
@@ -82,7 +84,7 @@ public class LotteryFacadeImpl implements LotteryFacade {
 			}
 		}
 		final int distributionPercent = this.stateHolder.getDistribution(numberOfHits);
-		LOGGER.debug("Number of hit of " + Arrays.toString(numbers) + ": " + numberOfHits + " (distributionPercent: " + distributionPercent + "%)");
+		LOGGER.debug("Number of hit(s) of " + Arrays.toString(numbers) + ": " + numberOfHits + " (distributionPercent: " + distributionPercent + "%)");
 		return Math.round(event.getPrizePool() * distributionPercent / 100);
 	}
 

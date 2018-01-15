@@ -19,7 +19,7 @@ public class Application {
 	public static void sendSingleMessage() {
 		try {
 			new QueueMessageProducer(Application.PROVIDER_URL, Application.USERNAME, Application.PASSWORD, Application.DESTINATION_LOTTERY)
-					.standaloneSendMessage("1, 2, 3, 4, 5");
+					.standaloneSendMessage("1, 2, 3, 4, 9");
 		} catch (final Exception e) {
 			e.printStackTrace();
 		}

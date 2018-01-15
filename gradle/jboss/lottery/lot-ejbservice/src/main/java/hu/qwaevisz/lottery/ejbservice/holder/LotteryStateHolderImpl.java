@@ -11,7 +11,7 @@ import javax.ejb.Singleton;
 
 import org.apache.log4j.Logger;
 
-@Singleton(mappedName = "ejb/lotteryState")
+@Singleton(mappedName = "ejb/lotteryState", name = "lotteryState")
 @ConcurrencyManagement(ConcurrencyManagementType.CONTAINER)
 public class LotteryStateHolderImpl implements LotteryStateHolder {
 

@@ -2,6 +2,7 @@ package hu.qwaevisz.lottery.webservice;
 
 import java.util.List;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.OPTIONS;
 import javax.ws.rs.POST;
@@ -27,8 +28,15 @@ public interface LotteryRestService {
 	EventStub getLatestEvent() throws AdaptorException;
 
 	@POST
-	@Path("/check")
-	int checkNumbers(int[] numbers) throws AdaptorException;
+	@Path("/verify")
+	@Consumes("application/json")
+	@Produces("application/json")
+	int verifyTicket(int[] numbers) throws AdaptorException;
+
+	@GET
+	@Path("/test")
+	@Produces("application/json")
+	int[] test() throws AdaptorException;
 
 	@OPTIONS
 	@Path("{path:.*}")

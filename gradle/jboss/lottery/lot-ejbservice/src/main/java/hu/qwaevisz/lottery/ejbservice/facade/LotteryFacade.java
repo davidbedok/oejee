@@ -16,6 +16,6 @@ public interface LotteryFacade {
 
 	void createNewEvent(int[] numbers) throws AdaptorException;
 
-	int checkNumbers(int[] numbers) throws AdaptorException;
+	int verifyTicket(int[] numbers) throws AdaptorException;
 
 }

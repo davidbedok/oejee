@@ -34,9 +34,14 @@ public class LotteryRestServiceBean implements LotteryRestService {
 	}
 
 	@Override
-	public int checkNumbers(int[] numbers) throws AdaptorException {
-		LOGGER.info("Check numbers (" + Arrays.toString(numbers) + ")");
-		return this.facade.checkNumbers(numbers);
+	public int verifyTicket(int[] numbers) throws AdaptorException {
+		LOGGER.info("Verify ticket (" + Arrays.toString(numbers) + ")");
+		return this.facade.verifyTicket(numbers);
+	}
+
+	@Override
+	public int[] test() throws AdaptorException {
+		return new int[] { 1, 2, 3, 4, 5 };
 	}
 
 	@Override

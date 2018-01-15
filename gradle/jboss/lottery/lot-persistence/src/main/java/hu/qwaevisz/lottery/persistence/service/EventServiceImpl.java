@@ -15,7 +15,6 @@ import org.apache.log4j.Logger;
 
 import hu.qwaevisz.lottery.persistence.entity.Event;
 import hu.qwaevisz.lottery.persistence.exception.PersistenceServiceException;
-import hu.qwaevisz.lottery.persistence.query.EventQuery;
 
 @Stateless(mappedName = "ejb/eventService")
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -39,7 +38,7 @@ public class EventServiceImpl implements EventService {
 			}
 			this.entityManager.persist(event);
 		} catch (final Exception e) {
-			throw new PersistenceServiceException("Unknown error when fetching Events! " + e.getLocalizedMessage(), e);
+			throw new PersistenceServiceException("Unknown error when persisting Events! " + e.getLocalizedMessage(), e);
 		}
 	}
 
@@ -50,7 +49,7 @@ public class EventServiceImpl implements EventService {
 		}
 		Event result = null;
 		try {
-			result = this.entityManager.createNamedQuery(EventQuery.GET_LATEST, Event.class).setMaxResults(1).getSingleResult();
+			result = this.entityManager.createNamedQuery(Event.GET_ALL, Event.class).setMaxResults(1).getSingleResult();
 		} catch (final Exception e) {
 			throw new PersistenceServiceException("Unknown error when fetching latest Event! " + e.getLocalizedMessage(), e);
 		}
@@ -64,7 +63,7 @@ public class EventServiceImpl implements EventService {
 		}
 		List<Event> result = null;
 		try {
-			result = this.entityManager.createNamedQuery(EventQuery.GET_ALL, Event.class).getResultList();
+			result = this.entityManager.createNamedQuery(Event.GET_ALL, Event.class).getResultList();
 		} catch (final Exception e) {
 			throw new PersistenceServiceException("Unknown error when fetching Events! " + e.getLocalizedMessage(), e);
 		}

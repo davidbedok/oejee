@@ -1,14 +1,23 @@
 package hu.qwaevisz.lottery.ejbservice.management;
 
 import javax.ejb.EJB;
+import javax.management.NotCompliantMBeanException;
 
 import org.apache.log4j.Logger;
 
 import hu.qwaevisz.lottery.ejbservice.holder.LotteryStateHolder;
 
-public class LotteryMonitor implements LotteryMonitorMBean {
+public class LotteryMonitor extends AnnotatedStandardMBean implements LotteryMonitorMBean {
 
 	private static final Logger LOGGER = Logger.getLogger(LotteryMonitor.class);
+
+	public LotteryMonitor() throws NotCompliantMBeanException {
+		this(LotteryMonitorMBean.class);
+	}
+
+	protected LotteryMonitor(Class<LotteryMonitorMBean> mbeanClazz) throws NotCompliantMBeanException {
+		super(mbeanClazz);
+	}
 
 	@EJB
 	private LotteryStateHolder stateHolder;
@@ -52,7 +61,7 @@ public class LotteryMonitor implements LotteryMonitorMBean {
 
 	@Override
 	public void setDistribution(int hit, int value) {
-		LOGGER.info("Set distributions (hit: " + hit + ", value: " + value + ")");
+		LOGGER.info("Set distribution item (hit: " + hit + ", value: " + value + ")");
 		this.stateHolder.setDistribution(hit, value);
 	}
 

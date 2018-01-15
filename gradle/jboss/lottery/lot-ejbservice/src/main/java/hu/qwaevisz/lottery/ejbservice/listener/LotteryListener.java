@@ -1,7 +1,5 @@
 package hu.qwaevisz.lottery.ejbservice.listener;
 
-import java.util.Arrays;
-
 import javax.annotation.PostConstruct;
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.EJB;
@@ -14,6 +12,7 @@ import javax.jms.TextMessage;
 
 import org.apache.log4j.Logger;
 
+import hu.qwaevisz.lottery.ejbservice.converter.MessageConverter;
 import hu.qwaevisz.lottery.ejbservice.exception.AdaptorException;
 import hu.qwaevisz.lottery.ejbservice.facade.LotteryFacade;
 
@@ -28,6 +27,9 @@ public class LotteryListener implements MessageListener {
 	@EJB
 	private LotteryFacade facade;
 
+	@EJB
+	private MessageConverter converter;
+
 	@PostConstruct
 	public void initialize() {
 		LOGGER.info("Lottery Listener created...");
@@ -37,6 +39,7 @@ public class LotteryListener implements MessageListener {
 	public void onMessage(final Message message) {
 		try {
 			if (LOGGER.isDebugEnabled()) {
+
 				final Queue destination = (Queue) message.getJMSDestination();
 				final String queueName = destination.getQueueName();
 				LOGGER.debug("New JMS message arrived into " + queueName + " queue (correlation id: " + message.getJMSCorrelationID() + ")");
@@ -48,18 +51,7 @@ public class LotteryListener implements MessageListener {
 				if (LOGGER.isDebugEnabled()) {
 					LOGGER.debug("Received message: " + content);
 				}
-				content = content.replace("[", "");
-				content = content.replace("]", "");
-				final String[] numbersStr = content.split(",");
-				final int[] numbers = new int[numbersStr.length];
-				int i = 0;
-				for (final String numberStr : numbersStr) {
-					numbers[i++] = Integer.valueOf(numberStr.trim());
-				}
-				if (LOGGER.isDebugEnabled()) {
-					LOGGER.debug("Parsed content: " + Arrays.toString(numbers));
-				}
-				this.facade.createNewEvent(numbers);
+				this.facade.createNewEvent(this.converter.toNumbers(content));
 			} else {
 				LOGGER.error("Received message is not a TextMessage (" + message + ")");
 			}
