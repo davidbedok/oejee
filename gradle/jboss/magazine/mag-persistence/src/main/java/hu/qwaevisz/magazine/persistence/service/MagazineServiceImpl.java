@@ -15,8 +15,6 @@ import org.apache.log4j.Logger;
 import hu.qwaevisz.magazine.persistence.entity.Magazine;
 import hu.qwaevisz.magazine.persistence.entity.trunk.MagazineCategory;
 import hu.qwaevisz.magazine.persistence.exception.PersistenceServiceException;
-import hu.qwaevisz.magazine.persistence.parameter.MagazineParameter;
-import hu.qwaevisz.magazine.persistence.query.MagazineQuery;
 
 @Stateless(mappedName = "ejb/magazineService")
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -34,8 +32,7 @@ public class MagazineServiceImpl implements MagazineService {
 			LOGGER.debug("Check Magazine by reference (" + reference + ")");
 		}
 		try {
-			return this.entityManager.createNamedQuery(MagazineQuery.COUNT_BY_REFERENCE, Long.class).setParameter(MagazineParameter.REFERENCE, reference)
-					.getSingleResult() == 1;
+			return this.entityManager.createNamedQuery(Magazine.COUNT_BY_REFERENCE, Long.class).setParameter("reference", reference).getSingleResult() == 1;
 		} catch (final Exception e) {
 			throw new PersistenceServiceException("Unknown error during counting Magazines by reference (" + reference + ")! " + e.getLocalizedMessage(), e);
 		}
@@ -64,7 +61,7 @@ public class MagazineServiceImpl implements MagazineService {
 		}
 		Magazine result = null;
 		try {
-			result = this.entityManager.createNamedQuery(MagazineQuery.GET_BY_ID, Magazine.class).setParameter(MagazineParameter.ID, id).getSingleResult();
+			result = this.entityManager.createNamedQuery(Magazine.GET_BY_ID, Magazine.class).setParameter("id", id).getSingleResult();
 		} catch (final Exception e) {
 			throw new PersistenceServiceException("Unknown error when fetching Magazine by id (" + id + ")! " + e.getLocalizedMessage(), e);
 		}
@@ -78,8 +75,7 @@ public class MagazineServiceImpl implements MagazineService {
 		}
 		Magazine result = null;
 		try {
-			result = this.entityManager.createNamedQuery(MagazineQuery.GET_BY_REFERENCE, Magazine.class).setParameter(MagazineParameter.REFERENCE, reference)
-					.getSingleResult();
+			result = this.entityManager.createNamedQuery(Magazine.GET_BY_REFERENCE, Magazine.class).setParameter("reference", reference).getSingleResult();
 		} catch (final Exception e) {
 			throw new PersistenceServiceException("Unknown error when fetching Magazine by reference (" + reference + ")! " + e.getLocalizedMessage(), e);
 		}
@@ -93,7 +89,7 @@ public class MagazineServiceImpl implements MagazineService {
 		}
 		List<Magazine> result = null;
 		try {
-			result = this.entityManager.createNamedQuery(MagazineQuery.GET_ALL, Magazine.class).getResultList();
+			result = this.entityManager.createNamedQuery(Magazine.GET_ALL, Magazine.class).getResultList();
 		} catch (final Exception e) {
 			throw new PersistenceServiceException("Unknown error when fetching Magazines! " + e.getLocalizedMessage(), e);
 		}
@@ -107,8 +103,7 @@ public class MagazineServiceImpl implements MagazineService {
 		}
 		List<Magazine> result = null;
 		try {
-			result = this.entityManager.createNamedQuery(MagazineQuery.GET_ALL_BY_CATEGORY, Magazine.class).setParameter(MagazineParameter.CATEGORY, category)
-					.getResultList();
+			result = this.entityManager.createNamedQuery(Magazine.GET_ALL_BY_CATEGORY, Magazine.class).setParameter("category", category).getResultList();
 		} catch (final Exception e) {
 			throw new PersistenceServiceException("Unknown error when fetching Magazines! " + e.getLocalizedMessage(), e);
 		}
@@ -123,13 +118,13 @@ public class MagazineServiceImpl implements MagazineService {
 					+ ", price: " + price + ", category: " + category + ")");
 		}
 		try {
-			final Magazine book = this.read(reference);
-			book.setPublisher(publisher);
-			book.setTitle(title);
-			book.setNumberOfPages(numberOfPages);
-			book.setPrice(price);
-			book.setCategory(category);
-			return this.entityManager.merge(book);
+			final Magazine magazine = this.read(reference);
+			magazine.setPublisher(publisher);
+			magazine.setTitle(title);
+			magazine.setNumberOfPages(numberOfPages);
+			magazine.setPrice(price);
+			magazine.setCategory(category);
+			return this.entityManager.merge(magazine);
 		} catch (final Exception e) {
 			throw new PersistenceServiceException("Unknown error when merging Magazine! " + e.getLocalizedMessage(), e);
 		}
@@ -141,7 +136,7 @@ public class MagazineServiceImpl implements MagazineService {
 			LOGGER.debug("Remove Magazine by reference (" + reference + ")");
 		}
 		try {
-			this.entityManager.createNamedQuery(MagazineQuery.REMOVE_BY_REFERENCE).setParameter(MagazineParameter.REFERENCE, reference).executeUpdate();
+			this.entityManager.createNamedQuery(Magazine.REMOVE_BY_REFERENCE).setParameter("reference", reference).executeUpdate();
 		} catch (final Exception e) {
 			throw new PersistenceServiceException("Unknown error when removing Magazine by reference (" + reference + ")! " + e.getLocalizedMessage(), e);
 		}

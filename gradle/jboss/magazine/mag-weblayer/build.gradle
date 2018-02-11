@@ -2,5 +2,4 @@ apply plugin: 'war'
 
 dependencies {
 	providedCompile project(':mag-ejbservice')
-	providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: servletapiVersion
 }

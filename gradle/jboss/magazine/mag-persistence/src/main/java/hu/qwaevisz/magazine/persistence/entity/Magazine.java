@@ -15,25 +15,29 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import hu.qwaevisz.magazine.persistence.entity.trunk.MagazineCategory;
-import hu.qwaevisz.magazine.persistence.parameter.MagazineParameter;
-import hu.qwaevisz.magazine.persistence.query.MagazineQuery;
 
 @Entity
 @Table(name = "magazine")
 @NamedQueries(value = { //
-		@NamedQuery(name = MagazineQuery.COUNT_BY_REFERENCE, query = "SELECT COUNT(m) FROM Magazine m WHERE m.reference=:" + MagazineParameter.REFERENCE),
-		@NamedQuery(name = MagazineQuery.GET_BY_REFERENCE, query = "SELECT m FROM Magazine m WHERE m.reference=:" + MagazineParameter.REFERENCE),
-		@NamedQuery(name = MagazineQuery.GET_BY_ID, query = "SELECT m FROM Magazine m WHERE m.id=:" + MagazineParameter.ID),
-		@NamedQuery(name = MagazineQuery.GET_ALL, query = "SELECT m FROM Magazine m ORDER BY m.title"),
-		@NamedQuery(name = MagazineQuery.GET_ALL_BY_CATEGORY, query = "SELECT m FROM Magazine m WHERE m.category=:" + MagazineParameter.CATEGORY
-				+ " ORDER BY m.title"),
-		@NamedQuery(name = MagazineQuery.REMOVE_BY_REFERENCE, query = "DELETE FROM Magazine m WHERE m.reference=:" + MagazineParameter.REFERENCE)
+		@NamedQuery(name = Magazine.COUNT_BY_REFERENCE, query = "SELECT COUNT(m) FROM Magazine m WHERE m.reference=:reference"),
+		@NamedQuery(name = Magazine.GET_BY_REFERENCE, query = "SELECT m FROM Magazine m WHERE m.reference=:reference"),
+		@NamedQuery(name = Magazine.GET_BY_ID, query = "SELECT m FROM Magazine m WHERE m.id=:id"),
+		@NamedQuery(name = Magazine.GET_ALL, query = "SELECT m FROM Magazine m ORDER BY m.title"),
+		@NamedQuery(name = Magazine.GET_ALL_BY_CATEGORY, query = "SELECT m FROM Magazine m WHERE m.category=:category ORDER BY m.title"),
+		@NamedQuery(name = Magazine.REMOVE_BY_REFERENCE, query = "DELETE FROM Magazine m WHERE m.reference=:reference")
 		//
 })
 @SequenceGenerator(name = "generatorMagazine", sequenceName = "magazine_magazine_id_seq", allocationSize = 1)
 public class Magazine implements Serializable {
 
-	private static final long serialVersionUID = 1525352421414297015L;
+	private static final long serialVersionUID = 1L;
+
+	public static final String COUNT_BY_REFERENCE = "Magazine.countByReference";
+	public static final String GET_BY_ID = "Magazine.getById";
+	public static final String GET_BY_REFERENCE = "Magazine.getByReference";
+	public static final String GET_ALL = "Magazine.getAll";
+	public static final String GET_ALL_BY_CATEGORY = "Magazine.getAllByCategory";
+	public static final String REMOVE_BY_REFERENCE = "Magazine.removeByReference";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generatorMagazine")

@@ -6,7 +6,6 @@
 <%@ page import="hu.qwaevisz.magazine.ejbservice.domain.MagazineStub" %>
 <%@ page import="hu.qwaevisz.magazine.ejbservice.domain.MagazineCategoryStub" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://qwaevisz.hu/jsp/tlds/booktag" prefix="bt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,7 +14,7 @@
 <title>:: Magazines ::</title>
 </head>
 <body>
-    <bt:header>List of Magazines</bt:header>
+    <h1>List of Magazines</h1>
     <div>
     	<% String userName = (String) request.getUserPrincipal().getName(); %>
 	    Welcome <strong><%= userName %></strong>! <a href="Logout">Logout</a>
@@ -61,7 +60,7 @@
                             <td><c:out value="${magazine.publisher}" /></td>
                             <td><a href="Magazine?reference=<c:out value="${magazine.reference}" />"><c:out value="${magazine.title}" /></a></td>
                             <td><c:out value="${magazine.category.label}" /></td>
-                            <td><bt:formatPrice value="${magazine.price}"/></td>
+                            <td><c:out value="${magazine.price}" /></td>
                             <td><c:out value="${magazine.numberOfPages}" /></td>
                             <% if (request.isUserInRole("magadmin")) { %>
                             	<td><a href="MagazineDelete?reference=<c:out value="${magazine.reference}" />">delete</a></td>

@@ -1,3 +1,0 @@
-dependencies {
-	compile group: 'org.hibernate', name: 'hibernate-core', version: hibernateVersion
-}
