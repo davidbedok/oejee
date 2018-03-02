@@ -7,7 +7,7 @@ import hu.qwaevisz.webstore.ejbservice.domain.ServiceError;
 @WebFault(name = "WebStoreServiceFault", targetNamespace = "http://www.qwaevisz.hu/WebStore")
 public class WebStoreServiceException extends Exception {
 
-	private static final long serialVersionUID = 536014448507939548L;
+	private static final long serialVersionUID = 1L;
 
 	private final ServiceError faultInfo;
 

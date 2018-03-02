@@ -36,17 +36,17 @@ public class WebBasketServiceImpl implements WebBasketService {
 	@Override
 	public void setIdentifier(String identifier) throws ServiceException {
 		LOGGER.debug("Set the identifier (" + identifier + ") for " + this.basket);
-		if (!this.basket.hasIdentifier()) {
-			this.basket.setIdentifier(identifier);
-		} else {
-			throw new ServiceException(WebStoreError.IDENTIFIER, "Basket already has an identifier (" + this.basket.getIdentifier() + ").");
-		}
+		this.basket.setIdentifier(identifier);
 	}
 
 	@Override
 	public String getIdentifier() throws ServiceException {
 		LOGGER.debug("Get the identifier of the " + this.basket);
-		return this.basket.getIdentifier();
+		if (this.basket.hasIdentifier()) {
+			return this.basket.getIdentifier();
+		} else {
+			throw new ServiceException(WebStoreError.IDENTIFIER, "The identifier of the basket has not beed set yet.");
+		}
 	}
 
 	@Override
@@ -61,11 +61,7 @@ public class WebBasketServiceImpl implements WebBasketService {
 		try {
 			ProductStub product = this.converter.toStub(this.service.read(productName));
 			if (product != null) {
-				if (this.basket.find(product)) {
-					this.basket.increment(product);
-				} else {
-					this.basket.add(product);
-				}
+				this.basket.increment(product);
 			} else {
 				throw new ServiceException(WebStoreError.PRODUCT, "Unknown product (name: " + productName + ").");
 			}
@@ -81,12 +77,7 @@ public class WebBasketServiceImpl implements WebBasketService {
 		try {
 			ProductStub product = this.converter.toStub(this.service.read(productName));
 			if (product != null) {
-				if (this.basket.find(product)) {
-					this.basket.remove(product);
-				} else {
-					throw new ServiceException(WebStoreError.IDENTIFIER,
-							"Basket (" + this.basket.getIdentifier() + ") doesn't contain this product (" + productName + ").");
-				}
+				this.basket.decrement(product);
 			} else {
 				throw new ServiceException(WebStoreError.PRODUCT, "Unknown product (name: " + productName + ").");
 			}
@@ -102,6 +93,7 @@ public class WebBasketServiceImpl implements WebBasketService {
 		return this.basket;
 	}
 
+	@Override
 	@Remove
 	public void remove() {
 		this.basket = null;

@@ -12,7 +12,6 @@ public class BasketItem {
 	private int quantity;
 
 	public BasketItem() {
-
 	}
 
 	public BasketItem(ProductStub product, int quantity) {
@@ -40,6 +39,10 @@ public class BasketItem {
 
 	public void increment() {
 		this.quantity++;
+	}
+
+	public void decrement() {
+		this.quantity--;
 	}
 
 	@XmlAttribute(name = "total")

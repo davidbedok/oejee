@@ -20,7 +20,7 @@ import hu.qwaevisz.webstore.ejbservice.service.StoreService;
 @WebServlet("/ProductsPing")
 public class WebStorePingServlet extends HttpServlet {
 
-	private static final long serialVersionUID = -7058255202709402208L;
+	private static final long serialVersionUID = 1L;
 
 	private static final Logger LOGGER = Logger.getLogger(WebStorePingServlet.class);
 

@@ -9,6 +9,9 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import hu.qwaevisz.webstore.ejbservice.exception.ServiceException;
+import hu.qwaevisz.webstore.ejbservice.exception.WebStoreError;
+
 @XmlRootElement(name = "Basket")
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class Basket {
@@ -18,34 +21,6 @@ public class Basket {
 
 	public Basket() {
 		this.items = new ArrayList<>();
-	}
-
-	public void add(ProductStub product) {
-		this.items.add(new BasketItem(product, 1));
-	}
-
-	public void remove(ProductStub product) {
-		this.items.remove(product);
-	}
-
-	public void increment(ProductStub product) {
-		for (final BasketItem item : this.items) {
-			if (item.getProduct().equals(product)) {
-				item.increment();
-				break;
-			}
-		}
-	}
-
-	public boolean find(ProductStub product) {
-		boolean result = false;
-		for (final BasketItem item : this.items) {
-			if (item.getProduct().equals(product)) {
-				result = true;
-				break;
-			}
-		}
-		return result;
 	}
 
 	@XmlAttribute(name = "identifier")
@@ -66,17 +41,51 @@ public class Basket {
 		return this.items;
 	}
 
+	public void increment(ProductStub product) {
+		BasketItem item = this.findItem(product);
+		if (item != null) {
+			item.increment();
+		} else {
+			this.add(product);
+		}
+	}
+
+	private BasketItem findItem(ProductStub product) {
+		return this.items.stream().filter(bi -> bi.getProduct().equals(product)).findFirst().orElse(null);
+	}
+
+	private void add(ProductStub product) {
+		this.items.add(new BasketItem(product, 1));
+	}
+
+	public void decrement(ProductStub product) throws ServiceException {
+		BasketItem item = this.findItem(product);
+		if (item != null) {
+			item.decrement();
+			if (item.getQuantity() == 0) {
+				this.remove(product);
+			}
+		} else {
+			throw new ServiceException(WebStoreError.BASKET, "Basket (" + this.identifier + ") does not contain this product (" + product.getName() + ").");
+		}
+	}
+
+	private void remove(ProductStub product) {
+		this.items.removeIf(bi -> bi.getProduct().equals(product));
+	}
+
+	public boolean find(ProductStub product) {
+		// return this.items.stream().anyMatch(bi -> bi.getProduct().equals(product));
+		return this.items.stream().map(BasketItem::getProduct).anyMatch(product::equals);
+	}
+
 	public int getSize() {
 		return this.items.size();
 	}
 
 	@XmlAttribute(name = "total")
 	public int getTotal() {
-		int sum = 0;
-		for (final BasketItem item : this.items) {
-			sum += item.getTotalPrice();
-		}
-		return sum;
+		return this.items.stream().mapToInt(BasketItem::getTotalPrice).sum();
 	}
 
 	@Override

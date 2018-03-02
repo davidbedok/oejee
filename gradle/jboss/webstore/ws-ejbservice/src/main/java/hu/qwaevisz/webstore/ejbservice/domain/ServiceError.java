@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "ServiceError")
 public class ServiceError implements Serializable {
 
-	private static final long serialVersionUID = 6351508957255647272L;
+	private static final long serialVersionUID = 1L;
 
 	private final int code;
 	private final String message;
@@ -34,7 +34,7 @@ public class ServiceError implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ErrorStub [code=" + this.code + ", message=" + this.message + "]";
+		return "ServiceError [code=" + this.code + ", message=" + this.message + "]";
 	}
 
 }

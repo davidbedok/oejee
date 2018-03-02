@@ -4,7 +4,7 @@ import hu.qwaevisz.webstore.ejbservice.domain.ServiceError;
 
 public class ServiceException extends Exception {
 
-	private static final long serialVersionUID = -6072617107159960432L;
+	private static final long serialVersionUID = 1L;
 
 	private final int code;
 

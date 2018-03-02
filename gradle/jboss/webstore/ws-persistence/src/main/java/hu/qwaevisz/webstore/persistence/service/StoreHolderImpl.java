@@ -2,6 +2,7 @@ package hu.qwaevisz.webstore.persistence.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Lock;
@@ -49,39 +50,20 @@ public class StoreHolderImpl implements StoreHolder {
 	@Override
 	@Lock(LockType.READ)
 	public Product read(String name) {
-		Product result = null;
-		for (final Product current : this.items) {
-			if (current.getName().equals(name)) {
-				result = current;
-				break;
-			}
-		}
-		return result;
+		return this.items.stream().filter(product -> product.getName().equals(name)).findFirst().orElse(null);
 	}
 
 	@Override
 	@Lock(LockType.READ)
 	public List<Product> readAll(String nameTerm) {
-		final List<Product> result = new ArrayList<>();
 		String ucNameTerm = nameTerm.toUpperCase();
-		for (final Product current : this.items) {
-			if (current.getName().toUpperCase().contains(ucNameTerm)) {
-				result.add(current);
-			}
-		}
-		return result;
+		return this.items.stream().filter(product -> product.getName().toUpperCase().contains(ucNameTerm)).collect(Collectors.toList());
 	}
 
 	@Override
 	@Lock(LockType.READ)
 	public List<Product> readAll(Brand brand) {
-		final List<Product> result = new ArrayList<>();
-		for (final Product current : this.items) {
-			if (current.getBrand() == brand) {
-				result.add(current);
-			}
-		}
-		return result;
+		return this.items.stream().filter(product -> product.getBrand() == brand).collect(Collectors.toList());
 	}
 
 	@Override

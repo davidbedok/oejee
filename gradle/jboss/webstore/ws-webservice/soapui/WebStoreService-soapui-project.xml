@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:soapui-project id="78aa3651-46eb-49a7-88f8-c8e6118ee551" activeEnvironment="Default" name="WebStoreService" resourceRoot="" soapui-version="5.2.1" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="152716ac-9366-440f-b810-7bdd138c91cf" wsaVersion="NONE" name="WebStoreServiceSoapBinding" type="wsdl" bindingName="{http://www.qwaevisz.hu/WebStore}WebStoreServiceSoapBinding" soapVersion="1_1" anonymous="optional" definition="http://localhost:8080/webstore/WebStoreService?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:8080/webstore/WebStoreService?wsdl"><con:part><con:url>http://localhost:8080/webstore/WebStoreService?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="WebStoreService" targetNamespace="http://www.qwaevisz.hu/WebStore" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.qwaevisz.hu/WebStore" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http">
+<con:soapui-project id="78aa3651-46eb-49a7-88f8-c8e6118ee551" activeEnvironment="Default" name="WebStoreService" resourceRoot="" soapui-version="5.2.1" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="152716ac-9366-440f-b810-7bdd138c91cf" wsaVersion="NONE" name="WebStoreServiceSoapBinding" type="wsdl" bindingName="{http://www.qwaevisz.hu/WebStore}WebStoreServiceSoapBinding" soapVersion="1_1" anonymous="optional" definition="http://localhost:8080/webstore/WebStoreService?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:8080/webstore/WebStoreService?wsdl"><con:part><con:url>http://localhost:8080/webstore/WebStoreService?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="WebStoreService" targetNamespace="http://www.qwaevisz.hu/WebStore" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.qwaevisz.hu/WebStore" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http">
   <wsdl:types>
     <xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://www.qwaevisz.hu/WebStore" xmlns:xs="http://www.w3.org/2001/XMLSchema">
       <xs:element name="AddItemToBasket" type="tns:AddItemToBasket"/>
@@ -7,7 +7,6 @@
       <xs:element name="AddProduct" type="tns:AddProduct"/>
       <xs:element name="AddProductResponse" type="tns:AddProductResponse"/>
       <xs:element name="Basket" type="tns:basket"/>
-      <xs:element name="BasketItem" type="tns:basketItem"/>
       <xs:element name="DeleteProduct" type="tns:DeleteProduct"/>
       <xs:element name="DeleteProductResponse" type="tns:DeleteProductResponse"/>
       <xs:element name="GetBasketContent" type="tns:GetBasketContent"/>
@@ -54,14 +53,14 @@
       </xs:complexType>
       <xs:complexType name="basket">
         <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="items" type="tns:basketItem"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Item" type="tns:basketItem"/>
         </xs:sequence>
         <xs:attribute name="identifier" type="xs:string"/>
         <xs:attribute name="total" type="xs:int" use="required"/>
       </xs:complexType>
       <xs:complexType name="basketItem">
         <xs:sequence>
-          <xs:element minOccurs="0" name="product" type="tns:productStub"/>
+          <xs:element minOccurs="0" ref="tns:Product"/>
         </xs:sequence>
         <xs:attribute name="quantity" type="xs:int" use="required"/>
         <xs:attribute name="total" type="xs:int" use="required"/>
@@ -90,7 +89,7 @@
       </xs:complexType>
       <xs:complexType name="AddProduct">
         <xs:sequence>
-          <xs:element minOccurs="0" name="product" type="tns:productStub"/>
+          <xs:element minOccurs="0" ref="tns:Product"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="AddProductResponse">
@@ -457,30 +456,24 @@
       <soap:address location="http://localhost:8080/webstore/WebStoreService"/>
     </wsdl:port>
   </wsdl:service>
-</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/webstore/WebStoreService</con:endpoint></con:endpoints><con:operation id="c052476b-84a2-4018-aa3f-d68522c1bdb7" isOneWay="false" action="http://www.qwaevisz.hu/WebStore/addItemToBasket" name="AddItemToBasket" bindingOperationName="AddItemToBasket" type="Request-Response" outputName="AddItemToBasketResponse" inputName="AddItemToBasket" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="9354b861-2d39-43fe-91b0-d168270757a5" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/webstore/WebStoreService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.qwaevisz.hu/WebStore">\r
-   <soapenv:Header/>\r
-   <soapenv:Body>\r
-      <web:AddItemToBasket>\r
-         <!--Optional:-->\r
-         <ProductName>?</ProductName>\r
-      </web:AddItemToBasket>\r
-   </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.qwaevisz.hu/WebStore/addItemToBasket"/></con:call></con:operation><con:operation id="38d81526-f339-441f-8b42-896950cb0a57" isOneWay="false" action="http://www.qwaevisz.hu/WebStore/addProduct" name="AddProduct" bindingOperationName="AddProduct" type="Request-Response" outputName="AddProductResponse" inputName="AddProduct" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="3019c5ae-f093-4989-9de9-85cddb65a5c1" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/webstore/WebStoreService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.qwaevisz.hu/WebStore">\r
-   <soapenv:Header/>\r
-   <soapenv:Body>\r
-      <web:AddProduct>\r
-         <!--Optional:-->\r
-         <product brand="?" productName="?" price="?"/>\r
-      </web:AddProduct>\r
-   </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.qwaevisz.hu/WebStore/addProduct"/></con:call></con:operation><con:operation id="b1dc516f-5e83-41ed-baaa-6e3660126e6d" isOneWay="false" action="http://www.qwaevisz.hu/WebStore/deleteProduct" name="DeleteProduct" bindingOperationName="DeleteProduct" type="Request-Response" outputName="DeleteProductResponse" inputName="DeleteProduct" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="02f0b22c-a09c-48ba-90b1-e68bfbd783a5" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/webstore/WebStoreService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.qwaevisz.hu/WebStore">\r
-   <soapenv:Header/>\r
-   <soapenv:Body>\r
-      <web:DeleteProduct>\r
-         <!--Optional:-->\r
-         <Name>?</Name>\r
-      </web:DeleteProduct>\r
-   </soapenv:Body>\r
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/webstore/WebStoreService</con:endpoint></con:endpoints><con:operation id="c052476b-84a2-4018-aa3f-d68522c1bdb7" isOneWay="false" action="http://www.qwaevisz.hu/WebStore/addItemToBasket" name="AddItemToBasket" bindingOperationName="AddItemToBasket" type="Request-Response" outputName="AddItemToBasketResponse" inputName="AddItemToBasket" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="9354b861-2d39-43fe-91b0-d168270757a5" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/webstore/WebStoreService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.qwaevisz.hu/WebStore">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <web:AddItemToBasket>
+         </web:AddItemToBasket>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.qwaevisz.hu/WebStore/addItemToBasket"/></con:call></con:operation><con:operation id="38d81526-f339-441f-8b42-896950cb0a57" isOneWay="false" action="http://www.qwaevisz.hu/WebStore/addProduct" name="AddProduct" bindingOperationName="AddProduct" type="Request-Response" outputName="AddProductResponse" inputName="AddProduct" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="3019c5ae-f093-4989-9de9-85cddb65a5c1" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/webstore/WebStoreService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.qwaevisz.hu/WebStore">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <web:AddProduct>
+         </web:AddProduct>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.qwaevisz.hu/WebStore/addProduct"/></con:call></con:operation><con:operation id="b1dc516f-5e83-41ed-baaa-6e3660126e6d" isOneWay="false" action="http://www.qwaevisz.hu/WebStore/deleteProduct" name="DeleteProduct" bindingOperationName="DeleteProduct" type="Request-Response" outputName="DeleteProductResponse" inputName="DeleteProduct" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="02f0b22c-a09c-48ba-90b1-e68bfbd783a5" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/webstore/WebStoreService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.qwaevisz.hu/WebStore">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <web:DeleteProduct>
+         </web:DeleteProduct>
+   </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.qwaevisz.hu/WebStore/deleteProduct"/></con:call></con:operation><con:operation id="b0aac23a-027f-4e41-b8b7-c36606df4a58" isOneWay="false" action="http://www.qwaevisz.hu/WebStore/getBasketContent" name="GetBasketContent" bindingOperationName="GetBasketContent" type="Request-Response" outputName="GetBasketContentResponse" inputName="GetBasketContent" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="d300ddad-9861-4b56-a2a5-26f40f2ff8a5" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/webstore/WebStoreService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.qwaevisz.hu/WebStore">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
@@ -496,49 +489,40 @@
    <soapenv:Body>\r
       <web:GetBasketSize/>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.qwaevisz.hu/WebStore/getBasketSize"/></con:call></con:operation><con:operation id="af853a06-5ae8-4255-93ed-ffa75f21e7d7" isOneWay="false" action="http://www.qwaevisz.hu/WebStore/getProduct" name="GetProduct" bindingOperationName="GetProduct" type="Request-Response" outputName="GetProductResponse" inputName="GetProduct" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="e47787eb-a90b-4346-95b4-69de3bee4f1d" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/webstore/WebStoreService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.qwaevisz.hu/WebStore">\r
-   <soapenv:Header/>\r
-   <soapenv:Body>\r
-      <web:GetProduct>\r
-         <!--Optional:-->\r
-         <Name>?</Name>\r
-      </web:GetProduct>\r
-   </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.qwaevisz.hu/WebStore/getProduct"/></con:call></con:operation><con:operation id="cec4d23a-c665-44f2-8354-95e7ada6c71d" isOneWay="false" action="http://www.qwaevisz.hu/WebStore/listAllProducts" name="ListAllProducts" bindingOperationName="ListAllProducts" type="Request-Response" outputName="ListAllProductsResponse" inputName="ListAllProducts" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="31ec43c2-6b41-443e-96b4-841095c0af27" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/webstore/WebStoreService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.qwaevisz.hu/WebStore">\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.qwaevisz.hu/WebStore/getBasketSize"/></con:call></con:operation><con:operation id="af853a06-5ae8-4255-93ed-ffa75f21e7d7" isOneWay="false" action="http://www.qwaevisz.hu/WebStore/getProduct" name="GetProduct" bindingOperationName="GetProduct" type="Request-Response" outputName="GetProductResponse" inputName="GetProduct" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="e47787eb-a90b-4346-95b4-69de3bee4f1d" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/webstore/WebStoreService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.qwaevisz.hu/WebStore">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <web:GetProduct>
+         		<Name>SD85 4K HDR</Name>
+      </web:GetProduct>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.qwaevisz.hu/WebStore/getProduct"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="cec4d23a-c665-44f2-8354-95e7ada6c71d" isOneWay="false" action="http://www.qwaevisz.hu/WebStore/listAllProducts" name="ListAllProducts" bindingOperationName="ListAllProducts" type="Request-Response" outputName="ListAllProductsResponse" inputName="ListAllProducts" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="31ec43c2-6b41-443e-96b4-841095c0af27" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/webstore/WebStoreService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.qwaevisz.hu/WebStore">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <web:ListAllProducts/>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.qwaevisz.hu/WebStore/listAllProducts"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="92053d48-08e9-4c75-b039-f6c4d0ef5ffe" isOneWay="false" action="http://www.qwaevisz.hu/WebStore/listProductsByBrand" name="ListProductsByBrand" bindingOperationName="ListProductsByBrand" type="Request-Response" outputName="ListProductsByBrandResponse" inputName="ListProductsByBrand" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="1b876ffe-3947-4a1b-b396-a4c0b4529872" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/webstore/WebStoreService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.qwaevisz.hu/WebStore">\r
-   <soapenv:Header/>\r
-   <soapenv:Body>\r
-      <web:ListProductsByBrand>\r
-         <!--Optional:-->\r
-         <Brand>?</Brand>\r
-      </web:ListProductsByBrand>\r
-   </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.qwaevisz.hu/WebStore/listProductsByBrand"/></con:call></con:operation><con:operation id="7e876a64-002c-44d8-83e1-20de5a8ace23" isOneWay="false" action="http://www.qwaevisz.hu/WebStore/listProductsByNameTerm" name="ListProductsByNameTerm" bindingOperationName="ListProductsByNameTerm" type="Request-Response" outputName="ListProductsByNameTermResponse" inputName="ListProductsByNameTerm" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="076b47b4-68ad-43a7-9098-c366ee3eef87" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/webstore/WebStoreService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.qwaevisz.hu/WebStore">\r
-   <soapenv:Header/>\r
-   <soapenv:Body>\r
-      <web:ListProductsByNameTerm>\r
-         <!--Optional:-->\r
-         <NameTerm>?</NameTerm>\r
-      </web:ListProductsByNameTerm>\r
-   </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.qwaevisz.hu/WebStore/listProductsByNameTerm"/></con:call></con:operation><con:operation id="7f41ae16-68b2-471f-b693-a065a927e71e" isOneWay="false" action="http://www.qwaevisz.hu/WebStore/removeItemFromBasket" name="RemoveItemFromBasket" bindingOperationName="RemoveItemFromBasket" type="Request-Response" outputName="RemoveItemFromBasketResponse" inputName="RemoveItemFromBasket" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="85f3ce0c-ffb4-4056-b18b-0380613c3b9b" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/webstore/WebStoreService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.qwaevisz.hu/WebStore">\r
-   <soapenv:Header/>\r
-   <soapenv:Body>\r
-      <web:RemoveItemFromBasket>\r
-         <!--Optional:-->\r
-         <ProductName>?</ProductName>\r
-      </web:RemoveItemFromBasket>\r
-   </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.qwaevisz.hu/WebStore/removeItemFromBasket"/></con:call></con:operation><con:operation id="b0481aaa-3481-4847-81b3-bfae5fab0099" isOneWay="false" action="http://www.qwaevisz.hu/WebStore/setBasketIdentifier" name="SetBasketIdentifier" bindingOperationName="SetBasketIdentifier" type="Request-Response" outputName="SetBasketIdentifierResponse" inputName="SetBasketIdentifier" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="b55e69c3-a530-47eb-acd9-ccfa603e4bf7" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/webstore/WebStoreService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.qwaevisz.hu/WebStore">\r
-   <soapenv:Header/>\r
-   <soapenv:Body>\r
-      <web:SetBasketIdentifier>\r
-         <!--Optional:-->\r
-         <Identifier>?</Identifier>\r
-      </web:SetBasketIdentifier>\r
-   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.qwaevisz.hu/WebStore/listAllProducts"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="92053d48-08e9-4c75-b039-f6c4d0ef5ffe" isOneWay="false" action="http://www.qwaevisz.hu/WebStore/listProductsByBrand" name="ListProductsByBrand" bindingOperationName="ListProductsByBrand" type="Request-Response" outputName="ListProductsByBrandResponse" inputName="ListProductsByBrand" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="1b876ffe-3947-4a1b-b396-a4c0b4529872" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/webstore/WebStoreService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.qwaevisz.hu/WebStore">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <web:ListProductsByBrand>
+         </web:ListProductsByBrand>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.qwaevisz.hu/WebStore/listProductsByBrand"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="7e876a64-002c-44d8-83e1-20de5a8ace23" isOneWay="false" action="http://www.qwaevisz.hu/WebStore/listProductsByNameTerm" name="ListProductsByNameTerm" bindingOperationName="ListProductsByNameTerm" type="Request-Response" outputName="ListProductsByNameTermResponse" inputName="ListProductsByNameTerm" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="076b47b4-68ad-43a7-9098-c366ee3eef87" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/webstore/WebStoreService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.qwaevisz.hu/WebStore">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <web:ListProductsByNameTerm>
+         </web:ListProductsByNameTerm>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.qwaevisz.hu/WebStore/listProductsByNameTerm"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="7f41ae16-68b2-471f-b693-a065a927e71e" isOneWay="false" action="http://www.qwaevisz.hu/WebStore/removeItemFromBasket" name="RemoveItemFromBasket" bindingOperationName="RemoveItemFromBasket" type="Request-Response" outputName="RemoveItemFromBasketResponse" inputName="RemoveItemFromBasket" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="85f3ce0c-ffb4-4056-b18b-0380613c3b9b" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/webstore/WebStoreService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.qwaevisz.hu/WebStore">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <web:RemoveItemFromBasket>
+         </web:RemoveItemFromBasket>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.qwaevisz.hu/WebStore/removeItemFromBasket"/></con:call></con:operation><con:operation id="b0481aaa-3481-4847-81b3-bfae5fab0099" isOneWay="false" action="http://www.qwaevisz.hu/WebStore/setBasketIdentifier" name="SetBasketIdentifier" bindingOperationName="SetBasketIdentifier" type="Request-Response" outputName="SetBasketIdentifierResponse" inputName="SetBasketIdentifier" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="b55e69c3-a530-47eb-acd9-ccfa603e4bf7" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/webstore/WebStoreService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.qwaevisz.hu/WebStore">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <web:SetBasketIdentifier>
+         </web:SetBasketIdentifier>
+   </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.qwaevisz.hu/WebStore/setBasketIdentifier"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/></con:soapui-project>

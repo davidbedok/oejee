@@ -4,7 +4,8 @@ public enum WebStoreError {
 
 	IDENTIFIER(10),
 	PERSISTENCE(20),
-	PRODUCT(30);
+	PRODUCT(30),
+	BASKET(40);
 
 	private int code;
 
