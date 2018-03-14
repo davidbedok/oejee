@@ -3,11 +3,11 @@ package hu.qwaevisz.inventory.ejbservice.client;
 import hu.qwaevisz.inventory.ejbservice.domain.ClientType;
 import hu.qwaevisz.inventory.ejbservice.qualifier.ClientFlag;
 
-@ClientFlag(ClientType.LIVE)
-public class LiveClientHolder extends AbstractClientHolder {
+@ClientFlag(ClientType.TEST)
+public class TestClientHolder extends AbstractClientHolder {
 
-	public LiveClientHolder() {
-		super("MCF012", "Matthew C. Flores");
+	public TestClientHolder() {
+		super("TEST", "Test System");
 	}
 
 }

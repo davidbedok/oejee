@@ -9,7 +9,7 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 import hu.qwaevisz.inventory.ejbservice.exception.AdaptorException;
-import hu.qwaevisz.inventory.webservice.filter.InventoryCrossOriginRequestFilter;
+import hu.qwaevisz.inventory.webservice.filter.InventoryCORSFilter;
 
 @Provider
 public class AdaptorExceptionMapper implements ExceptionMapper<AdaptorException> {
@@ -19,12 +19,12 @@ public class AdaptorExceptionMapper implements ExceptionMapper<AdaptorException>
 
 	@Override
 	public Response toResponse(AdaptorException e) {
-		return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.build()) //
-				.header(InventoryCrossOriginRequestFilter.ALLOW_ORIGIN, "*") //
-				.header(InventoryCrossOriginRequestFilter.ALLOW_METHODS, "GET, POST, PUT, DELETE, OPTIONS, HEAD") //
-				.header(InventoryCrossOriginRequestFilter.MAX_AGE, "1209600") //
-				.header(InventoryCrossOriginRequestFilter.ALLOW_HEADERS, "x-requested-with, origin, content-type, accept, X-Codingpedia, authorization") //
-				.header(InventoryCrossOriginRequestFilter.ALLOW_CREDENTIALS, "true") //
+		return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e) //
+				.header(InventoryCORSFilter.ALLOW_ORIGIN, "*") //
+				.header(InventoryCORSFilter.ALLOW_METHODS, "GET, POST, PUT, DELETE, OPTIONS, HEAD") //
+				.header(InventoryCORSFilter.MAX_AGE, "1209600") //
+				.header(InventoryCORSFilter.ALLOW_HEADERS, "x-requested-with, origin, content-type, accept, X-Codingpedia, authorization") //
+				.header(InventoryCORSFilter.ALLOW_CREDENTIALS, "true") //
 				.type(MediaType.APPLICATION_JSON).build();
 	}
 

@@ -1,8 +1,10 @@
 package hu.qwaevisz.inventory.ejbservice.service;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Named;
 
+@ApplicationScoped
 public class InventoryConfigurationProvider {
 
 	@Produces

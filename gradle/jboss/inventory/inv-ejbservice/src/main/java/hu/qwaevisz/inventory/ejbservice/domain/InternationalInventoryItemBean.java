@@ -2,12 +2,12 @@ package hu.qwaevisz.inventory.ejbservice.domain;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-public class InventoryItemStub {
+public class InternationalInventoryItemBean {
 
 	private String label;
 	private String price;
 
-	public InventoryItemStub(String label, String price) {
+	public InternationalInventoryItemBean(String label, String price) {
 		this.label = label;
 		this.price = price;
 	}
@@ -28,6 +28,11 @@ public class InventoryItemStub {
 
 	public void setPrice(String price) {
 		this.price = price;
+	}
+
+	@Override
+	public String toString() {
+		return this.label;
 	}
 
 }

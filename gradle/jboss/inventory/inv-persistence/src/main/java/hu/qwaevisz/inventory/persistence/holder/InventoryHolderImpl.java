@@ -1,4 +1,4 @@
-package hu.qwaevisz.inventory.persistence.service;
+package hu.qwaevisz.inventory.persistence.holder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,30 +34,6 @@ public class InventoryHolderImpl implements InventoryHolder {
 
 	@Override
 	@Lock(LockType.READ)
-	public InventoryItem get(String reference) {
-		InventoryItem result = null;
-		for (final InventoryItem current : this.items) {
-			if (current.getReference().equals(reference)) {
-				result = current;
-				break;
-			}
-		}
-		return result;
-	}
-
-	@Override
-	@Lock(LockType.READ)
-	public List<InventoryItem> list(InventoryType type) {
-		final List<InventoryItem> result = new ArrayList<>();
-		for (final InventoryItem current : this.items) {
-			if (current.getType() == type) {
-				result.add(current);
-			}
-		}
-		return result;
-	}
-
-	@Override
 	public List<InventoryItem> getAll() {
 		return this.items;
 	}

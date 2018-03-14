@@ -1,17 +1,17 @@
-package hu.qwaevisz.inventory.persistence.domain;
+package hu.qwaevisz.inventory.ejbservice.domain;
 
-public class InventoryItem {
+public class InventoryItemBean {
 
 	private String reference;
 	private String name;
-	private InventoryType type;
+	private String type;
 	private int value;
 
-	public InventoryItem() {
-		this(null, null, InventoryType.BOOK, 0);
+	public InventoryItemBean() {
+		this(null, null, null, 0);
 	}
 
-	public InventoryItem(String reference, String name, InventoryType type, int value) {
+	public InventoryItemBean(String reference, String name, String type, int value) {
 		this.reference = reference;
 		this.name = name;
 		this.type = type;
@@ -34,11 +34,11 @@ public class InventoryItem {
 		this.name = name;
 	}
 
-	public InventoryType getType() {
+	public String getType() {
 		return this.type;
 	}
 
-	public void setType(InventoryType type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 
@@ -52,7 +52,7 @@ public class InventoryItem {
 
 	@Override
 	public String toString() {
-		return "InventoryItem [reference=" + this.reference + ", name=" + this.name + ", type=" + this.type + ", value=" + this.value + "]";
+		return "InventoryItemBean [reference=" + this.reference + ", name=" + this.name + ", type=" + this.type + ", value=" + this.value + "]";
 	}
 
 }

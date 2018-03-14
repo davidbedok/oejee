@@ -2,8 +2,9 @@ package hu.qwaevisz.inventory.ejbservice.domain;
 
 public enum ClientType {
 
-	FAKE,
+	SANDBOX,
 	LIVE,
+	TEST,
 	CUSTOM
 
 }

@@ -20,7 +20,7 @@ public class Client {
 
 	@Override
 	public String toString() {
-		return "Client [reference=" + this.reference + ", name=" + this.name + "]";
+		return this.name + " (" + this.reference + ")";
 	}
 
 }

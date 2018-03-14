@@ -2,6 +2,7 @@ package hu.qwaevisz.inventory.persistence.service
 
 import hu.qwaevisz.inventory.persistence.domain.InventoryItem
 import hu.qwaevisz.inventory.persistence.domain.InventoryType
+import hu.qwaevisz.inventory.persistence.holder.InventoryHolder
 
 import javax.ejb.EJB
 import javax.ejb.Stateless

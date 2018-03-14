@@ -5,7 +5,6 @@ public enum InventoryType {
 	BOOK,
 	DISK,
 	CASSETTE,
-	MAGAZINE,
-	OTHER;
+	MAGAZINE;
 
 }

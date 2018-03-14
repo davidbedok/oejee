@@ -8,15 +8,15 @@ import hu.qwaevisz.inventory.ejbservice.domain.ClientType;
 import hu.qwaevisz.inventory.ejbservice.qualifier.ClientFlag;
 
 @ApplicationScoped
-public class CustomClientFactory {
+public class ClientHolderFactory {
 
 	@Resource(lookup = "java:global/customClientName")
-	private String customClientName;
+	private String clientName;
 
 	@Produces
 	@ClientFlag(ClientType.CUSTOM)
-	public ClientHolder getCustomClient() {
-		return new CustomClientHolder(this.customClientName);
+	public ClientHolder getCustomClientHolder() {
+		return new CustomClientHolder(this.clientName);
 	}
 
 }

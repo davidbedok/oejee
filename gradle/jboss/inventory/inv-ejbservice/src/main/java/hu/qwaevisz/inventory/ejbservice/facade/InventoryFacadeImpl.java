@@ -6,108 +6,123 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.enterprise.event.Event;
+import javax.enterprise.inject.Any;
 import javax.enterprise.inject.Instance;
+import javax.enterprise.util.AnnotationLiteral;
 import javax.inject.Inject;
 import javax.interceptor.Interceptors;
 
-import org.apache.log4j.Logger;
-
-import hu.qwaevisz.inventory.ejbservice.client.ClientHolder;
-import hu.qwaevisz.inventory.ejbservice.converter.InventoryItemConverter;
+import hu.qwaevisz.inventory.ejbservice.converter.InternationalInventoryItemConverter;
+import hu.qwaevisz.inventory.ejbservice.converter.InventoryItemBeanConverter;
 import hu.qwaevisz.inventory.ejbservice.cost.CostService;
-import hu.qwaevisz.inventory.ejbservice.domain.Client;
-import hu.qwaevisz.inventory.ejbservice.domain.ClientType;
-import hu.qwaevisz.inventory.ejbservice.domain.InventoryItemStub;
+import hu.qwaevisz.inventory.ejbservice.domain.InternationalInventoryItemBean;
+import hu.qwaevisz.inventory.ejbservice.domain.InventoryItemBean;
+import hu.qwaevisz.inventory.ejbservice.domain.PricingStrategy;
 import hu.qwaevisz.inventory.ejbservice.event.NotifierEvent;
 import hu.qwaevisz.inventory.ejbservice.exception.AdaptorException;
+import hu.qwaevisz.inventory.ejbservice.interceptor.CopyrightInterceptor;
 import hu.qwaevisz.inventory.ejbservice.interceptor.Logged;
-import hu.qwaevisz.inventory.ejbservice.interceptor.LoggedInterceptor;
-import hu.qwaevisz.inventory.ejbservice.qualifier.ClientFlag;
 import hu.qwaevisz.inventory.ejbservice.qualifier.Discount;
+import hu.qwaevisz.inventory.ejbservice.qualifier.DiscountQualifier;
 import hu.qwaevisz.inventory.ejbservice.qualifier.Random;
+import hu.qwaevisz.inventory.ejbservice.qualifier.Standard;
 import hu.qwaevisz.inventory.ejbservice.service.InventoryConfiguration;
-import hu.qwaevisz.inventory.persistence.domain.InventoryItem;
 import hu.qwaevisz.inventory.persistence.domain.InventoryType;
-import hu.qwaevisz.inventory.persistence.service.InventoryHolder;
+import hu.qwaevisz.inventory.persistence.service.InventoryFinder;
 import hu.qwaevisz.inventory.persistence.service.InventorySearch;
 
 @Stateless(mappedName = "ejb/inventoryFacade")
 public class InventoryFacadeImpl implements InventoryFacade {
 
-	private static final Logger LOGGER = Logger.getLogger(InventoryFacadeImpl.class);
+	@EJB
+	private InventoryFinder finder;
+
+	@Inject
+	private InventoryItemBeanConverter converter;
+
+	@Override
+	@Interceptors({ CopyrightInterceptor.class })
+	public InventoryItemBean getInventoryItem(String reference) throws AdaptorException {
+		return this.converter.to(this.finder.get(reference));
+	}
+
+	@Logged
+	@Override
+	@Interceptors({ CopyrightInterceptor.class })
+	public List<InventoryItemBean> getInventoryItems(final InventoryType type) throws AdaptorException {
+		return this.converter.to(this.finder.list(type));
+	}
+
+	@Inject
+	private InventorySearch search;
+
+	@Logged
+	@Override
+	public List<InventoryItemBean> getInventoryItems(final InventoryType type, final String nameTerm) throws AdaptorException {
+		return this.converter.to(this.search.list(type, nameTerm));
+	}
 
 	@Inject
 	@Discount
 	private CostService costService;
 
+	@Logged
+	@Override
+	public InventoryItemBean buyInventoryItem(String reference) throws AdaptorException {
+		final InventoryItemBean bean = this.converter.to(this.finder.get(reference));
+		bean.setValue(this.costService.getCost(bean.getValue()));
+		return bean;
+	}
+
+	@Any
 	@Inject
-	@ClientFlag(ClientType.LIVE)
-	private ClientHolder clientHolder;
+	private Instance<CostService> dynamicCostService;
+
+	@Logged
+	@Override
+	public InventoryItemBean buyInventoryItem(String reference, PricingStrategy pricing) throws AdaptorException {
+		final InventoryItemBean bean = this.converter.to(this.finder.get(reference));
+		bean.setValue(this.getCostService(pricing).getCost(bean.getValue()));
+		return bean;
+	}
+
+	private CostService getCostService(PricingStrategy pricing) {
+		CostService service = null;
+		switch (pricing) {
+			case STANDARD:
+				service = this.dynamicCostService.select(new AnnotationLiteral<Standard>() {
+					private static final long serialVersionUID = 1L;
+				}).get();
+				break;
+			case DISCOUNT:
+				service = this.dynamicCostService.select(new DiscountQualifier()).get();
+				break;
+		}
+		return service;
+	}
 
 	@Inject
-	@ClientFlag(ClientType.CUSTOM)
-	private ClientHolder customClientHolder;
+	private InternationalInventoryItemConverter internationalConverter;
 
-	@Inject
-	private InventoryConfiguration configuration;
-
-	@Inject
-	@Random
-	private Instance<Integer> randomNumber;
+	@Logged
+	@Override
+	public InternationalInventoryItemBean getInternationalInventoryItem(final String reference) throws AdaptorException {
+		return this.internationalConverter.to(this.finder.get(reference));
+	}
 
 	@Inject
 	private Event<NotifierEvent> notifier;
 
-	@EJB
-	private InventoryHolder inventoryHolder;
-
-	@EJB
-	private InventorySearch inventorySearch;
+	@Override
+	public InternationalInventoryItemBean getInternationalInventoryItemWithEvent(String reference) throws AdaptorException {
+		final InternationalInventoryItemBean bean = this.internationalConverter.to(this.finder.get(reference));
+		this.notifier.fire(new NotifierEvent(bean));
+		return bean;
+	}
 
 	@Inject
-	private InventoryItemConverter converter;
-
-	@Override
-	@Interceptors({ LoggedInterceptor.class })
-	public void test() {
-		LOGGER.info("Test method call");
-	}
-
-	@Logged
-	@Override
-	public InventoryItem getInventory(final String reference) throws AdaptorException {
-		final InventoryItem inventory = this.inventoryHolder.get(reference);
-		inventory.setValue(this.costService.getCost(inventory.getValue()));
-		final Client client = this.clientHolder.getCurrent();
-		this.notifier.fire(new NotifierEvent(client, "Get " + inventory.getName() + " (ref: " + inventory.getReference() + ") inventory item."));
-		this.notifier.fire(new NotifierEvent(this.customClientHolder.getCurrent(),
-				"Get " + inventory.getName() + " (ref: " + inventory.getReference() + ") inventory item."));
-		return inventory;
-	}
-
-	@Override
-	public InventoryItemStub getInventoryStub(final String reference) throws AdaptorException {
-		return this.converter.to(this.inventoryHolder.get(reference));
-	}
-
-	@Logged
-	@Override
-	public List<InventoryItem> getInventories(final InventoryType type) throws AdaptorException {
-		final List<InventoryItem> items = this.inventoryHolder.list(type);
-		final Client client = this.clientHolder.getCurrent();
-		this.notifier.fire(new NotifierEvent(client, "List " + items.size() + " inventory item(s)."));
-		return items;
-	}
-
-	@Override
-	public List<InventoryItem> getInventories(final InventoryType type, final String nameTerm) throws AdaptorException {
-		return this.inventorySearch.list(type, nameTerm);
-	}
-
-	@Override
-	public String getHost() throws AdaptorException {
-		return this.configuration.getHost();
-	}
+	@Random
+	private Instance<Integer> randomNumber;
 
 	@Logged
 	@Override
@@ -117,6 +132,14 @@ public class InventoryFacadeImpl implements InventoryFacade {
 			result.add(this.randomNumber.get());
 		}
 		return result;
+	}
+
+	@Inject
+	private InventoryConfiguration configuration;
+
+	@Override
+	public String getHost() throws AdaptorException {
+		return this.configuration.getHost();
 	}
 
 }

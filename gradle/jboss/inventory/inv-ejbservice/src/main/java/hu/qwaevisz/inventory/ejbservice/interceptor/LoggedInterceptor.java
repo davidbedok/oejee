@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 @Interceptor
 public class LoggedInterceptor implements Serializable {
 
-	private static final long serialVersionUID = 2630362102376137956L;
+	private static final long serialVersionUID = 1L;
 
 	private static final Logger LOGGER = Logger.getLogger(LoggedInterceptor.class);
 

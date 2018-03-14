@@ -4,6 +4,6 @@ import hu.qwaevisz.inventory.ejbservice.domain.Client;
 
 public interface ClientHolder {
 
-	Client getCurrent();
+	Client getClient();
 
 }
